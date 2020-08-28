@@ -1,14 +1,12 @@
 package kr.co.inhatc.lms.securityConfig;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-/**
- * @author 이승환
- * @since 2020-08-28
- * @version gittest
- * */
+
 @Configuration @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -18,5 +16,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/", "/login", "/sign-up", "/check-email-token",
                 "/email-login", "/login-by-email").permitAll()
                 .anyRequest().authenticated();
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .requestMatchers(PathRequest
+                .toStaticResources()
+                .atCommonLocations());
     }
 }

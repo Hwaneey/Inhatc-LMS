@@ -25,8 +25,5 @@ public class SignUpForm {
     private String password;
 
 
-    @NotBlank
-    @Length(min = 8, max = 50)
-    private String passwordcheck;
 
 }
