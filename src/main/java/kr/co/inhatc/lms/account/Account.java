@@ -1,4 +1,4 @@
-package kr.co.inhatc.lms.inhatc.account;
+package kr.co.inhatc.lms.account;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
