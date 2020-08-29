@@ -5,6 +5,7 @@ import kr.co.inhatc.lms.signup.SignUpFormValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,7 +20,7 @@ public class AccountController {
     private final JavaMailSender javaMailSender;
     private final AccountRepository accountRepository;
     private final SignUpFormValidator signUpFormValidator;
-
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     public String login() {
@@ -45,7 +46,7 @@ public class AccountController {
         Account account = Account.builder()
                 .email(signUpForm.getEmail())
                 .username(signUpForm.getUsername())
-                .password(signUpForm.getPassword())
+                .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .build();
 
         Account CreateAccount = accountRepository.save(account);
