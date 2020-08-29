@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments :: head"><head/>
+<body>
+<div th:replace="fragments :: main-nav"></div>
+
+<div class="container">
+    <h2>Inha Technical College < LOGIN ></h2>
+    <form th:action="@{/login}" method="post" novalidate>
+
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="username" type="text" name="username" class="form-control"  placeholder="Enter username" >
+        </div>
+        <BR>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
+        </div>
+        <BR>
+        <button type="submit" class="btn btn-default">로그인</button>
+    </form>
+</div>
+
+</body>
+</html>
