@@ -7,7 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -19,6 +19,8 @@ class AccountControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private  AccountService accountService;
     @Autowired
     private AccountRepository accountRepository;
 
@@ -46,7 +48,21 @@ class AccountControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
 
-        assertTrue(accountRepository.existsByEmail("seunghwan@email.com"));
+        Account account = accountRepository.findByEmail("seunghwan@email.com");
+        assertNotNull(account);
+        assertNotEquals(account.getPassword(),"123123123");
+        assertNotNull(account.getEmailCheckToken());
 //        then(javaMailSender).should().send(any(SimpleMailMessage.class));
+    }
+
+    @Test
+    @DisplayName("인증 메일 확인 - 입력값 오류")
+    void checkEmailToken_with_wrong_input() throws Exception {
+        mockMvc.perform(get("/check-email-token")
+               .param("token","adssadf")
+               .param("email","email@email.com"))
+               .andExpect(status().isOk())
+               .andExpect(model().attributeExists("error"))
+               .andExpect(view().name("account/checkedEmail"));
     }
 }

@@ -28,7 +28,6 @@ public class Account {
 
     private LocalDateTime joinedAt;
 
-
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();
     }

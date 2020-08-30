@@ -1,4 +1,4 @@
-package kr.co.inhatc.lms;
+package kr.co.inhatc.lms.mail;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailException;

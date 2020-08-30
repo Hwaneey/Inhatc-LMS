@@ -3,9 +3,6 @@ package kr.co.inhatc.lms.account;
 import kr.co.inhatc.lms.signup.SignUpForm;
 import kr.co.inhatc.lms.signup.SignUpFormValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -13,14 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 @Controller @RequiredArgsConstructor
 public class AccountController {
 
-    private final JavaMailSender javaMailSender;
     private final AccountRepository accountRepository;
+    private final AccountService accountService;
     private final SignUpFormValidator signUpFormValidator;
-    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     public String login() {
@@ -42,23 +39,27 @@ public class AccountController {
         if (errors.hasErrors()){
             return "account/sign-up";
         }
-
-        Account account = Account.builder()
-                .email(signUpForm.getEmail())
-                .username(signUpForm.getUsername())
-                .password(passwordEncoder.encode(signUpForm.getPassword()))
-                .build();
-
-        Account CreateAccount = accountRepository.save(account);
-
-        CreateAccount.generateEmailCheckToken();
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(CreateAccount.getEmail());
-        mailMessage.setSubject("Inha Technical College 회원가입 인증");
-        mailMessage.setText("/check-email-token?token=" + CreateAccount.getEmailCheckToken() +"&email = "+ CreateAccount.getEmail() );
-        javaMailSender.send(mailMessage);
-
+        Account account = accountService.createAccount(signUpForm);
+        accountService.login(account);
         return "redirect:/";
+    }
+
+    @GetMapping("/check-email-token")
+    public String checkEmailToken (String token, String email, Model model){
+        Account account = accountRepository.findByEmail(email);
+        if (account == null){
+            model.addAttribute("error","wrong.email");
+            return "account/checkedEmail";
+        }
+        if(!account.getEmailCheckToken().equals(token)){
+            model.addAttribute("error","wrong.token");
+            return "account/checkedEmail";
+        }
+
+        account.setEmailVerified(true);
+        account.setJoinedAt(LocalDateTime.now());
+        model.addAttribute("username",account.getUsername());
+        return "account/checkedEmail";
     }
 
 }
