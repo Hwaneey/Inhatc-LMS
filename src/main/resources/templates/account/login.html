@@ -6,23 +6,55 @@
 <head th:replace="fragments :: head"><head/>
 <body>
 <div th:replace="fragments :: main-nav"></div>
-
 <div class="container">
-    <h2>Inha Technical College < LOGIN ></h2>
-    <form th:action="@{/login}" method="post" novalidate>
+    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+        <p>이메일 과 패스워드가 정확하지 않습니다.</p>
+    </div>
+    <div class="py-5 text-center">
+        <p class="lead">Inha Technical College</p>
+        <h2>로그인</h2>
+    </div>
 
-        <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input id="username" type="text" name="username" class="form-control"  placeholder="Enter username" >
-        </div>
-        <BR>
-        <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-            <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
-        </div>
-        <BR>
-        <button type="submit" class="btn btn-default">로그인</button>
-    </form>
+    <div class="row justify-content-center">
+        <form class="needs-validation col-sm-6" action="#" th:action="@{/login}" method="post" novalidate>
+
+            <div class="form-group">
+                <label >이메일</label>
+                <input id="username" type="email" name="username" class="form-control"
+                       placeholder="your@email.com" aria-describedby="emailHelp" required>
+                <small id="emailHelp" class="form-text text-muted">
+                    가입할 때 사용한 이메일 을 입력하세요.
+                </small>
+                <small class="invalid-feedback">이메일을 입력하세요.</small>
+            </div>
+-
+            <div class="form-group">
+                <label for="password">패스워드</label>
+                <input id="password" type="password" name="password" class="form-control"
+                       aria-describedby="passwordHelp" required>
+                <small id="passwordHelp" class="form-text text-muted">
+                    패스워드가 기억나지 않는다면, <a href="#" th:href="@{/email-login}">패스워드 없이 로그인하기</a>
+                </small>
+                <small class="invalid-feedback">패스워드를 입력하세요.</small>
+            </div>
+
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="rememberMe" name="remember-me" checked>
+                <label class="form-check-label" for="rememberMe" aria-describedby="rememberMeHelp">로그인 유지</label>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-secondary btn-block" type="submit"
+                        aria-describedby="submitHelp">로그인
+                </button>
+                <small id="submitHelp" class="form-text text-muted">
+                    Inha Technical College 에 처음 오신거라면 <a href="#" th:href="@{/signup}">계정을 먼저 만드세요.</a>
+                </small>
+            </div>
+
+        </form>
+    </div>
+
 </div>
 
 </body>
