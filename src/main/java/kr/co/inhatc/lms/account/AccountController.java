@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 
 @Controller @RequiredArgsConstructor
 public class AccountController {
@@ -18,6 +17,14 @@ public class AccountController {
     private final AccountRepository accountRepository;
     private final AccountService accountService;
     private final SignUpFormValidator signUpFormValidator;
+
+    @GetMapping("/")
+    public String home(@CurrentUser Account account, Model model) {
+        if (account != null) {
+            model.addAttribute(account);
+        }
+        return "index";
+    }
 
     @GetMapping("/login")
     public String login() {
@@ -56,8 +63,7 @@ public class AccountController {
             return "account/checkedEmail";
         }
 
-        account.setEmailVerified(true);
-        account.setJoinedAt(LocalDateTime.now());
+        accountService.checkedMail(account);
         model.addAttribute("username",account.getUsername());
         return "account/checkedEmail";
     }

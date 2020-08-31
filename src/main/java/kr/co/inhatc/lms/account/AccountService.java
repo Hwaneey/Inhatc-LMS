@@ -48,15 +48,18 @@ public class AccountService implements UserDetailsService {
 
     }
 
+    public void checkedMail(Account account) {
+        account.checkEmail();
+        login(account);
+    }
+
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = accountRepository.findByEmail(username);
-
         if (account == null) {
             throw new UsernameNotFoundException(username);
         }
-
         return new UserAccount(account);
     }
 }
