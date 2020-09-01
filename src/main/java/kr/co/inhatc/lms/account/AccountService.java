@@ -30,13 +30,18 @@ public class AccountService implements UserDetailsService {
                 .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .build();
         Account CreateAccount = accountRepository.save(account);
-        CreateAccount.generateEmailCheckToken();
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(CreateAccount.getEmail());
-        mailMessage.setSubject("Inha Technical College 회원가입 인증");
-        mailMessage.setText("/check-email-token?token=" + CreateAccount.getEmailCheckToken()+"&email="+CreateAccount.getEmail() );
-        javaMailSender.send(mailMessage);
+        sendEmail(account);
         return CreateAccount;
+    }
+
+    public void sendEmail(Account Account) {
+        Account.generateEmailCheckToken();
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("tomuda72@gmail.com");
+        mailMessage.setTo(Account.getEmail());
+        mailMessage.setSubject("Inha Technical College 회원가입 인증");
+        mailMessage.setText("/check-email-token?token=" + Account.getEmailCheckToken()+"&email="+ Account.getEmail() );
+        javaMailSender.send(mailMessage);
     }
 
     public void login(Account account) {
@@ -45,7 +50,6 @@ public class AccountService implements UserDetailsService {
                 account.getPassword(),
                 List.of(new SimpleGrantedAuthority("ROLE_USER")));
         SecurityContextHolder.getContext().setAuthentication(token);
-
     }
 
     public void checkedMail(Account account) {

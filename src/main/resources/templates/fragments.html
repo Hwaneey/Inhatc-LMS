@@ -47,10 +47,10 @@
 
         <ul class="navbar-nav justify-content-end">
             <li class="nav-item" sec:authorize="!isAuthenticated()">
-                <a class="nav-link" th:href="@{/login}"> Login </a>
+                <a class="nav-link" th:href="@{/login}"> 로그인 </a>
             </li>
             <li class="nav-item" sec:authorize="!isAuthenticated()" >
-                <a class="nav-link" th:href="@{/sign-up}"> SignUp </a>
+                <a class="nav-link" th:href="@{/sign-up}"> 가입 </a>
             </li>
 
             <li class="nav-item" sec:authorize="isAuthenticated()">
@@ -58,7 +58,7 @@
             </li>
 
             <form class="form-inline my-2 my-lg-0" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-                <button class="dropdown-item" type="submit">로그아웃</button>
+                <button class="glyphicon glyphicon-share" aria-hidden="true" type="submit">로그아웃</button>
             </form>
 
         </ul>
