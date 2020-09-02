@@ -1,14 +1,15 @@
 package kr.co.inhatc.lms.account;
 
+import kr.co.inhatc.lms.role.Role;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
+@ToString(exclude = {"userRoles"})
 @Entity @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class Account {
 
@@ -27,6 +28,11 @@ public class Account {
     private String emailCheckToken;
 
     private LocalDateTime joinedAt;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
+    @JoinTable(name = "account_roles", joinColumns = { @JoinColumn(name = "account_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "role_id") })
+    private Set<Role> userRoles = new HashSet<>();
 
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();

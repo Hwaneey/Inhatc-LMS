@@ -14,7 +14,7 @@ import javax.validation.Valid;
 @Controller @RequiredArgsConstructor
 public class AccountController {
 
-    private final AccountRepository accountRepository;
+    private final UserRepository userRepository;
     private final AccountService accountService;
     private final SignUpFormValidator signUpFormValidator;
 
@@ -53,7 +53,7 @@ public class AccountController {
 
     @GetMapping("/check-email-token")
     public String checkEmailToken (String token, String email, Model model){
-        Account account = accountRepository.findByEmail(email);
+        Account account = userRepository.findByEmail(email);
         if (account == null){
             model.addAttribute("error","wrong.email");
             return "account/checkedEmail";
@@ -66,6 +66,18 @@ public class AccountController {
         accountService.checkedMail(account);
         model.addAttribute("username",account.getUsername());
         return "account/checkedEmail";
+    }
+
+    @GetMapping("/check-email")
+    public String checkEmail(@CurrentUser Account account,Model model){
+        model.addAttribute("email",account.getEmail());
+        return "account/check-email";
+    }
+
+    @GetMapping("/resend-confirm-email")
+    public String resendEmail(@CurrentUser Account account , Model model){
+        accountService.sendEmail(account);
+        return "redirect:/";
     }
 
 }

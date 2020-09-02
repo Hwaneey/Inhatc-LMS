@@ -25,7 +25,7 @@ class AccountControllerTest {
     @Autowired
     private  AccountService accountService;
     @Autowired
-    private AccountRepository accountRepository;
+    private UserRepository userRepository;
 
     @MockBean
     JavaMailSender javaMailSender;
@@ -51,7 +51,7 @@ class AccountControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
 
-        Account account = accountRepository.findByEmail("seunghwan@email.com");
+        Account account = userRepository.findByEmail("seunghwan@email.com");
         assertNotNull(account);
         assertNotEquals(account.getPassword(),"123123123");
         assertNotNull(account.getEmailCheckToken());

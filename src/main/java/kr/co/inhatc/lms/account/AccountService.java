@@ -5,7 +5,6 @@ import kr.co.inhatc.lms.mail.EmailMessage;
 import kr.co.inhatc.lms.mail.EmailService;
 import kr.co.inhatc.lms.signup.SignUpForm;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,8 +22,7 @@ import java.util.List;
 @Service @Transactional @RequiredArgsConstructor
 public class AccountService implements UserDetailsService {
 
-    private final JavaMailSender javaMailSender;
-    private final AccountRepository accountRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
     private final ITemplateEngine templateEngine;
@@ -36,13 +34,13 @@ public class AccountService implements UserDetailsService {
                 .username(signUpForm.getUsername())
                 .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .build();
-        Account CreateAccount = accountRepository.save(account);
+        Account CreateAccount = userRepository.save(account);
+        CreateAccount.generateEmailCheckToken();
         sendEmail(account);
         return CreateAccount;
     }
 
     public void sendEmail(Account Account) {
-        Account.generateEmailCheckToken();
         Context context = new Context();
         context.setVariable("link", "/check-email-token?token=" + Account.getEmailCheckToken() +
                 "&email=" + Account.getEmail());
@@ -76,10 +74,10 @@ public class AccountService implements UserDetailsService {
 
     @Transactional(readOnly = true)
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountRepository.findByEmail(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Account account = userRepository.findByEmail(email);
         if (account == null) {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException(email);
         }
         return new UserAccount(account);
     }

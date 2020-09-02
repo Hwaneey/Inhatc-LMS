@@ -5,7 +5,7 @@
 <body>
 <div th:replace="fragments :: main-nav"></div>
 <div class="alert alert-warning" role="alert" th:if="${account != null && !account.emailVerified}">
-    Inha Technical College 가입을 완료하려면
+    Inha Technical College LMS 가입을 완료하려면
     <a href="#" th:href="@{/check-email}" class="alter-link">
         계정 인증 이메일을 확인
     </a> 하세요
