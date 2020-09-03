@@ -5,6 +5,8 @@ import kr.co.inhatc.lms.account.Account;
 import kr.co.inhatc.lms.account.UserRepository;
 import kr.co.inhatc.lms.role.Role;
 import kr.co.inhatc.lms.role.RoleRepository;
+import kr.co.inhatc.lms.roleHierachy.RoleHierarchy;
+import kr.co.inhatc.lms.roleHierachy.RoleHierarchyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -19,12 +21,9 @@ import java.util.Set;
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     private boolean alreadySetup = false;
-
     private final UserRepository userRepository;
-
-
     private final RoleRepository roleRepository;
-
+    private final RoleHierarchyRepository roleHierarchyRepository;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -44,8 +43,12 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     private void setupSecurityResources() {
         Set<Role> roles = new HashSet<>();
         Role adminRole = createRoleIfNotFound("ROLE_ADMIN", "관리자");
-        roles.add(adminRole);
+        Role managerRole = createRoleIfNotFound("ROLE_MANAGER", "매니저권한");
+        Role userRole = createRoleIfNotFound("ROLE_USER", "사용자권한");
         createUserIfNotFound("admin", "admin@admin.com", "pass", roles);
+        createRoleHierarchyIfNotFound(managerRole, adminRole);
+        createRoleHierarchyIfNotFound(userRole, managerRole);
+        roles.add(adminRole);
     }
 
     @Transactional
@@ -63,7 +66,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     }
 
     @Transactional
-    public Account createUserIfNotFound(final String userName, final String email, final String password, Set<Role> roleSet) {
+    public Account createUserIfNotFound(final String userName, final String email, final String password, Set<Role> roleSet
+    ) {
 
         Account account = userRepository.findByUsername(userName);
 
@@ -77,5 +81,29 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         }
         return userRepository.save(account);
     }
+
+
+    @Transactional
+    public void createRoleHierarchyIfNotFound(Role childRole, Role parentRole) {
+
+        RoleHierarchy roleHierarchy = roleHierarchyRepository.findByChildName(parentRole.getRoleName());
+        if (roleHierarchy == null) {
+            roleHierarchy = RoleHierarchy.builder()
+                    .childName(parentRole.getRoleName())
+                    .build();
+        }
+        RoleHierarchy parentRoleHierarchy = roleHierarchyRepository.save(roleHierarchy);
+
+        roleHierarchy = roleHierarchyRepository.findByChildName(childRole.getRoleName());
+        if (roleHierarchy == null) {
+            roleHierarchy = RoleHierarchy.builder()
+                    .childName(childRole.getRoleName())
+                    .build();
+        }
+
+        RoleHierarchy childRoleHierarchy = roleHierarchyRepository.save(roleHierarchy);
+        childRoleHierarchy.setParentName(parentRoleHierarchy);
+    }
+
 
 }

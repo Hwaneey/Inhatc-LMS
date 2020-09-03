@@ -62,7 +62,6 @@ public class AccountController {
             model.addAttribute("error","wrong.token");
             return "account/checkedEmail";
         }
-
         accountService.checkedMail(account);
         model.addAttribute("username",account.getUsername());
         return "account/checkedEmail";
@@ -75,7 +74,7 @@ public class AccountController {
     }
 
     @GetMapping("/resend-confirm-email")
-    public String resendEmail(@CurrentUser Account account , Model model){
+    public String resendEmail(@CurrentUser Account account){
         accountService.sendEmail(account);
         return "redirect:/";
     }

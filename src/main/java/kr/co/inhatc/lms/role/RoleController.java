@@ -1,9 +1,6 @@
-package kr.co.inhatc.lms.admin;
+package kr.co.inhatc.lms.role;
 
 
-import kr.co.inhatc.lms.role.Role;
-import kr.co.inhatc.lms.role.RoleDto;
-import kr.co.inhatc.lms.role.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;

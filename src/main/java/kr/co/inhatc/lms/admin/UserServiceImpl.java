@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
+
     private final UserRepository userRepository;
 
     private final RoleRepository roleRepository;
@@ -42,10 +43,15 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void modifyUser(AccountDto accountDto){
-
+        Account modifyUser = userRepository.findByUsername(accountDto.getUsername());
         ModelMapper modelMapper = new ModelMapper();
         Account account = modelMapper.map(accountDto, Account.class);
+        account.setEmail(accountDto.getEmail());
+        account.setUsername(accountDto.getUsername());
 
+        account.setEmailVerified(modifyUser.isEmailVerified());
+        account.setJoinedAt(modifyUser.getJoinedAt());
+        account.setEmailCheckToken(modifyUser.getEmailCheckToken());
         if(accountDto.getRoles() != null){
             Set<Role> roles = new HashSet<>();
             accountDto.getRoles().forEach(role -> {

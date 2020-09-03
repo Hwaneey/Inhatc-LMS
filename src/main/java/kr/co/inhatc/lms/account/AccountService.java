@@ -3,6 +3,8 @@ package kr.co.inhatc.lms.account;
 import kr.co.inhatc.lms.mail.AppProperties;
 import kr.co.inhatc.lms.mail.EmailMessage;
 import kr.co.inhatc.lms.mail.EmailService;
+import kr.co.inhatc.lms.role.Role;
+import kr.co.inhatc.lms.role.RoleRepository;
 import kr.co.inhatc.lms.signup.SignUpForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,22 +19,29 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service @Transactional @RequiredArgsConstructor
 public class AccountService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
     private final ITemplateEngine templateEngine;
     private final AppProperties appProperties;
 
     public Account createAccount(SignUpForm signUpForm) {
+        Role role = roleRepository.findByRoleName("ROLE_USER");
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
         Account account = Account.builder()
                 .email(signUpForm.getEmail())
                 .username(signUpForm.getUsername())
                 .password(passwordEncoder.encode(signUpForm.getPassword()))
+                .userRoles(roles)
                 .build();
         Account CreateAccount = userRepository.save(account);
         CreateAccount.generateEmailCheckToken();

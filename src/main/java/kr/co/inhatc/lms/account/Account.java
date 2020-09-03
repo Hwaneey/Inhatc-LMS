@@ -38,6 +38,11 @@ public class Account {
         this.emailCheckToken = UUID.randomUUID().toString();
     }
 
+    public String generateEmailToken() {
+        this.emailCheckToken = UUID.randomUUID().toString();
+        return emailCheckToken;
+    }
+
     public void checkEmail() {
         this.emailVerified =true;
         this.joinedAt = LocalDateTime.now();
