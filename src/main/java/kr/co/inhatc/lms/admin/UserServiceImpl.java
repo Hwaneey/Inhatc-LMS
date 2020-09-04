@@ -22,21 +22,27 @@ import java.util.stream.Collectors;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
-
     private final UserRepository userRepository;
-
     private final RoleRepository roleRepository;
-
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
-    public void createUser(Account account){
+    public void createUser(Account account,AccountDto accountDto){
 
-        Role role = roleRepository.findByRoleName("ROLE_USER");
-        Set<Role> roles = new HashSet<>();
-        roles.add(role);
-        account.setUserRoles(roles);
+//        Role role = roleRepository.findByRoleName("ROLE_USER");
+//        Set<Role> roles = new HashSet<>();
+//        roles.add(role);
+//          account.setUserRoles(roles);
+
+        if(accountDto.getRoles() != null){
+            Set<Role> roles = new HashSet<>();
+            accountDto.getRoles().forEach(role -> {
+                Role r = roleRepository.findByRoleName(role);
+                roles.add(r);
+            });
+            account.setUserRoles(roles);
+        }
         userRepository.save(account);
     }
 
@@ -62,9 +68,7 @@ public class UserServiceImpl implements UserService {
         }
         account.setPassword(passwordEncoder.encode(accountDto.getPassword()));
         userRepository.save(account);
-
     }
-
     @Transactional
     public AccountDto getUser(Long id) {
 

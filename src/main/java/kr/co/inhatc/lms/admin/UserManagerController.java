@@ -5,6 +5,8 @@ import kr.co.inhatc.lms.account.Account;
 import kr.co.inhatc.lms.role.Role;
 import kr.co.inhatc.lms.role.RoleService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +17,24 @@ import java.util.List;
 
 @Controller @RequiredArgsConstructor
 public class UserManagerController {
-	
 
 	private final UserService userService;
-
 	private final RoleService roleService;
+	private final PasswordEncoder passwordEncoder;
+
+	@GetMapping("/admin/user/register")
+	public String registerUser(Model model){
+		return "admin/user/register";
+	}
+
+	@PostMapping(value="/users")
+	public String registerUser(AccountDto accountDto) throws Exception {
+		ModelMapper modelMapper = new ModelMapper();
+		Account account = modelMapper.map(accountDto, Account.class);
+		account.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+		userService.createUser(account,accountDto);
+		return "redirect:/admin/accounts";
+	}
 
 	@GetMapping(value="/admin/accounts")
 	public String getUsers(Model model) throws Exception {

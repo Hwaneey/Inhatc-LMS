@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
 
-    void createUser(Account account);
+    void createUser(Account account,AccountDto accountDto);
 
     void modifyUser(AccountDto accountDto);
 
