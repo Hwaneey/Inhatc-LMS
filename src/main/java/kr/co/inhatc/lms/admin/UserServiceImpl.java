@@ -59,8 +59,6 @@ public class UserServiceImpl implements UserService {
         if(!accountDto.getPassword().equals(modifyUser.getPassword())){
             account.setPassword(passwordEncoder.encode(accountDto.getPassword()));
         }
-
-
         userRepository.save(account);
     }
     @Transactional

@@ -2,7 +2,7 @@ package kr.co.inhatc.lms.account;
 
 
 import lombok.Getter;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.List;
@@ -12,8 +12,8 @@ public class UserAccount extends User {
 
     private Account account;
 
-    public UserAccount(Account account) {
-        super(account.getUsername(), account.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
+    public UserAccount(Account account, List<GrantedAuthority> roles) {
+        super(account.getUsername(), account.getPassword(), roles);
         this.account = account;
     }
 
