@@ -73,6 +73,6 @@ public class UserManagerController {
 
 		userService.deleteUser(id);
 
-		return "redirect:/admin/users";
+		return "redirect:/admin/accounts";
 	}
 }

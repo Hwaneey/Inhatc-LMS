@@ -56,6 +56,7 @@
                 <div class="col-sm-offset-1 col-sm-10">
                     <button type="Submit" class="btn btn-dark btn-lg">등록</button>
                     <a class="btn btn-dark btn-lg" th:href="@{/admin/accounts}">목록 </a>
+                    <a class="btn btn-dark btn-lg" th:href="@{'/admin/accounts/delete/' + ${account.id}}">회원 삭제 </a>
                 </div>
             </div>
         </form>

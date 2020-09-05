@@ -31,15 +31,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void createUser(Account account){
-//        if(accountDto.getRoles() != null){
-//            Set<Role> roles = new HashSet<>();
-//            accountDto.getRoles().forEach(role -> {
-//                Role r = roleRepository.findByRoleName(role);
-//                roles.add(r);
-//            });
-//            account.setUserRoles(roles);
-//        }
-
         Role role = roleRepository.findByRoleName("ROLE_USER");
         Set<Role> roles = new HashSet<>();
         roles.add(role);
