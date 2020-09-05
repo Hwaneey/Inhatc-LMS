@@ -1,7 +1,6 @@
 package kr.co.inhatc.lms.admin;
 
 import kr.co.inhatc.lms.account.Account;
-import kr.co.inhatc.lms.account.AccountService;
 import kr.co.inhatc.lms.account.UserRepository;
 import kr.co.inhatc.lms.role.Role;
 import kr.co.inhatc.lms.role.RoleRepository;
@@ -26,7 +25,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AccountService accountService;
 
     @Transactional
     @Override
@@ -58,7 +56,11 @@ public class UserServiceImpl implements UserService {
             });
             account.setUserRoles(roles);
         }
-        account.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+        if(!accountDto.getPassword().equals(modifyUser.getPassword())){
+            account.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+        }
+
+
         userRepository.save(account);
     }
     @Transactional

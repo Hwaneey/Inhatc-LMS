@@ -1,16 +1,13 @@
 package kr.co.inhatc.lms.admin;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor @Setter
 public class AccountDto {
 
     private String id;
