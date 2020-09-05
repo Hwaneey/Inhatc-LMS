@@ -1,6 +1,7 @@
 package kr.co.inhatc.lms.admin;
 
 import kr.co.inhatc.lms.account.Account;
+import kr.co.inhatc.lms.account.AccountService;
 import kr.co.inhatc.lms.account.UserRepository;
 import kr.co.inhatc.lms.role.Role;
 import kr.co.inhatc.lms.role.RoleRepository;
@@ -25,24 +26,24 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AccountService accountService;
 
     @Transactional
     @Override
-    public void createUser(Account account,AccountDto accountDto){
+    public void createUser(Account account){
+//        if(accountDto.getRoles() != null){
+//            Set<Role> roles = new HashSet<>();
+//            accountDto.getRoles().forEach(role -> {
+//                Role r = roleRepository.findByRoleName(role);
+//                roles.add(r);
+//            });
+//            account.setUserRoles(roles);
+//        }
 
-//        Role role = roleRepository.findByRoleName("ROLE_USER");
-//        Set<Role> roles = new HashSet<>();
-//        roles.add(role);
-//          account.setUserRoles(roles);
-
-        if(accountDto.getRoles() != null){
-            Set<Role> roles = new HashSet<>();
-            accountDto.getRoles().forEach(role -> {
-                Role r = roleRepository.findByRoleName(role);
-                roles.add(r);
-            });
-            account.setUserRoles(roles);
-        }
+        Role role = roleRepository.findByRoleName("ROLE_USER");
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        account.setUserRoles(roles);
         userRepository.save(account);
     }
 

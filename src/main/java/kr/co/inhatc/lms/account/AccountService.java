@@ -44,12 +44,12 @@ public class AccountService implements UserDetailsService {
                 .userRoles(roles)
                 .build();
         Account CreateAccount = userRepository.save(account);
-        CreateAccount.generateEmailCheckToken();
         sendEmail(account);
         return CreateAccount;
     }
 
     public void sendEmail(Account Account) {
+        Account.generateEmailCheckToken();
         Context context = new Context();
         context.setVariable("link", "/check-email-token?token=" + Account.getEmailCheckToken() +
                 "&email=" + Account.getEmail());

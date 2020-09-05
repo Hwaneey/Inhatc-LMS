@@ -29,7 +29,7 @@
                 <label for="password" class="col-sm-2 control-label">비밀번호</label>
                 <div class="col-sm-10">
                     <input type="password" class="form-control input-large" name="password" id="password"
-                           placeholder="Password" data-minlength="6" required>
+                           placeholder="Password" data-minlength="6" th:value="*{password}" required>
                 </div>
             </div>
 
@@ -55,7 +55,7 @@
             <div class="form-group">
                 <div class="col-sm-offset-1 col-sm-10">
                     <button type="Submit" class="btn btn-dark btn-lg">등록</button>
-                    <a class="btn btn-dark btn-lg" style="margin:10;" th:href="@{/admin/user/register}">목록 </a>
+                    <a class="btn btn-dark btn-lg" th:href="@{/admin/accounts}">목록 </a>
                 </div>
             </div>
         </form>

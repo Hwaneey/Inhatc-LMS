@@ -2,6 +2,7 @@ package kr.co.inhatc.lms.admin;
 
 
 import kr.co.inhatc.lms.account.Account;
+import kr.co.inhatc.lms.account.AccountService;
 import kr.co.inhatc.lms.role.Role;
 import kr.co.inhatc.lms.role.RoleService;
 import lombok.RequiredArgsConstructor;
@@ -21,19 +22,11 @@ public class UserManagerController {
 	private final UserService userService;
 	private final RoleService roleService;
 	private final PasswordEncoder passwordEncoder;
+	private final AccountService accountService;
 
 	@GetMapping("/admin/user/register")
 	public String registerUser(Model model){
 		return "admin/user/register";
-	}
-
-	@PostMapping(value="/users")
-	public String registerUser(AccountDto accountDto) throws Exception {
-		ModelMapper modelMapper = new ModelMapper();
-		Account account = modelMapper.map(accountDto, Account.class);
-		account.setPassword(passwordEncoder.encode(accountDto.getPassword()));
-		userService.createUser(account,accountDto);
-		return "redirect:/admin/accounts";
 	}
 
 	@GetMapping(value="/admin/accounts")
@@ -45,11 +38,13 @@ public class UserManagerController {
 		return "admin/user/list";
 	}
 
-	@PostMapping(value="/admin/accounts")
-	public String modifyUser(AccountDto accountDto) throws Exception {
-
-		userService.modifyUser(accountDto);
-
+	@PostMapping(value="/users")
+	public String registerUser(AccountDto accountDto) throws Exception {
+		ModelMapper modelMapper = new ModelMapper();
+		Account account = modelMapper.map(accountDto, Account.class);
+		account.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+		accountService.sendEmail(account);
+		userService.createUser(account);
 		return "redirect:/admin/accounts";
 	}
 
@@ -63,6 +58,14 @@ public class UserManagerController {
 		model.addAttribute("roleList", roleList);
 
 		return "admin/user/detail";
+	}
+
+	@PostMapping(value="/admin/accounts")
+	public String modifyUser(AccountDto accountDto) throws Exception {
+
+		userService.modifyUser(accountDto);
+
+		return "redirect:/admin/accounts";
 	}
 
 	@GetMapping(value = "/admin/accounts/delete/{id}")
