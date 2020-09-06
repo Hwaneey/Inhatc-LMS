@@ -34,6 +34,7 @@ public class AccountService implements UserDetailsService {
     private final AppProperties appProperties;
 
     public Account createAccount(SignUpForm signUpForm) {
+
         Role role = roleRepository.findByRoleName("ROLE_USER");
         Set<Role> roles = new HashSet<>();
         roles.add(role);
