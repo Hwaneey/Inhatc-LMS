@@ -5,7 +5,7 @@
 
 <head th:replace="fragments :: head"><head/>
 <body>
-<div th:replace="fragments :: main-nav"></div>
+<!--<div th:replace="fragments :: main-nav"></div>-->
 <div class="container">
     <div th:if="${param.error}" class="alert alert-danger" role="alert">
         이메일 혹은 패스워드가 일치하지 않습니다.
@@ -33,7 +33,7 @@
                 <input id="password" type="password" name="password" class="form-control"
                        aria-describedby="passwordHelp" required>
                 <small id="passwordHelp" class="form-text text-muted">
-                    패스워드가 기억나지 않는다면, <a href="#" th:href="@{/email-login}">패스워드 없이 로그인하기</a>
+                    가입할 때 사용한 이메일과 일치하는 비밀번호를 입력하세요.
                 </small>
                 <small class="invalid-feedback">패스워드를 입력하세요.</small>
             </div>
@@ -52,5 +52,6 @@
 
 </div>
 
+<div th:replace="fragments :: footer"></div>
 </body>
 </html>

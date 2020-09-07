@@ -4,6 +4,10 @@
 <body>
 <div th:replace="fragments :: main-nav"></div>
 <div class="container d-flex justify-content-center">
+    <div class="cc-tab-con">
+        <a href="javascript:void(0);" class="cc-tab-item on">사용자관리</a>		<!--// on : 현재 위치 //-->
+        <!--			<a href="javascript:tabChange('2');" class="cc-tab-item">권한관리</a>-->
+    </div>
     <div style="width:700px; margin-top: 30px;">
         <form class="form-horizontal" th:action="@{/users}" method="post">
             <div class="form-group">
@@ -46,5 +50,7 @@
         </form>
     </div>
 </div>
+<div th:replace="fragments :: footer"></div>
+
 </body>
 </html>
