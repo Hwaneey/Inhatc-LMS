@@ -8,8 +8,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-@Table(name = "ROLE")
-@ToString(exclude = {"users"})
 @Entity
 @Getter @Setter @Builder @NoArgsConstructor @AllArgsConstructor
 public class Role {
@@ -26,6 +24,5 @@ public class Role {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "userRoles")
     private Set<Account> accounts = new HashSet<>();
-
 
 }

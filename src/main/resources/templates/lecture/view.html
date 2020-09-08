@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"></head>
+<body class="bg-light">
+<div th:replace="fragments.html :: main-nav"></div>
+<div class="container">
+    <div th:fragment="study-info">
+        <div class="row pt-4 text-left justify-content-center bg-light">
+            <div class="col-6">
+                <a href="#" class="text-decoration-none" th:href="@{'/lecture/' + ${lecture.path}}">
+                    <span class="h2" th:text="${lecture.subjectTitle}">강의명</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+    <div th:replace="fragments.html :: footer"></div>
+</div>
+
+</body>
+</html>

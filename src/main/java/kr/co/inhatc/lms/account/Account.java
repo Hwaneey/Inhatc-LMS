@@ -14,6 +14,7 @@ import java.util.UUID;
 public class Account {
 
     @Id @GeneratedValue
+    @Column(name = "account_id")
     private Long id;
 
     @Column(unique = true)
@@ -30,8 +31,11 @@ public class Account {
     private LocalDateTime joinedAt;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
-    @JoinTable(name = "account_roles", joinColumns = { @JoinColumn(name = "account_id") }, inverseJoinColumns = {
-            @JoinColumn(name = "role_id") })
+    @JoinTable(
+            name = "account_roles",
+            joinColumns = { @JoinColumn(name = "account_id") },
+            inverseJoinColumns = { @JoinColumn(name = "role_id") }
+            )
     private Set<Role> userRoles = new HashSet<>();
 
     public void generateEmailCheckToken() {

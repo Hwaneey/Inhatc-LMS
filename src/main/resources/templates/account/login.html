@@ -11,20 +11,18 @@
         이메일 혹은 패스워드가 일치하지 않습니다.
     </div>
     <div class="py-5 text-center">
-<!--        <p class="lead">Inha Technical College LMS</p>-->
         <p class="lead" >Sign in to InhaTC</p>
     </div>
 
     <div class="row justify-content-center">
         <form class="needs-validation col-sm-3" action="#" th:action="@{/login}" method="post" novalidate>
-
+            <div>
+<!--            <img src="/images/logo_lg.png" width="250" height="250">-->
+            </div>
             <div class="form-group">
                 <label >Email address</label>
                 <input id="username" type="email" name="username" class="form-control"
                        placeholder="your@email.com" aria-describedby="emailHelp" required>
-<!--                <small id="emailHelp" class="form-text text-muted">-->
-<!--                    가입할 때 사용한 이메일 을 입력하세요.-->
-<!--                </small>-->
                 <small class="invalid-feedback">이메일을 입력하세요.</small>
             </div>
 
@@ -32,9 +30,6 @@
                 <label for="password">Password</label>
                 <input id="password" type="password" name="password" class="form-control"
                        aria-describedby="passwordHelp" required>
-<!--                <small id="passwordHelp" class="form-text text-muted">-->
-<!--                    가입할 때 사용한 이메일과 일치하는 비밀번호를 입력하세요.-->
-<!--                </small>-->
                 <small class="invalid-feedback">패스워드를 입력하세요.</small>
             </div>
 

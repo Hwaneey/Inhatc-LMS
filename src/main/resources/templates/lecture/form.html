@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"></head>
+<body class="bg-light">
+<div th:replace="fragments.html :: main-nav"></div>
+
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>강의 개설</h2>
+    </div>
+    <div class="row justify-content-center">
+        <form class="needs-validation col-sm-10" th:action="@{/new-lecture}" th:object="${lectureForm}" method="post"
+              novalidate>
+            <div class="form-group">
+                <label for="path">스터디 URL</label>
+                <input id="path" type="text" th:field="*{path}" class="form-control"
+                       placeholder="예) study-path" aria-describedby="pathHelp" required min="2" max="20">
+                <small id="pathHelp" class="form-text text-muted">
+                    공백없이 문자, 숫자, 대시(-)와 언더바(_)만 2자 이상 20자 이내로 입력하세요. 스터디 홈 주소에 사용합니다. 예) /study/<b>study-path</b>
+                </small>
+                <small class="invalid-feedback">강의 경로를 입력하세요.</small>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('path')}" th:errors="*{path}">Path
+                    Error</small>
+            </div>
+
+            <div class="form-group">
+                <label for="title">강의 명</label>
+                <input id="title" type="text" th:field="*{subjectTitle}" class="form-control"
+                       placeholder="강의 이름" aria-describedby="titleHelp" required max="50">
+                <small id="titleHelp" class="form-text text-muted">
+                    스터디 이름을 50자 이내로 입력하세요.
+                </small>
+                <small class="invalid-feedback">강의명 을 입력하세요.</small>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('subjectTitle')}" th:errors="*{subjectTitle}">Title
+                    Error</small>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary btn-block" type="submit"
+                        aria-describedby="submitHelp">강의 개설
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="fragments.html :: footer"></div>
+    <script th:replace="fragments.html :: form-validation"></script>
+</div>
+
+</body>
+</html>
