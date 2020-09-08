@@ -5,51 +5,53 @@
 
 <head th:replace="fragments :: head"><head/>
 <body>
-<!--<div th:replace="fragments :: main-nav"></div>-->
+<div th:replace="fragments :: main-nav"></div>
 <div class="container">
     <div th:if="${param.error}" class="alert alert-danger" role="alert">
         이메일 혹은 패스워드가 일치하지 않습니다.
     </div>
     <div class="py-5 text-center">
-        <p class="lead">Inha Technical College LMS</p>
-        <h2>로그인</h2>
+<!--        <p class="lead">Inha Technical College LMS</p>-->
+        <p class="lead" >Sign in to InhaTC</p>
     </div>
 
     <div class="row justify-content-center">
-        <form class="needs-validation col-sm-6" action="#" th:action="@{/login}" method="post" novalidate>
+        <form class="needs-validation col-sm-3" action="#" th:action="@{/login}" method="post" novalidate>
 
             <div class="form-group">
-                <label >이메일</label>
+                <label >Email address</label>
                 <input id="username" type="email" name="username" class="form-control"
                        placeholder="your@email.com" aria-describedby="emailHelp" required>
-                <small id="emailHelp" class="form-text text-muted">
-                    가입할 때 사용한 이메일 을 입력하세요.
-                </small>
+<!--                <small id="emailHelp" class="form-text text-muted">-->
+<!--                    가입할 때 사용한 이메일 을 입력하세요.-->
+<!--                </small>-->
                 <small class="invalid-feedback">이메일을 입력하세요.</small>
             </div>
 
             <div class="form-group">
-                <label for="password">패스워드</label>
+                <label for="password">Password</label>
                 <input id="password" type="password" name="password" class="form-control"
                        aria-describedby="passwordHelp" required>
-                <small id="passwordHelp" class="form-text text-muted">
-                    가입할 때 사용한 이메일과 일치하는 비밀번호를 입력하세요.
-                </small>
+<!--                <small id="passwordHelp" class="form-text text-muted">-->
+<!--                    가입할 때 사용한 이메일과 일치하는 비밀번호를 입력하세요.-->
+<!--                </small>-->
                 <small class="invalid-feedback">패스워드를 입력하세요.</small>
             </div>
 
             <div class="form-group">
-                <button class="btn btn-secondary btn-block" type="submit"
-                        aria-describedby="submitHelp">로그인
+                <button class="btn btn-success btn-block" type="submit"
+                        aria-describedby="submitHelp">Sign in
                 </button>
-                <small id="submitHelp" class="form-text text-muted">
-                    Inha Technical College LMS 에 처음 오신거라면 <a href="#" th:href="@{/sign-up}">계정을 먼저 만드세요.</a>
-                </small>
             </div>
 
         </form>
     </div>
-
+    <br>
+    <div class="row justify-content-center">
+        <li id="submitHelp" class="form-text text-muted">
+            New to GitHub? <a href="#" th:href="@{/sign-up}"> Create an account</a>
+        </li>
+    </div>
 </div>
 
 <div th:replace="fragments :: footer"></div>

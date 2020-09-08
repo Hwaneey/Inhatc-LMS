@@ -69,17 +69,10 @@ public class AccountService implements UserDetailsService {
         emailService.sendEmail(emailMessage);
     }
 
-//    public void login(Account account) {
-//        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-//                new UserAccount(account, collect),
-//                account.getPassword(),
-//                List.of(new SimpleGrantedAuthority("ROLE_USER")));
-//        SecurityContextHolder.getContext().setAuthentication(token);
-//    }
+
 
     public void checkedMail(Account account) {
         account.checkEmail();
-//        login(account);
     }
 
     @Transactional(readOnly = true)
