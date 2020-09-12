@@ -17,4 +17,7 @@ public class LectureForm {
     @NotBlank
     @Length(max = 50)
     private String subjectTitle;
+
+
+
 }

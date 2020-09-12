@@ -1,19 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head th:replace="fragments.html :: head"></head>
 <body class="bg-light">
 <div th:replace="fragments.html :: main-nav"></div>
 <div class="container">
     <div th:fragment="study-info">
         <div class="row pt-4 text-left justify-content-center bg-light">
-            <div class="col-6">
+            <div class="col-11">
                 <a href="#" class="text-decoration-none" th:href="@{'/lecture/' + ${lecture.path}}">
-                    <span class="h2" th:text="${lecture.subjectTitle}">강의명</span>
+                    <span class="h5" th:text="${lecture.subjectTitle}">강의명</span>
+<!--                    <span th:href="@{/admin/accounts}" >-->
+<!--                            <strong sec:authentication="name">username</strong>-->
+<!--                    </span>-->
                 </a>
             </div>
 
         </div>
     </div>
+
+    <br>
+    <br>
+    <div th:replace="fragments.html :: lecture-menu(lectureMenu='lecture')"></div>
     <div th:replace="fragments.html :: footer"></div>
 </div>
 

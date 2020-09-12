@@ -32,10 +32,11 @@
 
     </style>
 </head>
+
 <nav th:fragment="main-nav" class="navbar navbar-expand-lg navbar-dark" style="background-color: #24292e;">
     <div>
         <a class="navbar-brand" th:href="@{/}">
-            <img src="/images/logo.png" width="40" height="40">
+            <img src="/images/logo.png" width="30" height="30">
 <!--            Inha Technical College-->
         </a>
     </div>
@@ -56,11 +57,23 @@
                 <a class="nav-link" th:href="@{/sign-up}" style="color: white"> Sign up </a>
             </li>
 
-            <li class="nav-item" >
-                <a class="nav-link" th:href="@{/new-lecture}" sec:authorize="hasAuthority('ROLE_ADMIN')">
+            <li class="nav-item dropdown"  sec:authorize="hasAuthority('ROLE_ADMIN')">
+                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                 </a>
+                <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="adminDropdown">
+                    <a class="dropdown-item" th:href="@{/new-lecture}" sec:authorize="hasAuthority('ROLE_ADMIN')">강의 개설</a>
+                    <div class="dropdown-divider"></div>
+                    <h5 class="dropdown-header">
+                        <a>개설된 강의</a>
+                        <a class="dropdown-item" >개설된 과목1</a>
+                        <a class="dropdown-item" >개설된 과목2</a>
+                        <a class="dropdown-item" >개설된 과목3</a>
+                    </h5>
+                </div>
             </li>
+
 
             <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
@@ -71,7 +84,6 @@
                 <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="userDropdown">
                     <h6 class="dropdown-header">
                         <a>Signed in as</a>
-<!--                        <strong>Holy guacamole!</strong>-->
                         <span th:href="@{/admin/accounts}" >
                             <strong sec:authentication="name">username</strong>
                         </span>
@@ -88,6 +100,24 @@
         </ul>
     </div>
 </nav>
+
+<div th:fragment="lecture-menu (lectureMenu)" class="row px-1 justify-content-center bg-light">
+    <nav class="col-11 nav nav-tabs">
+        <a class="nav-item nav-link" th:classappend="${lectureMenu == 'lecture'}? active" href="#" th:href="@{#}">
+            <i class="fa fa-caret-square-o-right"></i> 강의실
+        </a>
+        <a class="nav-item nav-link" th:classappend="${lectureMenu == 'assignment'}? active" th:href="@{#}">
+            <i class="fa fa-book fa-fw" ></i> 과제
+        </a>
+        <a class="nav-item nav-link" th:classappend="${lectureMenu == 'attendance'}? active" th:href="@{#}">
+            <i class="fa fa-check" ></i> 출석
+        </a>
+        <a sec:authorize="isAuthenticated()"
+           class="nav-item nav-link" th:classappend="${lectureMenu == 'setting'}? active" href="#" th:href="@{#}">
+            <i class="fa fa-cog fa-fw" ></i> 설정
+        </a>
+    </nav>
+</div>
 
 <footer th:fragment="footer">
     <div class="footer-copyright text-center py-3">© 2020 Copyright

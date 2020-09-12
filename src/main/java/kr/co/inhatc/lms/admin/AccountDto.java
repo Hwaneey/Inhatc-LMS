@@ -15,6 +15,7 @@ import java.util.List;
 public class AccountDto {
 
     private String id;
+
     @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9_-]{2,10}$")
     @Length(min = 2, max = 10)
     private String username;
