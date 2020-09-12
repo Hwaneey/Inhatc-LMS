@@ -2,7 +2,6 @@ package kr.co.inhatc.lms.lecture;
 
 import kr.co.inhatc.lms.account.Account;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class LectureService {
     private final LectureRepository lectureRepository;
-    private final ModelMapper modelMapper;
 
     public Lecture createLecture(Lecture lecture , Account account) {
         Lecture createLecture = lectureRepository.save(lecture);

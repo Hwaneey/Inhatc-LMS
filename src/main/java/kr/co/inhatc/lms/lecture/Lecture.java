@@ -18,10 +18,10 @@ public class Lecture {
     @GeneratedValue
     private Long id;
 
-    @OneToMany
+    @ManyToMany
     private Set<Account> lecturer = new HashSet<>();
 
-    @OneToMany
+    @ManyToMany
     private Set<Account> student = new HashSet<>();
 
     @Column(unique = true)

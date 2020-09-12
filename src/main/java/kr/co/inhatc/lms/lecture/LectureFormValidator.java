@@ -18,7 +18,7 @@ public class LectureFormValidator implements Validator {
     public void validate(Object target, Errors errors) {
         LectureForm lectureForm = (LectureForm) target;
         if (lectureRepository.existsByPath(lectureForm.getPath())) {
-            errors.rejectValue("path", "wrong.pate", "해당 강의 경로를 사용할수 없습니다");
+            errors.rejectValue("path", "wrong.path", "해당 강의 경로를 사용할수 없습니다");
         }
 
     }

@@ -1,5 +1,6 @@
 package kr.co.inhatc.lms.account;
 
+import kr.co.inhatc.lms.lecture.LectureRepository;
 import kr.co.inhatc.lms.signup.SignUpForm;
 import kr.co.inhatc.lms.signup.SignUpFormValidator;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +17,15 @@ public class AccountController {
 
     private final UserRepository userRepository;
     private final AccountService accountService;
+    private final LectureRepository lectureRepository;
     private final SignUpFormValidator signUpFormValidator;
 
     @GetMapping("/")
     public String home(@CurrentUser Account account, Model model) {
         if (account != null) {
             model.addAttribute(account);
+//            model.addAttribute("studyManagerOf",
+//                    lectureRepository.findBySubjectTitle(account));
         }
         return "index";
     }
