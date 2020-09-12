@@ -1,6 +1,7 @@
 package kr.co.inhatc.lms.lecture;
 
 import kr.co.inhatc.lms.account.Account;
+import kr.co.inhatc.lms.account.UserAccount;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,10 +30,16 @@ public class Lecture {
 
     private String subjectTitle;
 
-
     public void addLecturer(Account account) {
         this.lecturer.add(account);
     }
 
+    public boolean isLecturer(UserAccount userAccount) {
+        return this.lecturer.contains(userAccount.getAccount());
+    }
+
+    public boolean isManagedBy(Account account) {
+        return this.getLecturer().contains(account);
+    }
 
 }

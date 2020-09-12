@@ -26,6 +26,8 @@ public class LectureController {
     @GetMapping("/new-lecture")
     public String newStudyForm(@CurrentUser Account account, Model model) {
         model.addAttribute(account);
+        model.addAttribute("lectureManagerOf",
+                lectureRepository.findFirst5ByLecturerContaining(account));
         model.addAttribute(new LectureForm());
         return "lecture/form";
     }
@@ -46,8 +48,12 @@ public class LectureController {
     @GetMapping("/lecture/{path}")
     public String viewLecture(@CurrentUser Account account, @PathVariable String path, Model model) {
         Lecture lecture = lectureRepository.findByPath(path);
+        model.addAttribute("lectureManagerOf",
+                lectureRepository.findFirst5ByLecturerContaining(account));
         model.addAttribute(account);
         model.addAttribute(lecture);
         return "lecture/view";
     }
+
+
 }

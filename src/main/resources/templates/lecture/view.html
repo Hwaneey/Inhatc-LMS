@@ -12,9 +12,9 @@
             <div class="col-11">
                 <a href="#" class="text-decoration-none" th:href="@{'/lecture/' + ${lecture.path}}">
                     <span class="h5" th:text="${lecture.subjectTitle}">강의명</span>
-<!--                    <span th:href="@{/admin/accounts}" >-->
-<!--                            <strong sec:authentication="name">username</strong>-->
-<!--                    </span>-->
+                    <!--                    <span th:href="@{/admin/accounts}" >-->
+                    <!--                            <strong sec:authentication="name">username</strong>-->
+                    <!--                    </span>-->
                 </a>
             </div>
 
@@ -22,8 +22,25 @@
     </div>
 
     <br>
-    <br>
     <div th:replace="fragments.html :: lecture-menu(lectureMenu='lecture')"></div>
+<br>
+    <div class="col-9 text-right justify-content-end">
+
+            <span class="btn btn-success" sec:authorize="hasAuthority('ROLE_ADMIN')"
+                  th:href="@{'/lecture/' + ${lecture.path} + '/new-study'}">
+                <i class="fa fa-plus"></i> 강의 개설
+            </span>
+
+
+    </div>
+
+    <div class="container">
+        <div class="py-5 text-center">
+
+        </div>
+    </div>
+
+
     <div th:replace="fragments.html :: footer"></div>
 </div>
 

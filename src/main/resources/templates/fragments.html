@@ -63,13 +63,15 @@
                     <i class="fa fa-plus" aria-hidden="true"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="adminDropdown">
-                    <a class="dropdown-item" th:href="@{/new-lecture}" sec:authorize="hasAuthority('ROLE_ADMIN')">강의 개설</a>
+                    <a class="dropdown-item" th:href="@{/new-lecture}" sec:authorize="hasAuthority('ROLE_ADMIN')">강의실 개설</a>
                     <div class="dropdown-divider"></div>
                     <h5 class="dropdown-header">
                         <a>개설된 강의</a>
-                        <a class="dropdown-item" >개설된 과목1</a>
-                        <a class="dropdown-item" >개설된 과목2</a>
-                        <a class="dropdown-item" >개설된 과목3</a>
+                        <a class="dropdown-item" th:if="${#lists.isEmpty(lectureManagerOf)}">개설된 강의가 없습니다.</a>
+
+                        <a href="#" th:href="@{'/lecture/' + ${lecture.path}}" th:text="${lecture.subjectTitle}"
+                           class="dropdown-item" th:each="lecture: ${lectureManagerOf}">
+                        </a>
                     </h5>
                 </div>
             </li>
@@ -109,10 +111,11 @@
         <a class="nav-item nav-link" th:classappend="${lectureMenu == 'assignment'}? active" th:href="@{#}">
             <i class="fa fa-book fa-fw" ></i> 과제
         </a>
-        <a class="nav-item nav-link" th:classappend="${lectureMenu == 'attendance'}? active" th:href="@{#}">
+        <a sec:authorize="hasAuthority('ROLE_ADMIN')"
+                class="nav-item nav-link"  th:classappend="${lectureMenu == 'attendance'}? active" th:href="@{#}">
             <i class="fa fa-check" ></i> 출석
         </a>
-        <a sec:authorize="isAuthenticated()"
+        <a sec:authorize="hasAuthority('ROLE_ADMIN')"
            class="nav-item nav-link" th:classappend="${lectureMenu == 'setting'}? active" href="#" th:href="@{#}">
             <i class="fa fa-cog fa-fw" ></i> 설정
         </a>
