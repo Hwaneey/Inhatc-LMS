@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService {
         }
         userRepository.save(account);
     }
+
     @Transactional
     public AccountDto getUser(Long id) {
 

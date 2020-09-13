@@ -30,7 +30,7 @@ public class UserManagerController {
 	}
 
 	@GetMapping(value="/admin/accounts")
-	public String getUsers(Model model) throws Exception {
+	public String getUsers(Model model){
 
 		List<Account> accounts = userService.getUsers();
 		model.addAttribute("accounts", accounts);

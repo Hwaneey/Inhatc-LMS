@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/node_modules/summernote/dist/summernote-bs4.min.css">
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/node_modules/jdenticon/dist/jdenticon.min.js"></script>
@@ -29,7 +30,6 @@
         .popover {
             font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         }
-
     </style>
 </head>
 
@@ -67,6 +67,7 @@
                     <div class="dropdown-divider"></div>
                     <h5 class="dropdown-header">
                         <a>개설된 강의</a>
+
                         <a class="dropdown-item" th:if="${#lists.isEmpty(lectureManagerOf)}">개설된 강의가 없습니다.</a>
 
                         <a href="#" th:href="@{'/lecture/' + ${lecture.path}}" th:text="${lecture.subjectTitle}"
@@ -128,6 +129,20 @@
     </div>
 </footer>
 
+<div th:fragment="editor-script">
+    <script src="/node_modules/summernote/dist/summernote-bs4.js"></script>
+    <script type="application/javascript">
+        $(function () {
+            $('.editor').summernote({
+                fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Noto Sans KR', 'Merriweather'],
+                placeholder: '강의 내용을 넣어주세요',
+                tabsize: 2,
+                height: 300
+            });
+        });
+    </script>
+</div>
+
 <script type="application/javascript" th:fragment="form-validation">
     (function () {
         'use strict';
@@ -147,6 +162,16 @@
             })
         }, false)
     }())
+</script>
+
+<script type="application/javascript" th:inline="javascript" th:fragment="ajax-csrf-header">
+    $(function() {
+        var csrfToken = /*[[${_csrf.token}]]*/ null;
+        var csrfHeader = /*[[${_csrf.headerName}]]*/ null;
+        $(document).ajaxSend(function (e, xhr, options) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        });
+    });
 </script>
 
 </html>

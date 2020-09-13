@@ -10,11 +10,9 @@
     <div th:fragment="study-info">
         <div class="row pt-4 text-left justify-content-center bg-light">
             <div class="col-11">
-                <a href="#" class="text-decoration-none" th:href="@{'/lecture/' + ${lecture.path}}">
+                <a href="#" class="text-decoration-none"
+                   th:href="@{'/lecture/' + ${lecture.path}}">
                     <span class="h5" th:text="${lecture.subjectTitle}">강의명</span>
-                    <!--                    <span th:href="@{/admin/accounts}" >-->
-                    <!--                            <strong sec:authentication="name">username</strong>-->
-                    <!--                    </span>-->
                 </a>
             </div>
 
@@ -26,17 +24,16 @@
 <br>
     <div class="col-9 text-right justify-content-end">
 
-            <span class="btn btn-success" sec:authorize="hasAuthority('ROLE_ADMIN')"
-                  th:href="@{'/lecture/' + ${lecture.path} + '/new-study'}">
+            <span class="btn btn-success" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                 <a th:href="@{'/lecture/' + ${lecture.path} + '/createStudy'}"></a>
                 <i class="fa fa-plus"></i> 강의 개설
             </span>
 
 
     </div>
-
     <div class="container">
         <div class="py-5 text-center">
-
+            <a th:href="@{'/lecture/' + ${lecture.path} + '/createStudy'}">예비</a>
         </div>
     </div>
 

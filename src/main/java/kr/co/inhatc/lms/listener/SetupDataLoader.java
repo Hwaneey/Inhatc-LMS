@@ -30,13 +30,10 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     @Override
     @Transactional
     public void onApplicationEvent(final ContextRefreshedEvent event) {
-
         if (alreadySetup) {
             return;
         }
-
         setupSecurityResources();
-
         alreadySetup = true;
     }
 
@@ -53,9 +50,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     @Transactional
     public Role createRoleIfNotFound(String roleName, String roleDesc) {
-
         Role role = roleRepository.findByRoleName(roleName);
-
         if (role == null) {
             role = Role.builder()
                     .roleName(roleName)
@@ -66,11 +61,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     }
 
     @Transactional
-    public Account createUserIfNotFound(final String userName, final String email, final String password, Set<Role> roleSet
-    ) {
-
+    public Account createUserIfNotFound(final String userName, final String email, final String password, Set<Role> roleSet) {
         Account account = userRepository.findByUsername(userName);
-
         if (account == null) {
             account = Account.builder()
                     .username(userName)
@@ -85,7 +77,6 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     @Transactional
     public void createRoleHierarchyIfNotFound(Role childRole, Role parentRole) {
-
         RoleHierarchy roleHierarchy = roleHierarchyRepository.findByChildName(parentRole.getRoleName());
         if (roleHierarchy == null) {
             roleHierarchy = RoleHierarchy.builder()
