@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-@Entity
+@Entity @EqualsAndHashCode(of = "id")
 @Getter @Setter @Builder @NoArgsConstructor @AllArgsConstructor
 public class Role {
 

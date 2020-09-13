@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @ToString(exclude = {"userRoles"})
+@EqualsAndHashCode(of = "id")
 @Entity @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class Account {
 

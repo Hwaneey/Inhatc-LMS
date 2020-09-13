@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"></head>
+<body class="bg-light">
+<div th:replace="fragments.html :: main-nav"></div>
+<div class="container">
+    <div th:fragment="study-info">
+        <div class="row pt-4 text-left justify-content-center bg-light">
+            <div class="col-11">
+<!--                <a href="#" class="text-decoration-none"-->
+<!--                   th:href="@{'/lecture/' + ${lecture.path}}">-->
+<!--                    <span class="h5" th:text="${lecture.subjectTitle}">강의명</span>/-->
+<!--                    <span th:text="${study.title}">스터디</span></a>-->
+<!--                </a>-->
+                <h2>
+                    <a th:href="@{'/lecture/' + ${lecture.path}}">
+                        <span th:text="${lecture.subjectTitle}">강의명</span> /
+                        <span th:text="${study.title}"></span></a>
+                </h2>
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <div th:replace="fragments.html :: lecture-menu(lectureMenu='lecture')"></div>
+    <div class="row px-3 justify-content-center">
+
+        <div class="col-10 pt-3" th:utext="${study.post}"></div>
+    </div>
+    <div th:replace="fragments.html :: footer"></div>
+</div>
+
+</body>
+</html>

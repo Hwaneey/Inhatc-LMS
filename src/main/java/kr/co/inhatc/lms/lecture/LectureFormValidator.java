@@ -7,6 +7,7 @@ import org.springframework.validation.Validator;
 
 @RequiredArgsConstructor @Component
 public class LectureFormValidator implements Validator {
+
     private final LectureRepository lectureRepository;
 
     @Override
@@ -20,6 +21,5 @@ public class LectureFormValidator implements Validator {
         if (lectureRepository.existsByPath(lectureForm.getPath())) {
             errors.rejectValue("path", "wrong.path", "해당 강의 경로를 사용할수 없습니다");
         }
-
     }
 }

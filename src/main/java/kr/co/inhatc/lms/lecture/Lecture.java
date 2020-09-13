@@ -5,6 +5,8 @@ import kr.co.inhatc.lms.account.UserAccount;
 import lombok.*;
 
 import javax.persistence.*;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +14,7 @@ import java.util.Set;
 @Getter @Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor @EqualsAndHashCode(of = "id")
 public class Lecture {
 
     @Id
@@ -34,6 +36,9 @@ public class Lecture {
         this.lecturer.add(account);
     }
 
+    public String getEncodedPath() {
+        return URLEncoder.encode(this.path, StandardCharsets.UTF_8);
+    }
     public boolean isLecturer(UserAccount userAccount) {
         return this.lecturer.contains(userAccount.getAccount());
     }
