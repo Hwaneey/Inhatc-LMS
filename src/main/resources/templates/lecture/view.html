@@ -21,22 +21,15 @@
 
     <br>
     <div th:replace="fragments.html :: lecture-menu(lectureMenu='lecture')"></div>
-<br>
+    <br>
     <div class="col-9 text-right justify-content-end">
 
-            <span class="btn btn-success" sec:authorize="hasAuthority('ROLE_ADMIN')">
-                 <a th:href="@{'/lecture/' + ${lecture.path} + '/createStudy'}"></a>
-                <i class="fa fa-plus"></i> 강의 개설
-            </span>
-
+        <a href="#" class="btn btn-success" sec:authorize="hasAuthority('ROLE_ADMIN')"
+           th:href="@{'/lecture/' + ${lecture.path} + '/createStudy'}">
+            <span class="fa fa-plus">강의 개설</span>
+        </a>
 
     </div>
-    <div class="container">
-        <div class="py-5 text-center">
-            <a th:href="@{'/lecture/' + ${lecture.path} + '/createStudy'}">예비</a>
-        </div>
-    </div>
-
 
     <div th:replace="fragments.html :: footer"></div>
 </div>

@@ -31,6 +31,7 @@ public class LectureController {
         model.addAttribute(new LectureForm());
         return "lecture/form";
     }
+
     @PostMapping("/new-lecture")
     public String newStudySubmit(@CurrentUser Account account, @Valid LectureForm lectureForm, Errors errors, Model model) {
         if (errors.hasErrors()) {

@@ -7,16 +7,11 @@
     <div th:fragment="study-info">
         <div class="row pt-4 text-left justify-content-center bg-light">
             <div class="col-11">
-<!--                <a href="#" class="text-decoration-none"-->
-<!--                   th:href="@{'/lecture/' + ${lecture.path}}">-->
-<!--                    <span class="h5" th:text="${lecture.subjectTitle}">강의명</span>/-->
-<!--                    <span th:text="${study.title}">스터디</span></a>-->
-<!--                </a>-->
-                <h2>
+                <h5>
                     <a th:href="@{'/lecture/' + ${lecture.path}}">
                         <span th:text="${lecture.subjectTitle}">강의명</span> /
                         <span th:text="${study.title}"></span></a>
-                </h2>
+                </h5>
             </div>
 
         </div>
