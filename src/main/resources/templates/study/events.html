@@ -3,10 +3,24 @@
 <head th:replace="fragments.html :: head"></head>
 <body>
 <nav th:replace="fragments.html :: main-nav"></nav>
-<div th:replace="fragments.html :: study-banner"></div>
+<div class="container justify-content-center">
+    <div th:fragment="study-info">
+        <div class="row pt-4 text-left justify-content-center bg-light">
+            <div class="col-11">
+                <a href="#" class="text-decoration-none"
+                   th:href="@{'/lecture/' + ${lecture.path}}">
+                    <span class="h5" th:text="${lecture.subjectTitle}">강의명</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <br>
+    <div th:replace="fragments.html :: lecture-menu(lectureMenu='lecture')"></div>
+    <br>
+</div>
 <div class="container">
-    <div th:replace="fragments.html :: study-info"></div>
-    <div th:replace="fragments.html :: study-menu(studyMenu='events')"></div>
     <div class="row my-3 mx-3 justify-content-center">
         <div class="col-10 px-0 row">
             <div class="col-2 px-0">
@@ -38,16 +52,7 @@
                                 <span class="calendar" th:text="${event.startDateTime}"></span> 모임 시작
                             </li>
                             <li class="list-group-item">
-                                <i class="fa fa-hourglass-end"></i> <span class="fromNow"
-                                                                          th:text="${event.endEnrollmentDateTime}"></span>
-                                모집 마감,
-                                <span th:if="${event.limitOfEnrollments != 0}">
-                                    <span th:text="${event.limitOfEnrollments}"></span>명 모집 중
-                                    <!--                                    (<span th:text="${event.numberOfRemainSpots()}"></span> 자리 남음)-->
-                                </span>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#" th:href="@{'/study/' + ${study.path} + '/events/' + ${event.id}}"
+                                <a href="#" th:href="@{'/study/' + ${lecture.path} + '/events/' + ${event.id}}"
                                    class="card-link">자세히 보기</a>
                             </li>
                         </ul>
@@ -75,7 +80,7 @@
                             <span class="date-weekday-time" th:text="${event.endDateTime}"></span>
                         </td>
                         <td>
-                            <a href="#" th:href="@{'/study/' + ${study.path} + '/events/' + ${event.id}}"
+                            <a href="#" th:href="@{'/study/' + ${lecture.path} + '/events/' + ${event.id}}"
                                class="card-link">자세히 보기</a>
                         </td>
                     </tr>
@@ -84,9 +89,7 @@
             </div>
         </div>
     </div>
-    <div th:replace="fragments.html :: footer"></div>
 </div>
-<script th:replace="fragments.html :: tooltip"></script>
-<script th:replace="fragments.html :: date-time"></script>
+<div th:replace="fragments.html :: footer"></div>
 </body>
 </html>

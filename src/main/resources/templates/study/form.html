@@ -21,6 +21,22 @@
                 <small class="invalid-feedback">강의 명을 입력하세요.</small>
                 <small class="form-text text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Error</small>
             </div>
+
+            <div class="form-group col-sm-13">
+                <label for="startDateTime">강의 시작 일시</label>
+                <input id="startDateTime" type="datetime-local" th:field="*{startDateTime}" class="form-control"
+                       aria-describedby="startDateTimeHelp" required>
+                <small class="invalid-feedback">강의 시작 일시를 입력하세요.</small>
+            </div>
+            <div class="form-group col-sm-13">
+                <label for="startDateTime">강의 종료 일시</label>
+                <input id="endDateTime" type="datetime-local" th:field="*{endDateTime}" class="form-control"
+                       aria-describedby="endDateTimeHelp" required>
+                <small class="invalid-feedback">강의 종료 일시를 입력하세요.</small>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('endDateTime')}"
+                       th:errors="*{endDateTime}">Error</small>
+            </div>
+
             <div class="form-group">
                 <label for="description">강의 설명</label>
                 <textarea id="description" type="textarea" th:field="*{post}" class="editor form-control"

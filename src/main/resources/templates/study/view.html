@@ -23,7 +23,8 @@ xmlns:th="http://www.thymeleaf.org">
                 <a href="#">Start Bootstrap</a>
             </p>
             <hr>
-            <p>Posted on January 1, 2019 at 12:00 PM</p>
+            <p th:text="${study.getStartDateTime()}" >Posted on January 1, 2019 at 12:00 PM</p>~
+            <p th:text="${study.getEndDateTime()}" >Posted on January 1, 2019 at 12:00 PM</p>
             <hr>
             <img class="img-fluid rounded" src="http://placehold.it/1280x720" alt="">
             <hr>

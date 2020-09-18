@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -66,19 +69,19 @@ public class StudyController {
         model.addAttribute(account);
         model.addAttribute(lecture);
 
-//        List<Event> events = eventRepository.findByStudyOrderByStartDateTime(study);
-//        List<Event> newEvents = new ArrayList<>();
-//        List<Event> oldEvents = new ArrayList<>();
-//        events.forEach(e -> {
-//            if (e.getEndDateTime().isBefore(LocalDateTime.now())) {
-//                oldEvents.add(e);
-//            } else {
-//                newEvents.add(e);
-//            }
-//        });
-//
-//        model.addAttribute("newEvents", newEvents);
-//        model.addAttribute("oldEvents", oldEvents);
+        List<Study> study = studyRepository.findByLectureOrderByStartDateTime(lecture);
+        List<Study> newEvents = new ArrayList<>();
+        List<Study> oldEvents = new ArrayList<>();
+        study.forEach(e -> {
+            if (e.getEndDateTime().isBefore(LocalDateTime.now())) {
+                oldEvents.add(e);
+            } else {
+                newEvents.add(e);
+            }
+        });
+
+        model.addAttribute("newEvents", newEvents);
+        model.addAttribute("oldEvents", oldEvents);
 
         return "study/events";
     }

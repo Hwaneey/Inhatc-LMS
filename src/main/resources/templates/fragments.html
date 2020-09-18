@@ -210,7 +210,10 @@
 
 <div th:fragment="lecture-menu (lectureMenu)" class="row px-1 justify-content-center bg-light">
     <nav class="col-11 nav nav-tabs">
-        <a class="nav-item nav-link" th:classappend="${lectureMenu == 'lecture'}? active" href="#" th:href="@{'/lecture/' + ${lecture.path}}">
+        <a class="nav-item nav-link" th:classappend="${lectureMenu == 'info'}? active" href="#" th:href="@{'/lecture/' + ${lecture.path}}">
+            <i class="fa fa-caret-square-o-right"></i> 소개
+        </a>
+        <a class="nav-item nav-link" th:classappend="${lectureMenu == 'lecture'}? active" href="#" th:href="@{'/study/' + ${lecture.path} + '/events/'}">
             <i class="fa fa-caret-square-o-right"></i> 강의실
         </a>
         <a class="nav-item nav-link" th:classappend="${lectureMenu == 'assignment'}? active" th:href="@{#}">
