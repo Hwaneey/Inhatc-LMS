@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,6 +27,8 @@ public class Lecture {
 
     @ManyToMany
     private Set<Account> student = new HashSet<>();
+
+    private LocalDateTime createdDateTime;
 
     @Column(unique = true)
     private String path;

@@ -48,7 +48,7 @@ public class AccountService implements UserDetailsService {
         sendEmail(account);
         return CreateAccount;
     }
-//sdsd
+
     public void sendEmail(Account Account) {
         Account.generateEmailCheckToken();
         Context context = new Context();

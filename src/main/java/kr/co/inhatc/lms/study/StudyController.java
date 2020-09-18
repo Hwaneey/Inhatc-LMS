@@ -59,4 +59,28 @@ public class StudyController {
         return "study/view";
 
     }
+
+    @GetMapping("/study/{path}/events")
+    public String viewStudyEvents(@CurrentUser Account account, @PathVariable String path, Model model) {
+        Lecture lecture = studyService.getStudy(path);
+        model.addAttribute(account);
+        model.addAttribute(lecture);
+
+//        List<Event> events = eventRepository.findByStudyOrderByStartDateTime(study);
+//        List<Event> newEvents = new ArrayList<>();
+//        List<Event> oldEvents = new ArrayList<>();
+//        events.forEach(e -> {
+//            if (e.getEndDateTime().isBefore(LocalDateTime.now())) {
+//                oldEvents.add(e);
+//            } else {
+//                newEvents.add(e);
+//            }
+//        });
+//
+//        model.addAttribute("newEvents", newEvents);
+//        model.addAttribute("oldEvents", oldEvents);
+
+        return "study/events";
+    }
+
 }

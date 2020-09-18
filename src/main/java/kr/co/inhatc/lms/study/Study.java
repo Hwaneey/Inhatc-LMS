@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity @Getter
 @Setter @EqualsAndHashCode(of = "id")
@@ -27,6 +28,11 @@ public class Study {
     @Column(nullable = false)
     private  String title;
 
+    private LocalDateTime createdDateTime;
+
+    private LocalDateTime startDateTime;
+
+    private LocalDateTime endDateTime;
     @Lob
     private String post;
 }
