@@ -1,28 +1,88 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="fragments.html :: head"></head>
+<nav th:replace="fragments.html :: main-nav"></nav>
+
 <body class="bg-light">
-<div th:replace="fragments.html :: main-nav"></div>
+<!-- Page Content -->
 <div class="container">
-    <div th:fragment="study-info">
-        <div class="row pt-4 text-left justify-content-center bg-light">
-            <div class="col-11">
-                <h5>
-                    <a th:href="@{'/lecture/' + ${lecture.path}}">
-                        <span th:text="${lecture.subjectTitle}">강의명</span> /
-                        <span th:text="${study.title}"></span></a>
-                </h5>
+<br>
+    <div class="row justify-content-center" >
+        <div class="col-lg-6">
+            <h5>
+                <a th:href="@{'/lecture/' + ${lecture.path}}">
+                    <span th:text="${lecture.subjectTitle}">강의명</span>
+                </a>/
+                <span th:text="${study.title}"></span>
+            </h5>
+<!--            <h1 class="mt-4">Post Title</h1>-->
+            <p class="lead">
+                by
+                <a href="#">Start Bootstrap</a>
+            </p>
+            <hr>
+            <p>Posted on January 1, 2019 at 12:00 PM</p>
+            <hr>
+            <img class="img-fluid rounded" src="http://placehold.it/1280x720" alt="">
+            <hr>
+            <div class="row px-3 justify-content-center">
+                <div class="col-10 pt-3" th:utext="${study.post}"></div>
+            </div>
+            <hr>
+
+            <!-- Comments Form -->
+            <div class="card my-4">
+                <h5 class="card-header">Leave a Comment:</h5>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Single Comment -->
+            <div class="media mb-4">
+                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                <div class="media-body">
+                    <h5 class="mt-0">Commenter Name</h5>
+                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                </div>
+            </div>
+
+            <!-- Comment with nested comments -->
+            <div class="media mb-4">
+                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                <div class="media-body">
+                    <h5 class="mt-0">Commenter Name</h5>
+                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+
+                    <div class="media mt-4">
+                        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                        <div class="media-body">
+                            <h5 class="mt-0">Commenter Name</h5>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+                    </div>
+
+                    <div class="media mt-4">
+                        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                        <div class="media-body">
+                            <h5 class="mt-0">Commenter Name</h5>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
         </div>
     </div>
-    <br>
-    <div th:replace="fragments.html :: lecture-menu(lectureMenu='lecture')"></div>
-    <div class="row px-3 justify-content-center">
-        <div class="col-10 pt-3" th:utext="${study.post}"></div>
-    </div>
-    <div th:replace="fragments.html :: footer"></div>
 </div>
-
+<div th:replace="fragments.html :: footer"></div>
 </body>
 </html>

@@ -42,6 +42,7 @@ public class Lecture {
     public String getEncodedPath() {
         return URLEncoder.encode(this.path, StandardCharsets.UTF_8);
     }
+
     public boolean isLecturer(UserAccount userAccount) {
         return this.lecturer.contains(userAccount.getAccount());
     }

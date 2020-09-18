@@ -46,6 +46,5 @@ public class Account {
     public void checkEmail() {
         this.emailVerified =true;
         this.joinedAt = LocalDateTime.now();
-
     }
 }
