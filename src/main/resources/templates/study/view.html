@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments.html :: head"></head>
 <nav th:replace="fragments.html :: main-nav"></nav>
@@ -8,8 +8,30 @@ xmlns:th="http://www.thymeleaf.org">
 <body class="bg-light">
 <!-- Page Content -->
 <div class="container">
-<br>
-    <div class="row justify-content-center" >
+
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-xs-10">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">강의 명</th>
+                    <th scope="col">링크</th>
+                </tr>
+                </thead>
+                <tbody th:each="event: ${studys}">
+                <tr>
+                    <th scope="row" th:text="${eventStat.count}">1</th>
+                    <td th:text="${event.title}">Title</td>
+                    <td>
+                        <a th:href="@{'/study/' + ${lecture.path} + '/events/' + ${event.id}}"
+                           class="card-link" >자세히 보기</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
         <div class="col-lg-6">
             <h5>
                 <a th:href="@{'/lecture/' + ${lecture.path}}">
@@ -17,16 +39,16 @@ xmlns:th="http://www.thymeleaf.org">
                 </a>/
                 <span th:text="${study.title}"></span>
             </h5>
-            <p class="lead">
-                by
-                <a href="#">Start Bootstrap</a>
-            </p>
+
+
             <hr>
-            <p th:text="${study.getStartDateTime()}" >Posted on January 1, 2019 at 12:00 PM</p>~
-            <p th:text="${study.getEndDateTime()}" >Posted on January 1, 2019 at 12:00 PM</p>
+            <div>
+                <span class="h6">등록일 :</span>
+                <span th:text="${study.getStartDateTime()}">Posted on January 1, 2019 at 12:00 PM</span>~
+                <span th:text="${study.getEndDateTime()}">Posted on January 1, 2019 at 12:00 PM</span>
+            </div>
             <hr>
-            <img class="img-fluid rounded" src="http://placehold.it/1280x720" alt="">
-            <hr>
+<!--            <img class="img-fluid rounded" src="http://placehold.it/1280x720" alt="">-->
             <div class="row px-3 justify-content-center">
                 <div class="col-10 pt-3" th:utext="${study.post}"></div>
             </div>
@@ -34,7 +56,7 @@ xmlns:th="http://www.thymeleaf.org">
 
             <!-- Comments Form -->
             <div class="card my-4">
-                <h5 class="card-header">Leave a Comment:</h5>
+                <h5 class="card-header">강의에 대한 질문을 남겨주세요:</h5>
                 <div class="card-body">
                     <form>
                         <div class="form-group">
@@ -50,7 +72,9 @@ xmlns:th="http://www.thymeleaf.org">
                 <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                 <div class="media-body">
                     <h5 class="mt-0">Commenter Name</h5>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras
+                    purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
+                    vulputate fringilla. Donec lacinia congue felis in faucibus.
                 </div>
             </div>
 
@@ -59,13 +83,17 @@ xmlns:th="http://www.thymeleaf.org">
                 <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                 <div class="media-body">
                     <h5 class="mt-0">Commenter Name</h5>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras
+                    purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
+                    vulputate fringilla. Donec lacinia congue felis in faucibus.
 
                     <div class="media mt-4">
                         <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                         <div class="media-body">
                             <h5 class="mt-0">Commenter Name</h5>
-                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
+                            Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc
+                            ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
                         </div>
                     </div>
 
@@ -73,7 +101,9 @@ xmlns:th="http://www.thymeleaf.org">
                         <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                         <div class="media-body">
                             <h5 class="mt-0">Commenter Name</h5>
-                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
+                            Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc
+                            ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
                         </div>
                     </div>
 
@@ -82,7 +112,9 @@ xmlns:th="http://www.thymeleaf.org">
 
         </div>
     </div>
+
 </div>
+
 <div th:replace="fragments.html :: footer"></div>
 </body>
 </html>

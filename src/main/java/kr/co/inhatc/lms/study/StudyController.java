@@ -59,6 +59,10 @@ public class StudyController {
         model.addAttribute(account);
         model.addAttribute(studyRepository.findById(id).orElseThrow());
         model.addAttribute(lectureService.getStudy(path));
+
+        Lecture lecture = studyService.getStudy(path);
+        List<Study> study = studyRepository.findByLectureOrderByStartDateTime(lecture);
+        model.addAttribute("studys",study);
         return "study/view";
 
     }

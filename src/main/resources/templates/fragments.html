@@ -211,22 +211,22 @@
 <div th:fragment="lecture-menu (lectureMenu)" class="row px-1 justify-content-center bg-light">
     <nav class="col-11 nav nav-tabs">
         <a class="nav-item nav-link" th:classappend="${lectureMenu == 'info'}? active" href="#" th:href="@{'/lecture/' + ${lecture.path}}">
-            <i class="fa fa-caret-square-o-right"></i> 소개
+            <i class="fa fa-bullhorn"></i> 공지사항
         </a>
         <a class="nav-item nav-link" th:classappend="${lectureMenu == 'lecture'}? active" href="#" th:href="@{'/study/' + ${lecture.path} + '/events/'}">
             <i class="fa fa-caret-square-o-right"></i> 강의실
         </a>
-        <a class="nav-item nav-link" th:classappend="${lectureMenu == 'assignment'}? active" th:href="@{#}">
-            <i class="fa fa-book fa-fw" ></i> 과제
-        </a>
-        <a sec:authorize="hasAuthority('ROLE_ADMIN')"
-                class="nav-item nav-link"  th:classappend="${lectureMenu == 'attendance'}? active" th:href="@{#}">
-            <i class="fa fa-check" ></i> 출석
-        </a>
-        <a sec:authorize="hasAuthority('ROLE_ADMIN')"
-           class="nav-item nav-link" th:classappend="${lectureMenu == 'setting'}? active" href="#" th:href="@{#}">
-            <i class="fa fa-cog fa-fw" ></i> 설정
-        </a>
+<!--        <a class="nav-item nav-link" th:classappend="${lectureMenu == 'assignment'}? active" th:href="@{#}">-->
+<!--            <i class="fa fa-book fa-fw" ></i> 과제-->
+<!--        </a>-->
+<!--        <a sec:authorize="hasAuthority('ROLE_ADMIN')"-->
+<!--                class="nav-item nav-link"  th:classappend="${lectureMenu == 'attendance'}? active" th:href="@{#}">-->
+<!--            <i class="fa fa-check" ></i> 출석-->
+<!--        </a>-->
+<!--        <a sec:authorize="hasAuthority('ROLE_ADMIN')"-->
+<!--           class="nav-item nav-link" th:classappend="${lectureMenu == 'setting'}? active" href="#" th:href="@{#}">-->
+<!--            <i class="fa fa-cog fa-fw" ></i> 설정-->
+<!--        </a>-->
     </nav>
 </div>
 

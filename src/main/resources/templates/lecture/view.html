@@ -23,18 +23,6 @@
     <div th:replace="fragments.html :: lecture-menu(lectureMenu='info')"></div>
     <br>
 
-    <div class="col-9 text-right justify-content-end">
-
-        <a href="#" class="btn btn-success" sec:authorize="hasAuthority('ROLE_ADMIN')"
-           th:href="@{'/lecture/' + ${lecture.path} + '/createStudy'}">
-            <span class="fa fa-plus">강의 개설</span>
-        </a>
-
-        <a href="#" class="btn btn-success" sec:authorize="hasAuthority('ROLE_ADMIN')"
-           th:href="@{'/study/' + ${lecture.path} + '/events'}">
-            <span class="fa fa-plus">????</span>
-        </a>
-    </div>
 
     <div th:replace="fragments.html :: footer"></div>
 </div>

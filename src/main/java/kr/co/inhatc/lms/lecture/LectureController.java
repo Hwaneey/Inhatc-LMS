@@ -53,8 +53,6 @@ public class LectureController {
                 lectureRepository.findFirst5ByLecturerContaining(account));
         model.addAttribute(account);
         model.addAttribute(lecture);
-
-
         return "lecture/view";
     }
 

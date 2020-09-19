@@ -9,5 +9,6 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface StudyRepository extends JpaRepository<Study , Long> {
 
+    List<Study> findAllByLectureOrderByStartDateTime(Lecture lecture);
     List<Study> findByLectureOrderByStartDateTime(Lecture lecture);
 }
