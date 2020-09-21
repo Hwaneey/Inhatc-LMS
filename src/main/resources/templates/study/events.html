@@ -2,24 +2,26 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments.html :: head"></head>
-<body>
+<body class="bg-light">
 <nav th:replace="fragments.html :: main-nav"></nav>
 <div class="container justify-content-center">
-    <div th:fragment="study-info">
-        <div class="row pt-4 text-left justify-content-center bg-light">
-            <div class="col-11">
-                <a href="#" class="text-decoration-none"
-                   th:href="@{'/lecture/' + ${lecture.path}}">
-                    <span class="h5" th:text="${lecture.subjectTitle}">강의명</span>
-                </a>
-            </div>
-        </div>
-    </div>
+
+<!--    <div th:fragment="study-info">-->
+<!--        <div class="row pt-4 text-left justify-content-center bg-light">-->
+<!--            <div class="col-11">-->
+<!--                <a href="#" class="text-decoration-none"-->
+<!--                   th:href="@{'/lecture/' + ${lecture.path}}">-->
+<!--                    <span class="h5" th:text="${lecture.subjectTitle}">강의명</span>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <br>
     <div th:replace="fragments.html :: lecture-menu(lectureMenu='lecture')"></div>
     <br>
 </div>
+<div class="card text-center">
 <div class="container">
     <div class="row my-3 mx-3 justify-content-center">
         <div class="col-10 px-0 row">
@@ -37,57 +39,65 @@
 <!--                    </a>-->
 <!--                </ul>-->
 <!--            </div>-->
-            <div class="col-12 row row-cols-1">
-                <div th:if="${newEvents.size() == 0}" class="col">
-                    새 모임이 없습니다.
+            <div class="col-12 row row-cols-1 row row-cols-2 row row-cols-3 row row-cols-4">
+                <div th:if="${studys.size() == 0}" class="col">
+                    강의가 아직 없습니다.
                 </div>
-                <div class="col mb-4 pr-0" th:each="event: ${newEvents}">
-                    <div class="card">
-                        <div class="card-header">
-                            <span th:text="${event.title}">title</span>
+                <div class="col mb-4 pr-0 " th:each="event: ${studys}">
+                    <div class="card border-success mb-3" style="max-width: 18rem;">
+                        <div class="card-header bg-transparent border-success">
+                            <span th:text="${eventStat.count}">1</span>주차 &nbsp&nbsp
+                            <br>
+                            <small th:text="${event.getStartDateTime()}">Posted on January 1, 2019 at 12:00 PM</small>~
+                            <small th:text="${event.getEndDateTime()}">Posted on January 1, 2019 at 12:00 PM</small>
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <i class="fa fa-calendar"></i>
-                                <span class="calendar" th:text="${event.startDateTime}"></span> 모임 시작
+<!--                                <i class="fa fa-book"></i>-->
+                                <span th:text="${event.title}">강의 명</span>
                             </li>
                             <li class="list-group-item">
+
                                 <a href="#" th:href="@{'/study/' + ${lecture.path} + '/events/' + ${event.id}}"
-                                   class="card-link">자세히 보기</a>
+                                   class="card-link">
+                                    <i class="fa fa-book"></i>
+                                    학습하기</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-10 px-0 row">
-            <div class="col-2"></div>
-            <div class="col-10">
-                <table th:if="${oldEvents.size() > 0}" class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">지난 모임 이름</th>
-                        <th scope="col">모임 종료</th>
-                        <th scope="col"></th>
-                    </tr>
-                    </thead>
-                    <tbody th:each="event: ${oldEvents}">
-                    <tr>
-                        <th scope="row" th:text="${eventStat.count}">1</th>
-                        <td th:text="${event.title}">Title</td>
-                        <td>
-                            <span class="date-weekday-time" th:text="${event.endDateTime}"></span>
-                        </td>
-                        <td>
-                            <a href="#" th:href="@{'/study/' + ${lecture.path} + '/events/' + ${event.id}}"
-                               class="card-link">자세히 보기</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
+
+<!--        <div class="col-10 px-0 row">-->
+<!--            <div class="col-2"></div>-->
+<!--            <div class="col-10">-->
+<!--                <table th:if="${oldEvents.size() > 0}" class="table table-hover">-->
+<!--                    <thead>-->
+<!--                    <tr>-->
+<!--                        <th scope="col">#</th>-->
+<!--                        <th scope="col">지난 모임 이름</th>-->
+<!--                        <th scope="col">모임 종료</th>-->
+<!--                        <th scope="col"></th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody th:each="event: ${oldEvents}">-->
+<!--                    <tr>-->
+<!--                        <th scope="row" th:text="${eventStat.count}">1</th>-->
+<!--                        <td th:text="${event.title}">Title</td>-->
+<!--                        <td>-->
+<!--                            <span class="date-weekday-time" th:text="${event.endDateTime}"></span>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <a href="#" th:href="@{'/study/' + ${lecture.path} + '/events/' + ${event.id}}"-->
+<!--                               class="card-link">자세히 보기</a>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </div>
 <div class="col-9 text-right justify-content-end">

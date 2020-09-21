@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments.html :: head"></head>
 <body class="bg-light">
 <nav th:replace="fragments.html :: main-nav"></nav>
 <div class="container">
     <div class="py-5 text-center">
         <h2>
-            강의 개설
+            강의수정
         </h2>
     </div>
     <div class="row justify-content-center">
         <form class="needs-validation col-sm-10"
-              th:action="@{'/lecture/' + ${lecture.path} + '/createStudy'}"
+              th:action="@{'/study/' + ${lecture.path} + '/events/' + ${study.id} + '/edit'}"
               th:object="${studyDto}" method="post" novalidate>
             <div class="form-group">
                 <label for="title">강의 명</label>
@@ -54,6 +53,7 @@
     </div>
     <div th:replace="fragments.html :: footer"></div>
 </div>
+
 <script th:replace="fragments.html :: form-validation"></script>
 <script th:replace="fragments.html :: editor-script"></script>
 </body>

@@ -15,7 +15,7 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">주차</th>
                     <th scope="col">강의 명</th>
                     <th scope="col">링크</th>
                 </tr>
@@ -26,7 +26,7 @@
                     <td th:text="${event.title}">Title</td>
                     <td>
                         <a th:href="@{'/study/' + ${lecture.path} + '/events/' + ${event.id}}"
-                           class="card-link" >자세히 보기</a>
+                           class="card-link" >학습하기</a>
                     </td>
                 </tr>
                 </tbody>
@@ -44,6 +44,7 @@
             <hr>
             <div>
                 <span class="h6">등록일 :</span>
+<!--                <span th:text="${#calendars.format(study.getStartDateTime())}">Posted on January 1, 2019 at 12:00 PM</span>~-->
                 <span th:text="${study.getStartDateTime()}">Posted on January 1, 2019 at 12:00 PM</span>~
                 <span th:text="${study.getEndDateTime()}">Posted on January 1, 2019 at 12:00 PM</span>
             </div>
@@ -53,6 +54,21 @@
                 <div class="col-10 pt-3" th:utext="${study.post}"></div>
             </div>
             <hr>
+<!--            <dd th:if="${study.isManager(#authentication.principal)}">-->
+            <div>
+                <a class="btn btn-primary"
+                   th:href="@{'/study/' + ${lecture.path} + '/events/' + ${study.id} + '/edit'}">
+                    수정
+                </a>
+            </div>
+            <br>
+            <div>
+                <form th:action="@{'/study/' + ${lecture.path} + '/events/' + ${study.id}}" method="post" novalidate>
+                    <button class="btn btn-primary" type="submit">삭제
+                    </button>
+                </form>
+
+            </div>
 
             <!-- Comments Form -->
             <div class="card my-4">

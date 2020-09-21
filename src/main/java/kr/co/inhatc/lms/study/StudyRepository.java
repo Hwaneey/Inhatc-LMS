@@ -10,5 +10,6 @@ import java.util.List;
 public interface StudyRepository extends JpaRepository<Study , Long> {
 
     List<Study> findAllByLectureOrderByStartDateTime(Lecture lecture);
+
     List<Study> findByLectureOrderByStartDateTime(Lecture lecture);
 }

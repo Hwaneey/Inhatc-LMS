@@ -33,6 +33,7 @@ public class Study {
     private LocalDateTime startDateTime;
 
     private LocalDateTime endDateTime;
+
     @Lob
     private String post;
 }

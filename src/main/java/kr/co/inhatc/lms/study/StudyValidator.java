@@ -1,11 +1,14 @@
 package kr.co.inhatc.lms.study;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import java.time.LocalDateTime;
 
+@Component
 public class StudyValidator implements Validator  {
+
     @Override
     public boolean supports(Class<?> clazz) {
         return StudyDto.class.isAssignableFrom(clazz);
@@ -16,7 +19,7 @@ public class StudyValidator implements Validator  {
         StudyDto studyDto = (StudyDto) target;
 
         if (isNotValidEndDateTime(studyDto)) {
-            errors.rejectValue("endDateTime", "wrong.datetime", "모임 종료 일시를 정확히 입력하세요.");
+            errors.rejectValue("endDateTime", "wrong.datetime", "강의 종료 일시를 정확히 입력하세요.");
         }
     }
 
