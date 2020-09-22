@@ -7,6 +7,10 @@ import kr.co.inhatc.lms.lecture.LectureRepository;
 import kr.co.inhatc.lms.lecture.LectureService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -69,18 +73,26 @@ public class StudyController {
         model.addAttribute("studys",study);
         return "study/view";
     }
-
+//**
+//
+//
+//**
     @GetMapping("/study/{path}/events")
-    public String viewStudyEvents(@CurrentUser Account account, @PathVariable String path, Model model) {
+    public String viewStudyEvents(@CurrentUser Account account, @PathVariable String path, Model model,
+                                  @PageableDefault(size = 4,direction = Sort.Direction.DESC)Pageable pageable) {
         Lecture lecture = studyService.getStudy(path);
         model.addAttribute(account);
         model.addAttribute(lecture);
 
-        List<Study> study = studyRepository.findByLectureOrderByStartDateTime(lecture);
-        model.addAttribute("studys",study);
+//        Page<Study> studyPage = studyRepository.findByKeyword(keyword, pageable);
+        Page<Study> studyPage = studyRepository.findByLectureOrderByStartDateTime(lecture,pageable);
+        model.addAttribute("studyPage",studyPage);
         return "study/events";
     }
-
+    //**
+//
+//
+//**
     @GetMapping("/study/{path}/events/{id}/edit")
     public String editStudy(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id, Model model) {
         Lecture lecture = lectureService.getStudyToUpdateStatus(path);
@@ -112,7 +124,7 @@ public class StudyController {
     }
 
     @PostMapping("/study/{path}/events/{id}")
-    public String cancelEvent(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id) {
+    public String deleteStudy(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id) {
         Lecture lecture = lectureService.getStudyToUpdateStatus(path);
         studyService.deleteStudy(studyRepository.findById(id).orElseThrow());
         return "redirect:/study/" + lecture.getEncodedPath() + "/events";
