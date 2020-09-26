@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 public class Study {
-//asdada
+
     @Id
     @GeneratedValue
     private Long id;
