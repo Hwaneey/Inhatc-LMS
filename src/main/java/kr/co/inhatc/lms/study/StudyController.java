@@ -1,5 +1,7 @@
 package kr.co.inhatc.lms.study;
 
+import kr.co.inhatc.lms.Comment.CommentForm;
+import kr.co.inhatc.lms.Comment.CommentService;
 import kr.co.inhatc.lms.account.Account;
 import kr.co.inhatc.lms.account.CurrentUser;
 import kr.co.inhatc.lms.lecture.Lecture;
@@ -31,6 +33,8 @@ public class StudyController {
     private final LectureRepository lectureRepository;
     private final StudyValidator studyValidator;
     private final ModelMapper modelMapper;
+    private final CommentService commentService;
+
 
     @GetMapping("/lecture/{path}/createStudy")
     public String createStudy(@CurrentUser Account account, @PathVariable String path, Model model) {
@@ -129,4 +133,15 @@ public class StudyController {
         studyService.deleteStudy(studyRepository.findById(id).orElseThrow());
         return "redirect:/study/" + lecture.getEncodedPath() + "/events";
     }
+
+    // 코멘트 작성
+    @PostMapping("/study/{path}/events/{id}/comment")
+    public String write(@CurrentUser Account account,@PathVariable String path,@PathVariable Long id, CommentForm CommentForm) {
+
+        Study study = studyRepository.findById(id).orElseThrow();
+        Lecture lecture = studyService.getStudy(path);
+
+        commentService.saveComment(CommentForm, account);
+        return "redirect:/study/" + lecture.getEncodedPath() + "/events/" + study.getId();    }
+
 }

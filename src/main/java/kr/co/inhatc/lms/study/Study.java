@@ -1,5 +1,6 @@
 package kr.co.inhatc.lms.study;
 
+import kr.co.inhatc.lms.Comment.Comment;
 import kr.co.inhatc.lms.account.Account;
 import kr.co.inhatc.lms.lecture.Lecture;
 import lombok.EqualsAndHashCode;
@@ -9,6 +10,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity @Getter
 @Setter @EqualsAndHashCode(of = "id")
@@ -25,6 +28,10 @@ public class Study {
     @ManyToOne
     private Account createdBy;
 
+    @ManyToOne
+    @JoinColumn(name ="account_id")
+    private Account writer;
+
     @Column(nullable = false)
     private  String title;
 
@@ -36,4 +43,21 @@ public class Study {
 
     @Lob
     private String post;
+
+    //Comment의 ProblemId와 연결을 의미함
+    @OneToMany
+    private List<Comment> comments = new ArrayList<Comment>();
+
+    public boolean isWriter (Account account) {
+        return this.writer.equals(account);
+    }
+
+    public void addComment (Comment comment) {
+        this.comments.add(comment);
+    }
+
+    public void removeComment (Comment comment) {
+        this.comments.remove(comment);
+    }
+
 }
