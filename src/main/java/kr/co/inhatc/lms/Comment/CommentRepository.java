@@ -13,5 +13,5 @@ public interface CommentRepository extends JpaRepository<Comment,Long>{
     
     List<Comment> findAllByStudy(Study study);
 
-    Comment findOrderBycreatedDate(Comment comment);
+//    Comment findOrderBycreatedDate(Comment comment);
 }

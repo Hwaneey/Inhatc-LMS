@@ -21,8 +21,8 @@ public class CommentService {
         return studyRepository.findById(studyId).get();
     }
 
-    //코멘트 작성
     public Comment saveComment(CommentForm commentForm, Account account){
+
         Study study = getStudy(commentForm.getStudyId());
 
         Comment comment = Comment.builder()

@@ -72,14 +72,16 @@
             <br>
             <hr>
             <div class="card-body">
-                <ul class="comments-list" th:each="comment : ${study.comments}">
+                <ul class="comments-list" th:each="comment,status : ${study.comments}" >
+
+<!--                <ul class="comments-list" th:each="comment : ${#study.comments.sort(#dates)}">-->
                     <div class="comment" >
-                        <form id="delete-comment-form"  method="post">
-                            <input type="hidden" name="_method" value="delete"/>
-                            <button class="btn btn-outline-danger pull-right comment-delete-btn">
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                            </button>
-                        </form>
+<!--                        <form id="delete-comment-form"  method="post">-->
+<!--                            <input type="hidden" name="_method" value="delete"/>-->
+<!--                            <button class="btn btn-outline-danger pull-right comment-delete-btn">-->
+<!--                                <i class="fa fa-times" aria-hidden="true"></i>-->
+<!--                            </button>-->
+<!--                        </form>-->
 
                         <a class="pull-left" href="#">
                             <svg th:data-jdenticon-value="${comment.getWriter().getUsername()}"
