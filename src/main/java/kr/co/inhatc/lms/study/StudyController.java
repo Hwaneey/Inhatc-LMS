@@ -1,7 +1,5 @@
 package kr.co.inhatc.lms.study;
 
-import kr.co.inhatc.lms.Comment.CommentForm;
-import kr.co.inhatc.lms.Comment.CommentService;
 import kr.co.inhatc.lms.account.Account;
 import kr.co.inhatc.lms.account.CurrentUser;
 import kr.co.inhatc.lms.lecture.Lecture;
@@ -33,7 +31,7 @@ public class StudyController {
     private final LectureRepository lectureRepository;
     private final StudyValidator studyValidator;
     private final ModelMapper modelMapper;
-    private final CommentService commentService;
+
 
 
     @GetMapping("/lecture/{path}/createStudy")
@@ -77,10 +75,7 @@ public class StudyController {
         model.addAttribute("studys",study);
         return "study/view";
     }
-//**
-//
-//
-//**
+
     @GetMapping("/study/{path}/events")
     public String viewStudyEvents(@CurrentUser Account account, @PathVariable String path, Model model,
                                   @PageableDefault(size = 4,direction = Sort.Direction.DESC)Pageable pageable) {
@@ -93,10 +88,7 @@ public class StudyController {
         model.addAttribute("studyPage",studyPage);
         return "study/events";
     }
-    //**
-//
-//
-//**
+
     @GetMapping("/study/{path}/events/{id}/edit")
     public String editStudy(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id, Model model) {
         Lecture lecture = lectureService.getStudyToUpdateStatus(path);
@@ -134,14 +126,5 @@ public class StudyController {
         return "redirect:/study/" + lecture.getEncodedPath() + "/events";
     }
 
-    // 코멘트 작성
-    @PostMapping("/study/{path}/events/{id}/comment")
-    public String write(@CurrentUser Account account,@PathVariable String path,@PathVariable Long id, CommentForm CommentForm) {
-
-        Study study = studyRepository.findById(id).orElseThrow();
-        Lecture lecture = studyService.getStudy(path);
-
-        commentService.saveComment(CommentForm, account);
-        return "redirect:/study/" + lecture.getEncodedPath() + "/events/" + study.getId();    }
 
 }
