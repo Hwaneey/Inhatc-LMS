@@ -44,30 +44,20 @@
             <hr>
             <div>
                 <span class="h6">강의 등록일 : </span>
-<!--                <span th:text="${#calendars.format(study.getStartDateTime())}">Posted on January 1, 2019 at 12:00 PM</span>~-->
                 <span class="date-time" th:text="${study.getCreatedDateTime()}">Posted on January 1, 2019 at 12:00 PM</span>
+                <span class="pull-right">
+                    <a class="btn btn-primary"
+                       th:href="@{'/study/' + ${lecture.path} + '/events/' + ${study.id} + '/edit'}">
+                        수정
+                    </a>
+
+                </span>
             </div>
             <hr>
-<!--            <img class="img-fluid rounded" src="http://placehold.it/1280x720" alt="">-->
             <div class="row px-3 justify-content-center">
                 <div class="col-10 pt-3" th:utext="${study.post}"></div>
             </div>
             <hr>
-<!--            <dd th:if="${study.isManager(#authentication.principal)}">-->
-            <div>
-                <a class="btn btn-primary"
-                   th:href="@{'/study/' + ${lecture.path} + '/events/' + ${study.id} + '/edit'}">
-                    수정
-                </a>
-
-            </div>
-<p>
-            <div>
-                <form th:action="@{'/study/' + ${lecture.path} + '/events/' + ${study.id}}" method="post" novalidate>
-                    <button class="btn btn-primary" type="submit">삭제</button>
-                </form>
-            </div>
-
             <h5 class="card-header">강의에 대한 질문을 남겨주세요:</h5>
             <div class="card-body">
                 <form th:action="@{'/study/' + ${lecture.path} + '/events/' +${study.id} +'/comment'}" method="post">
@@ -76,9 +66,11 @@
                         <input type="hidden" name="studyId" >
                         <textarea class="form-control" type="text" name="content" rows="5"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary pull-left">Submit</button>
                 </form>
             </div>
+            <br>
+            <hr>
             <div class="card-body">
                 <ul class="comments-list" th:each="comment : ${study.comments}">
                     <div class="comment" >
@@ -96,8 +88,8 @@
                         </a>
                         <div class="media mb-4">
                             <div class="media-body">
-                                <h5 class="mt-0" th:text="${comment.getWriter().getUsername()}" >Commenter Name</h5>
-<!--                                <h5 class="time comment-time" th:text="${comment.createdDate}"></h5>&ndash;&gt;-->
+                                <span class="h5" th:text="${comment.getWriter().getUsername()}" >Commenter Name</span>
+                                <span class="fromNow" th:text="${comment.createdDate}">~분전</span>
                                 <p th:text="${comment.content}"></p>
                             </div>
                         </div>
