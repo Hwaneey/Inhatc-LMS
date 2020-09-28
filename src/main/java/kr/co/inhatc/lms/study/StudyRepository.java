@@ -11,13 +11,10 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface StudyRepository extends JpaRepository<Study , Long> {
 
-//    Study findByStudy(Long studyId);
-
     List<Study> findAllByLectureOrderByStartDateTime(Lecture lecture);
 
     List<Study> findByLectureOrderByStartDateTime(Lecture lecture);
 
     Page<Study> findByLectureOrderByStartDateTime(Lecture lecture, Pageable pageable);
 
-//    List<Study> findByStudy(Long studyId);
 }

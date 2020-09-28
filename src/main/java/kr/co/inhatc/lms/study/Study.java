@@ -29,7 +29,7 @@ public class Study {
     private Account createdBy;
 
     @ManyToOne
-    @JoinColumn(name ="account_id")
+    @JoinColumn(name ="account_lecturer")
     private Account writer;
 
     @Column(nullable = false)
@@ -44,9 +44,8 @@ public class Study {
     @Lob
     private String post;
 
-    //Comment의 ProblemId와 연결을 의미함
     @OneToMany
-    private List<Comment> comments = new ArrayList<Comment>();
+    private List<Comment> comments = new ArrayList<>();
 
     public boolean isWriter (Account account) {
         return this.writer.equals(account);

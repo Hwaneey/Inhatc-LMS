@@ -27,7 +27,6 @@ public class CommentController {
         Study study = studyRepository.findById(id).orElseThrow();
 
         commentService.saveComment(CommentForm, account);
-//        commentList commentList = commentRepository.
         return "redirect:/study/" + lecture.getEncodedPath() + "/events/" + study.getId();
     }
 

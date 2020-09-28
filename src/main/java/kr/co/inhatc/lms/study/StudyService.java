@@ -1,6 +1,5 @@
 package kr.co.inhatc.lms.study;
 
-import kr.co.inhatc.lms.Comment.CommentService;
 import kr.co.inhatc.lms.account.Account;
 import kr.co.inhatc.lms.lecture.Lecture;
 import kr.co.inhatc.lms.lecture.LectureRepository;
@@ -19,7 +18,7 @@ public class StudyService {
     private final StudyRepository studyRepository;
     private final LectureRepository lectureRepository;
     private final ModelMapper modelMapper;
-    private final CommentService commentService;
+
     public Study createStudy(Study study, Lecture lecture, Account account) {
         study.setCreatedBy(account);
         study.setLecture(lecture);

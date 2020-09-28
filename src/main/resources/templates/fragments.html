@@ -116,14 +116,14 @@
 <!--        <a class="nav-item nav-link" th:classappend="${lectureMenu == 'assignment'}? active" th:href="@{#}">-->
 <!--            <i class="fa fa-book fa-fw" ></i> 과제-->
 <!--        </a>-->
-<!--        <a sec:authorize="hasAuthority('ROLE_ADMIN')"-->
-<!--                class="nav-item nav-link"  th:classappend="${lectureMenu == 'attendance'}? active" th:href="@{#}">-->
-<!--            <i class="fa fa-check" ></i> 출석-->
-<!--        </a>-->
-<!--        <a sec:authorize="hasAuthority('ROLE_ADMIN')"-->
-<!--           class="nav-item nav-link" th:classappend="${lectureMenu == 'setting'}? active" href="#" th:href="@{#}">-->
-<!--            <i class="fa fa-cog fa-fw" ></i> 설정-->
-<!--        </a>-->
+        <a sec:authorize="hasAuthority('ROLE_ADMIN')"
+                class="nav-item nav-link"  th:classappend="${lectureMenu == 'attendance'}? active" th:href="@{#}">
+            <i class="fa fa-check" ></i> 출석
+        </a>
+        <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:if="${lecture.isLecturer(#authentication.principal)}"
+           class="nav-item nav-link" th:classappend="${lectureMenu == 'setting'}? active" href="#" th:href="@{#}">
+            <i class="fa fa-cog fa-fw" ></i> 설정
+        </a>
     </nav>
 </div>
 

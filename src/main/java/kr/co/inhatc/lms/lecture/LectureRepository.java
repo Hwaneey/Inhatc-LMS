@@ -14,6 +14,7 @@ public interface LectureRepository extends JpaRepository<Lecture,Long> {
 
     List<Lecture> findFirst5ByLecturerContaining(Account account);
 
+    Lecture findStudyWithLecturerByPath(String path);
 
-    Lecture findStudyWithManagersByPath(String path);
+    Lecture findStudyWithStudentByPath(String path);
 }

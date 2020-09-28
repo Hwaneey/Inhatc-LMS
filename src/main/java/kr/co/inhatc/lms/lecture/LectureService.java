@@ -21,7 +21,7 @@ public class LectureService {
     }
 
     public Lecture getStudyToUpdateStatus(String path) {
-        Lecture lecture = lectureRepository.findStudyWithManagersByPath(path);
+        Lecture lecture = lectureRepository.findStudyWithLecturerByPath(path);
         checkIfExistingStudy(path, lecture);
         return lecture;
     }
@@ -38,5 +38,13 @@ public class LectureService {
             throw new IllegalArgumentException(path + "에 해당하는 강의가 없습니다.");
         }
         return lecture;
+    }
+
+    public void addStudent(Lecture lecture, Account account) {
+        lecture.addStudent(account);
+    }
+
+    public void removeStudent(Lecture lecture, Account account) {
+        lecture.oddStudent(account);
     }
 }

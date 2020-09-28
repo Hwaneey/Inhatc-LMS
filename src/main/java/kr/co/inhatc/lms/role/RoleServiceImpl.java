@@ -7,28 +7,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Slf4j
+@Slf4j @Transactional
 @Service @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
 
-    @Transactional
     public Role getRole(long id) {
         return roleRepository.findById(id).orElse(new Role());
     }
 
-    @Transactional
     public List<Role> getRoles() {
         return roleRepository.findAll();
     }
 
-    @Transactional
     public void createRole(Role role){
         roleRepository.save(role);
     }
 
-    @Transactional
     public void deleteRole(long id) {
         roleRepository.deleteById(id);
     }

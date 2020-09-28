@@ -57,4 +57,25 @@ public class LectureController {
     }
 
 
+    @GetMapping("/lecture/{path}/students")
+    public String viewStudyMembers(@CurrentUser Account account, @PathVariable String path, Model model) {
+        model.addAttribute(account);
+        model.addAttribute(lectureRepository.findByPath(path));
+        return "lecture/student";
+    }
+
+    @GetMapping("/lecture/{path}/register")
+    public String joinStudy(@CurrentUser Account account, @PathVariable String path) {
+        Lecture lecture = lectureRepository.findStudyWithStudentByPath(path);
+        lectureService.addStudent(lecture, account);
+        return "redirect:/study/" + lecture.getEncodedPath() + "/members";
+    }
+
+    @GetMapping("/lecture/{path}/leave")
+    public String leaveStudy(@CurrentUser Account account, @PathVariable String path) {
+        Lecture lecture = lectureRepository.findStudyWithStudentByPath(path);
+        lectureService.removeStudent(lecture, account);
+        return "redirect:/study/" + lecture.getEncodedPath() + "/members";
+    }
+
 }

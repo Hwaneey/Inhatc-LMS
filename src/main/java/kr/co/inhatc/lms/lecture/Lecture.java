@@ -35,6 +35,9 @@ public class Lecture {
 
     private String subjectTitle;
 
+    private int studentCount;
+
+
     public void addLecturer(Account account) {
         this.lecturer.add(account);
     }
@@ -47,8 +50,18 @@ public class Lecture {
         return this.lecturer.contains(userAccount.getAccount());
     }
 
-    public boolean isManagedBy(Account account) {
+    public boolean isLecturerBy(Account account) {
         return this.getLecturer().contains(account);
+    }
+
+    public void addStudent(Account account) {
+        this.getStudent().add(account);
+        this.studentCount++;
+    }
+
+    public void oddStudent(Account account) {
+        this.getStudent().remove(account);
+        this.studentCount--;
     }
 
 }
