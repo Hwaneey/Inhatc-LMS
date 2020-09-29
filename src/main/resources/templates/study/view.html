@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="fragments.html :: head"></head>
 <nav th:replace="fragments.html :: main-nav"></nav>
@@ -46,7 +47,7 @@
                 <span class="h6">강의 등록일 : </span>
                 <span class="date-time" th:text="${study.getCreatedDateTime()}">Posted on January 1, 2019 at 12:00 PM</span>
                 <span class="pull-right">
-                    <a class="btn btn-primary"
+                    <a class="btn btn-primary" sec:authorize="isAuthenticated()" th:if="${lecture.isLecturer(#authentication.principal)}"
                        th:href="@{'/study/' + ${lecture.path} + '/events/' + ${study.id} + '/edit'}">
                         수정
                     </a>

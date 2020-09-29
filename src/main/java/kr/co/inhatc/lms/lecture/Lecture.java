@@ -42,18 +42,6 @@ public class Lecture {
         this.lecturer.add(account);
     }
 
-    public String getEncodedPath() {
-        return URLEncoder.encode(this.path, StandardCharsets.UTF_8);
-    }
-
-    public boolean isLecturer(UserAccount userAccount) {
-        return this.lecturer.contains(userAccount.getAccount());
-    }
-
-    public boolean isLecturerBy(Account account) {
-        return this.getLecturer().contains(account);
-    }
-
     public void addStudent(Account account) {
         this.getStudent().add(account);
         this.studentCount++;
@@ -64,4 +52,21 @@ public class Lecture {
         this.studentCount--;
     }
 
+    public String getEncodedPath() {
+        return URLEncoder.encode(this.path, StandardCharsets.UTF_8);
+    }
+
+    public boolean isLecturer(UserAccount userAccount) {
+        return this.lecturer.contains(userAccount.getAccount());
+    }
+
+    public boolean isStudent(UserAccount userAccount){
+        return this.student.contains(userAccount.getAccount());
+    }
+
+    public boolean isEnable(UserAccount userAccount) {
+        Account account = userAccount.getAccount();
+        return !this.student.contains(account) && !this.lecturer.contains(account);
+
+    }
 }

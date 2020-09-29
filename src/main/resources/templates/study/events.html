@@ -5,6 +5,17 @@
 <body class="bg-light">
 <nav th:replace="fragments.html :: main-nav"></nav>
 <div class="container justify-content-center">
+    <div>
+        <div class="row pt-4 text-left justify-content-center bg-light">
+            <div class="col-11">
+                <a href="#" class="text-decoration-none"
+                   th:href="@{'/lecture/' + ${lecture.path}}">
+                    <span class="h5" th:text="${lecture.subjectTitle}">강의명</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
     <br>
     <div th:replace="fragments.html :: lecture-menu(lectureMenu='lecture')"></div>
     <br>
