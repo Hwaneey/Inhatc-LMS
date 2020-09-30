@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,11 +24,15 @@ public class LectureController {
     private final LectureRepository lectureRepository;
     private final LectureFormValidator lectureFormValidator;
 
+    private void list(@CurrentUser Account account, Model model) {
+        model.addAttribute("lectureManagerOf", lectureRepository.findFirst5ByLecturerContaining(account));
+        model.addAttribute("studentManagerOf", lectureRepository.findFirst5ByStudentContaining(account));
+    }
+
     @GetMapping("/new-lecture")
     public String newStudyForm(@CurrentUser Account account, Model model) {
         model.addAttribute(account);
-        model.addAttribute("lectureManagerOf",
-                lectureRepository.findFirst5ByLecturerContaining(account));
+        list(account, model);
         model.addAttribute(new LectureForm());
         return "lecture/form";
     }
@@ -49,16 +54,15 @@ public class LectureController {
     @GetMapping("/lecture/{path}")
     public String viewLecture(@CurrentUser Account account, @PathVariable String path, Model model) {
         Lecture lecture = lectureRepository.findByPath(path);
-        model.addAttribute("lectureManagerOf",
-                lectureRepository.findFirst5ByLecturerContaining(account));
+        list(account, model);
         model.addAttribute(account);
         model.addAttribute(lecture);
         return "lecture/view";
     }
 
-
     @GetMapping("/lecture/{path}/student")
     public String viewStudyMembers(@CurrentUser Account account, @PathVariable String path, Model model) {
+        list(account, model);
         model.addAttribute(account);
         model.addAttribute(lectureRepository.findByPath(path));
         return "lecture/student";
@@ -68,9 +72,9 @@ public class LectureController {
     public String registerStudy(@CurrentUser Account account, @PathVariable String path, Model model) {
         Lecture lecture = lectureRepository.findStudyWithStudentByPath(path);
         lectureService.addStudent(lecture, account);
+        list(account, model);
         model.addAttribute(account);
         model.addAttribute(lecture);
-//        return "redirect:/lecture/" + lecture.getEncodedPath() + "/members";
         return "lecture/view";
     }
 
@@ -78,9 +82,9 @@ public class LectureController {
     public String leaveStudy(@CurrentUser Account account, @PathVariable String path, Model model) {
         Lecture lecture = lectureRepository.findStudyWithStudentByPath(path);
         lectureService.removeStudent(lecture, account);
+        list(account, model);
         model.addAttribute(account);
         model.addAttribute(lecture);
-//        return "redirect:/study/" + lecture.getEncodedPath() + "/members";
         return "lecture/view";
     }
 

@@ -57,33 +57,31 @@
                 <a class="nav-link" th:href="@{/sign-up}" style="color: white"> Sign up </a>
             </li>
 
-<!--            <li class="nav-item dropdown"  sec:authorize="hasAuthority('ROLE_USER')">-->
-<!--                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown"-->
-<!--                   aria-haspopup="true" aria-expanded="false">-->
-<!--                    <i class="fa fa-plus" aria-hidden="true"></i>-->
-<!--                </a>-->
-<!--                <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="adminDropdown">-->
-<!--&lt;!&ndash;                    <a class="dropdown-item" th:href="@{/new-lecture}" sec:authorize="hasAuthority('ROLE_ADMIN')">강의실 개설</a>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <div class="dropdown-divider"></div>&ndash;&gt;-->
-<!--                    <h5 class="dropdown-header">-->
-<!--                        <a>수강중인 강의</a>-->
+            <li class="nav-item dropdown"  sec:authorize="hasAuthority('ROLE_USER')" th:if="${account.emailVerified}">
+                <a class="nav-link dropdown-toggle" href="#" id="usersDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="usersDropdown">
+                    <h5 class="dropdown-header">
+                        <a>수강중인 강의</a>
 
-<!--                        <a class="dropdown-item" th:if="${#lists.isEmpty(lectureManagerOf)}">수강중인 강의가 없습니다.</a>-->
+                        <a class="dropdown-item" th:if="${#lists.isEmpty(studentManagerOf)}">수강중인 강의가 없습니다.</a>
 
-<!--                        <a href="#" th:href="@{'/lecture/' + ${lecture.path}}" th:text="${lecture.subjectTitle}"-->
-<!--                           class="dropdown-item" th:each="lecture: ${lectureManagerOf}">-->
-<!--                        </a>-->
-<!--                    </h5>-->
-<!--                </div>-->
-<!--            </li>-->
+                        <a href="#" th:href="@{'/lecture/' + ${lecture.path}}" th:text="${lecture.subjectTitle}"
+                           class="dropdown-item" th:each="lecture: ${studentManagerOf}">
+                        </a>
+                    </h5>
+                </div>
+            </li>
 
-            <li class="nav-item dropdown"  sec:authorize="hasAuthority('ROLE_ADMIN')">
+            <li class="nav-item dropdown"  sec:authorize="hasAuthority('ROLE_MANAGER') or hasAuthority('ROLE_ADMIN')">
                 <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="adminDropdown">
-                    <a class="dropdown-item" th:href="@{/new-lecture}" sec:authorize="hasAuthority('ROLE_ADMIN')">강의실 개설</a>
+                    <a class="dropdown-item" th:href="@{/new-lecture}" sec:authorize="hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_MANAGER')">강의실 개설</a>
                     <div class="dropdown-divider"></div>
                     <h5 class="dropdown-header">
                         <a>개설된 강의</a>
@@ -134,10 +132,14 @@
                 class="nav-item nav-link" th:classappend="${lectureMenu == 'lecture'}? active" href="#" th:href="@{'/study/' + ${lecture.path} + '/events/'}">
             <i class="fa fa-caret-square-o-right"></i> 강의실
         </a>
-        <a sec:authorize="isAuthenticated()" th:if="${lecture.isLecturer(#authentication.principal) or lecture.isStudent(#authentication.principal)}"
-                class="nav-item nav-link" th:classappend="${lectureMenu == 'assignment'}? active" th:href="@{#}">
-            <i class="fa fa-book fa-fw" ></i> 과제
+        <a sec:authorize="isAuthenticated()" th:if="${lecture.isLecturer(#authentication.principal)}"
+                class="nav-item nav-link" th:classappend="${lectureMenu == 'students'}? active" th:href="@{'/lecture/' + ${lecture.path} + '/student'}">
+            <i class="fa fa-user-circle" ></i> 수강인원
         </a>
+<!--        <a sec:authorize="isAuthenticated()" th:if="${lecture.isLecturer(#authentication.principal) or lecture.isStudent(#authentication.principal)}"-->
+<!--                class="nav-item nav-link" th:classappend="${lectureMenu == 'assignment'}? active" th:href="@{#}">-->
+<!--            <i class="fa fa-book fa-fw" ></i> 과제-->
+<!--        </a>-->
         <a sec:authorize="isAuthenticated()" th:if="${lecture.isLecturer(#authentication.principal) or lecture.isStudent(#authentication.principal)}"
                 class="nav-item nav-link"  th:classappend="${lectureMenu == 'attendance'}? active" th:href="@{#}">
             <i class="fa fa-check" ></i> 출석
@@ -151,11 +153,6 @@
 
 <div th:fragment="study-info">
     <div class="row pt-4 text-left justify-content-center bg-light">
-        <div class="col-6">
-<!--            <a href="#" class="text-decoration-none" th:href="@{'/lecture/' + ${lecture.path}}">-->
-<!--                <span class="h2" th:text="${lecture.subjectTitle}">강의 명</span>-->
-<!--            </a>-->
-        </div>
         <div class="col-4 text-right justify-content-end">
             <span sec:authorize="isAuthenticated()" th:if="${!lecture.isStudent(#authentication.principal) and !lecture.isLecturer(#authentication.principal)}"
                   class="btn-group" role="group" aria-label="Basic example">
@@ -170,11 +167,24 @@
                     <a class="btn btn-outline-warning" th:href="@{'/lecture/' + ${lecture.path} + '/leave'}">
                         수강 취소
                     </a>
-<!--                    <a class="btn btn-outline-primary" th:href="@{'/study/' + ${lecture.path} + '/members'}"-->
-<!--                       th:text="${lecture.student.size()}">1</a>-->
                 </span>
         </div>
     </div>
+</div>
+
+<div th:fragment="member-list (student, isLecturer)" class="row px-3 justify-content-center">
+    <ul class="list-unstyled col-10">
+        <li class="media mt-3" th:each="member: ${student}">
+            <svg th:data-jdenticon-value="${member.getUsername()}"
+                 width="64" height="64" class="d-flex mr-3 rounded-circle border bg-light"></svg>
+            <div class="media-body">
+                <h5 class="mt-0 mb-1"><span th:text="${member.getUsername()}"></span>
+                    <span th:if="${isLecturer}" class="badge badge-primary">교수</span>
+                </h5>
+<!--                <span th:text="${member.getUserRole()}"></span>-->
+            </div>
+        </li>
+    </ul>
 </div>
 
 <footer th:fragment="footer">

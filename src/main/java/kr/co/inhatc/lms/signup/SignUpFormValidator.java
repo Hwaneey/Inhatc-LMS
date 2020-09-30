@@ -8,7 +8,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @RequiredArgsConstructor @Component
-public class SignUpFormValidator implements Validator {
+public class SignUpFormValidator implements Validator{
 
     private final UserRepository userRepository;
 

@@ -32,6 +32,10 @@ public class StudyController {
     private final StudyValidator studyValidator;
     private final ModelMapper modelMapper;
 
+    private void list(Account account, Model model) {
+        model.addAttribute("lectureManagerOf",lectureRepository.findFirst5ByLecturerContaining(account));
+        model.addAttribute("studentManagerOf",lectureRepository.findFirst5ByStudentContaining(account));
+    }
 
 
     @GetMapping("/lecture/{path}/createStudy")
@@ -39,6 +43,7 @@ public class StudyController {
         Lecture lecture = lectureService.getStudyToUpdateStatus(path);
         model.addAttribute("lectureManagerOf",
                 lectureRepository.findFirst5ByLecturerContaining(account));
+        list(account, model);
         model.addAttribute(lecture);
         model.addAttribute(account);
         model.addAttribute(new StudyDto());
@@ -69,7 +74,7 @@ public class StudyController {
         model.addAttribute(account);
         model.addAttribute(studyRepository.findById(id).orElseThrow());
         model.addAttribute(lectureService.getStudy(path));
-
+        list(account, model);
         Lecture lecture = studyService.getStudy(path);
         List<Study> study = studyRepository.findByLectureOrderByStartDateTime(lecture);
         model.addAttribute("studys",study);
@@ -82,8 +87,7 @@ public class StudyController {
         Lecture lecture = studyService.getStudy(path);
         model.addAttribute(account);
         model.addAttribute(lecture);
-
-//        Page<Study> studyPage = studyRepository.findByKeyword(keyword, pageable);
+        list(account, model);
         Page<Study> studyPage = studyRepository.findByLectureOrderByStartDateTime(lecture,pageable);
         model.addAttribute("studyPage",studyPage);
         return "study/events";
@@ -93,7 +97,7 @@ public class StudyController {
     public String editStudy(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id, Model model) {
         Lecture lecture = lectureService.getStudyToUpdateStatus(path);
         Study study = studyRepository.findById(id).orElseThrow();
-
+        list(account, model);
         model.addAttribute(lecture);
         model.addAttribute(account);
         model.addAttribute(study);

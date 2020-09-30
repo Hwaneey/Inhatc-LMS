@@ -18,8 +18,7 @@ import java.util.Set;
 @NoArgsConstructor @EqualsAndHashCode(of = "id")
 public class Lecture {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     private Long id;
 
     @ManyToMany
@@ -67,6 +66,5 @@ public class Lecture {
     public boolean isEnable(UserAccount userAccount) {
         Account account = userAccount.getAccount();
         return !this.student.contains(account) && !this.lecturer.contains(account);
-
     }
 }

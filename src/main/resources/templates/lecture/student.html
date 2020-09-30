@@ -1,13 +1,9 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments.html :: head"></head>
 <body class="bg-light">
 <div th:replace="fragments.html :: main-nav"></div>
-
-<div class="container justify-content-center">
+<div class="container">
     <div>
         <div class="row pt-4 text-left justify-content-center bg-light">
             <div class="col-11">
@@ -19,11 +15,12 @@
         </div>
     </div>
     <br>
-    <div th:replace="fragments.html :: lecture-menu(lectureMenu='info')"></div>
+    <div th:replace="fragments.html :: lecture-menu(lectureMenu='students')"></div>
     <br>
-    <div th:replace="fragments.html :: study-info"></div>
+    <div th:replace="fragments.html :: member-list(student=${lecture.lecturer},isLecturer=${true})"></div>
+    <div th:replace="fragments.html :: member-list(student=${lecture.student},isLecturer=${false})"></div>
+
     <div th:replace="fragments.html :: footer"></div>
 </div>
-
 </body>
 </html>
