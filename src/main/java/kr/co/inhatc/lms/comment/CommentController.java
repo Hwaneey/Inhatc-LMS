@@ -1,4 +1,4 @@
-package kr.co.inhatc.lms.Comment;
+package kr.co.inhatc.lms.comment;
 
 import kr.co.inhatc.lms.account.Account;
 import kr.co.inhatc.lms.account.CurrentUser;
@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @RequiredArgsConstructor
 public class CommentController {
-    private final CommentRepository commentRepository;
     private final CommentService commentService;
     private final StudyService studyService;
     private final StudyRepository studyRepository;
 
-    // 강의 댓글
     @PostMapping("/study/{path}/events/{id}/comment")
     public String write(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id, CommentForm CommentForm) {
 

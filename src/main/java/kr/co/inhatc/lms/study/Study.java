@@ -1,6 +1,6 @@
 package kr.co.inhatc.lms.study;
 
-import kr.co.inhatc.lms.Comment.Comment;
+import kr.co.inhatc.lms.comment.Comment;
 import kr.co.inhatc.lms.account.Account;
 import kr.co.inhatc.lms.lecture.Lecture;
 import lombok.EqualsAndHashCode;

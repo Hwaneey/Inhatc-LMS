@@ -1,4 +1,4 @@
-package kr.co.inhatc.lms.Comment;
+package kr.co.inhatc.lms.comment;
 
 import lombok.Data;
 

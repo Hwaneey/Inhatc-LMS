@@ -1,4 +1,4 @@
-package kr.co.inhatc.lms.Comment;
+package kr.co.inhatc.lms.comment;
 
 import kr.co.inhatc.lms.account.Account;
 import kr.co.inhatc.lms.study.Study;
@@ -21,7 +21,7 @@ public class Comment {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne @JoinColumn(name="Study_id")
+    @ManyToOne @JoinColumn(name="study_id")
     private Study study;
 
     @ManyToOne @JoinColumn(name="account_id")
