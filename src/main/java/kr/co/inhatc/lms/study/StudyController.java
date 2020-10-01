@@ -129,6 +129,4 @@ public class StudyController {
         studyService.deleteStudy(studyRepository.findById(id).orElseThrow());
         return "redirect:/study/" + lecture.getEncodedPath() + "/events";
     }
-
-
 }

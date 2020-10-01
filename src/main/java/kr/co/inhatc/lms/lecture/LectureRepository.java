@@ -19,4 +19,6 @@ public interface LectureRepository extends JpaRepository<Lecture,Long> {
     Lecture findStudyWithLecturerByPath(String path);
 
     Lecture findStudyWithStudentByPath(String path);
+
+    Lecture findLectureOnlyByPath(String path);
 }

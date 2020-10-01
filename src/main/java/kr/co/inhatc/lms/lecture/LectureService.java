@@ -1,5 +1,7 @@
 package kr.co.inhatc.lms.lecture;
 
+import kr.co.inhatc.lms.Register.Register;
+import kr.co.inhatc.lms.Register.RegisterRepository;
 import kr.co.inhatc.lms.account.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class LectureService {
     private final LectureRepository lectureRepository;
+
+    private final RegisterRepository registerRepository;
 
     public Lecture createLecture(Lecture lecture , Account account) {
         Lecture createLecture = lectureRepository.save(lecture);
@@ -46,5 +50,40 @@ public class LectureService {
 
     public void removeStudent(Lecture lecture, Account account) {
         lecture.oddStudent(account);
+    }
+
+    public Lecture getLectureToRegister(String path) {
+        Lecture lecture = lectureRepository.findLectureOnlyByPath(path);
+        checkIfExistingStudy(path, lecture);
+        return lecture;
+    }
+
+    public void newRegister(Lecture lecture, Account account) {
+        if (!registerRepository.existsByLectureAndAccount(lecture, account)) {
+            Register register = new Register();
+            register.setRegisteredAt(LocalDateTime.now());
+//            register.setAccepted(lecture.isAbleToAcceptWaitingEnrollment());
+            register.setAccount(account);
+            lecture.addRegister(register);
+//            lecture.addStudent(account);
+            registerRepository.save(register);
+        }
+    }
+
+    public void cancelRegister(Lecture lecture, Account account) {
+        Register register = registerRepository.findByLectureAndAccount(lecture, account);
+        if (!register.isAttended()) {
+            lecture.removeEnrollment(register);
+            registerRepository.delete(register);
+//            lecture.acceptNextWaitingEnrollment();
+        }
+    }
+
+    public void acceptRegister(Lecture lecture, Register register) {
+        lecture.accept(register);
+    }
+
+    public void rejectRegister(Lecture lecture, Register register) {
+        lecture.reject(register);
     }
 }

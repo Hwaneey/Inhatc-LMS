@@ -41,4 +41,5 @@ public class StudyService {
     public void deleteStudy(Study study) {
         studyRepository.delete(study);
     }
+
 }
