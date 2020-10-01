@@ -114,12 +114,11 @@ public class LectureController {
     }
 
     @GetMapping("/lecture/{path}/register/{id}/registers/{registerId}/accept")
-    public String acceptEnrollment(@CurrentUser Account account, @PathVariable String path,
-                                   @PathVariable Long id ,   Model model, @PathVariable Long registerId) {
+    public String acceptEnrollment(@PathVariable String path,
+                                   @PathVariable Long id , @PathVariable Long registerId) {
 
         Lecture lecture = lectureRepository.findByPath(path);
         Register register = registerRepository.findById(registerId).orElseThrow();
-//        Account findAccount = registerRepository.findByAccount(id);
         Account findAccount = userRepository.findById(id).orElseThrow();
 
         lectureService.acceptRegister(lecture, register);
@@ -128,10 +127,9 @@ public class LectureController {
     }
 
     @GetMapping("/lecture/{path}/disRegister/{id}/registers/{registerId}/reject")
-    public String rejectEnrollment(@CurrentUser Account account, @PathVariable String path,
-                                   @PathVariable Long id, Model model, @PathVariable Long registerId) {
-//        Study study = studyService.getStudyToUpdate(account, path);
-//        Lecture lecture = lectureRepository.findById(id).orElseThrow();
+    public String rejectEnrollment(@PathVariable String path,
+                                   @PathVariable Long id, @PathVariable Long registerId) {
+
         Lecture lecture = lectureRepository.findByPath(path);
         Register register = registerRepository.findById(registerId).orElseThrow();
         Account findAccount = userRepository.findById(id).orElseThrow();
