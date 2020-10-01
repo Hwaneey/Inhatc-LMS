@@ -62,10 +62,8 @@ public class LectureService {
         if (!registerRepository.existsByLectureAndAccount(lecture, account)) {
             Register register = new Register();
             register.setRegisteredAt(LocalDateTime.now());
-//            register.setAccepted(lecture.isAbleToAcceptWaitingEnrollment());
             register.setAccount(account);
             lecture.addRegister(register);
-//            lecture.addStudent(account);
             registerRepository.save(register);
         }
     }
@@ -75,7 +73,6 @@ public class LectureService {
         if (!register.isAttended()) {
             lecture.removeEnrollment(register);
             registerRepository.delete(register);
-//            lecture.acceptNextWaitingEnrollment();
         }
     }
 

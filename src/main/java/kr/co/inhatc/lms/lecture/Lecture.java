@@ -45,6 +45,7 @@ public class Lecture {
         this.lecturer.add(account);
     }
 
+
     public void addStudent(Account account) {
         this.getStudent().add(account);
         this.studentCount++;
@@ -81,7 +82,6 @@ public class Lecture {
         this.registers.remove(register);
         register.setLecture(null);
     }
-
     public boolean isAttended(UserAccount userAccount) {
         Account account = userAccount.getAccount();
         for (Register e : this.registers) {
@@ -100,6 +100,7 @@ public class Lecture {
         }
         return false;
     }
+
     public boolean isRegisterFor(UserAccount userAccount) {
         return !isAlreadyRegister(userAccount);
     }

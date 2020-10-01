@@ -10,7 +10,11 @@ public interface RegisterRepository extends JpaRepository<Register,Long> {
 
     boolean existsByLectureAndAccount(Lecture lecture, Account account);
 
+//    Account findByAcceptedContainsOrderByAccount(Account account);
+
     Register findByLectureAndAccount(Lecture lecture, Account account);
+
+//    Account findByAccount(Account account);
 
 
 }

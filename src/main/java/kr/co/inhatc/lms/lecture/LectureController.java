@@ -4,6 +4,7 @@ import kr.co.inhatc.lms.Register.Register;
 import kr.co.inhatc.lms.Register.RegisterRepository;
 import kr.co.inhatc.lms.account.Account;
 import kr.co.inhatc.lms.account.CurrentUser;
+import kr.co.inhatc.lms.account.UserRepository;
 import kr.co.inhatc.lms.study.StudyRepository;
 import kr.co.inhatc.lms.study.StudyService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class LectureController {
     private final LectureService lectureService;
     private final LectureRepository lectureRepository;
     private final LectureFormValidator lectureFormValidator;
+    private final UserRepository userRepository;
     private final StudyService studyService;
     private final StudyRepository studyRepository;
     private final RegisterRepository registerRepository;
@@ -113,23 +115,29 @@ public class LectureController {
 
     @GetMapping("/lecture/{path}/register/{id}/registers/{registerId}/accept")
     public String acceptEnrollment(@CurrentUser Account account, @PathVariable String path,
-                                   Model model, @PathVariable Long registerId) {
-//        Lecture lecture = lectureService.getStudyToUpdateStatus(path);
-//        Lecture lecture = lectureRepository.findById(id).orElseThrow();
+                                   @PathVariable Long id ,   Model model, @PathVariable Long registerId) {
+
         Lecture lecture = lectureRepository.findByPath(path);
         Register register = registerRepository.findById(registerId).orElseThrow();
+//        Account findAccount = registerRepository.findByAccount(id);
+        Account findAccount = userRepository.findById(id).orElseThrow();
+
         lectureService.acceptRegister(lecture, register);
+        lectureService.addStudent(lecture, findAccount);
         return "redirect:/lecture/" + lecture.getEncodedPath() + "/student";
     }
 
     @GetMapping("/lecture/{path}/disRegister/{id}/registers/{registerId}/reject")
     public String rejectEnrollment(@CurrentUser Account account, @PathVariable String path,
-                                   Model model, @PathVariable Long registerId) {
+                                   @PathVariable Long id, Model model, @PathVariable Long registerId) {
 //        Study study = studyService.getStudyToUpdate(account, path);
 //        Lecture lecture = lectureRepository.findById(id).orElseThrow();
         Lecture lecture = lectureRepository.findByPath(path);
         Register register = registerRepository.findById(registerId).orElseThrow();
+        Account findAccount = userRepository.findById(id).orElseThrow();
+
         lectureService.rejectRegister(lecture, register);
+        lectureService.removeStudent(lecture, findAccount);
         return "redirect:/lecture/" + lecture.getEncodedPath() + "/student";
     }
 }

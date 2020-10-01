@@ -59,10 +59,10 @@
                         </td>
                         <td th:if="${lecture.isLecturer(#authentication.principal)}">
                             <a th:if="${lecture.canAccept(register)}" href="#" class="text-decoration-none"
-                               th:href="@{'/lecture/' + ${lecture.path} + '/register/' + ${account.id} + '/registers/' + ${register.id} + '/accept'}">신청
+                               th:href="@{'/lecture/' + ${lecture.path} + '/register/' + ${register.account.id} + '/registers/' + ${register.id} + '/accept'}">신청
                                 수락</a>
                             <a th:if="${lecture.canReject(register)}" href="#" class="text-decoration-none"
-                               th:href="@{'/lecture/' + ${lecture.path} + '/disRegister/' + ${account.id} + '/registers/' + ${register.id} + '/reject'}">취소</a>
+                               th:href="@{'/lecture/' + ${lecture.path} + '/disRegister/' + ${register.account.id} + '/registers/' + ${register.id} + '/reject'}">취소</a>
                         </td>
 
                     </tr>
