@@ -39,22 +39,12 @@ public class Lecture {
     private int studentCount;
 
     @OneToMany(mappedBy = "lecture")
-    private List<Register> registers;
+    private List<Register> registers ;
 
     public void addLecturer(Account account) {
         this.lecturer.add(account);
     }
 
-
-    public void addStudent(Account account) {
-        this.getStudent().add(account);
-        this.studentCount++;
-    }
-
-    public void oddStudent(Account account) {
-        this.getStudent().remove(account);
-        this.studentCount--;
-    }
 
     public String getEncodedPath() {
         return URLEncoder.encode(this.path, StandardCharsets.UTF_8);
@@ -73,15 +63,6 @@ public class Lecture {
         return !this.student.contains(account) && !this.lecturer.contains(account);
     }
 
-    public void addRegister(Register register) {
-        this.registers.add(register);
-        register.setLecture(this);
-    }
-
-    public void removeEnrollment(Register register) {
-        this.registers.remove(register);
-        register.setLecture(null);
-    }
     public boolean isAttended(UserAccount userAccount) {
         Account account = userAccount.getAccount();
         for (Register e : this.registers) {
@@ -91,6 +72,7 @@ public class Lecture {
         }
         return false;
     }
+
     private boolean isAlreadyRegister(UserAccount userAccount) {
         Account account = userAccount.getAccount();
         for (Register e : this.registers) {
@@ -101,6 +83,15 @@ public class Lecture {
         return false;
     }
 
+    public void addRegister(Register register) {
+        this.registers.add(register);
+        register.setLecture(this);
+    }
+    public void removeRegister(Register register) {
+        this.registers.remove(register);
+        register.setLecture(null);
+    }
+
     public boolean isRegisterFor(UserAccount userAccount) {
         return !isAlreadyRegister(userAccount);
     }
@@ -109,12 +100,16 @@ public class Lecture {
         return isAlreadyRegister(userAccount);
     }
 
-    public void accept(Register register) {
+    public void accept(Register register, Account account) {
         register.setAccepted(true);
+        this.getStudent().add(account);
+        this.studentCount++;
     }
 
-    public void reject(Register register) {
+    public void reject(Register register, Account account) {
         register.setAccepted(false);
+        this.getStudent().remove(account);
+        this.studentCount--;
     }
 
     public boolean canAccept(Register register) {

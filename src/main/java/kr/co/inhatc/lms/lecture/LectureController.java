@@ -76,66 +76,39 @@ public class LectureController {
         return "lecture/student";
     }
 
-    @GetMapping("/lecture/{path}/register")
-    public String registerStudy(@CurrentUser Account account, @PathVariable String path, Model model) {
-        Lecture lecture = lectureRepository.findStudyWithStudentByPath(path);
-        lectureService.addStudent(lecture, account);
-        list(account, model);
-        model.addAttribute(account);
-        model.addAttribute(lecture);
-        return "lecture/view";
-    }
-
-    @GetMapping("/lecture/{path}/leave")
-    public String leaveStudy(@CurrentUser Account account, @PathVariable String path, Model model) {
-        Lecture lecture = lectureRepository.findStudyWithStudentByPath(path);
-        lectureService.removeStudent(lecture, account);
-        list(account, model);
-        model.addAttribute(account);
-        model.addAttribute(lecture);
-        return "lecture/view";
-    }
-
-
-
     @PostMapping("/lecture/{path}/register/{id}")
-    public String newRegister(@CurrentUser Account account,@PathVariable String path, @PathVariable Long id) {
+    public String newRegister(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id) {
         Lecture lecture = lectureService.getLectureToRegister(path);
         lectureService.newRegister(lectureRepository.findById(id).orElseThrow(), account);
         return "redirect:/lecture/" + lecture.getEncodedPath();
     }
 
     @PostMapping("/lecture/{path}/disRegister/{id}")
-    public String cancelEnrollment(@CurrentUser Account account,
-                                   @PathVariable String path, @PathVariable Long id) {
+    public String cancelEnrollment(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id) {
         Lecture lecture = lectureService.getLectureToRegister(path);
         lectureService.cancelRegister(lectureRepository.findById(id).orElseThrow(), account);
         return "redirect:/lecture/" + lecture.getEncodedPath();
     }
 
     @GetMapping("/lecture/{path}/register/{id}/registers/{registerId}/accept")
-    public String acceptEnrollment(@PathVariable String path,
-                                   @PathVariable Long id , @PathVariable Long registerId) {
+    public String acceptEnrollment(@PathVariable String path, @PathVariable Long id , @PathVariable Long registerId) {
 
         Lecture lecture = lectureRepository.findByPath(path);
         Register register = registerRepository.findById(registerId).orElseThrow();
         Account findAccount = userRepository.findById(id).orElseThrow();
 
-        lectureService.acceptRegister(lecture, register);
-        lectureService.addStudent(lecture, findAccount);
+        lectureService.acceptRegister(findAccount,lecture, register);
         return "redirect:/lecture/" + lecture.getEncodedPath() + "/student";
     }
 
     @GetMapping("/lecture/{path}/disRegister/{id}/registers/{registerId}/reject")
-    public String rejectEnrollment(@PathVariable String path,
-                                   @PathVariable Long id, @PathVariable Long registerId) {
+    public String rejectEnrollment(@PathVariable String path, @PathVariable Long id, @PathVariable Long registerId) {
 
         Lecture lecture = lectureRepository.findByPath(path);
         Register register = registerRepository.findById(registerId).orElseThrow();
         Account findAccount = userRepository.findById(id).orElseThrow();
 
-        lectureService.rejectRegister(lecture, register);
-        lectureService.removeStudent(lecture, findAccount);
+        lectureService.rejectRegister(findAccount,lecture, register);
         return "redirect:/lecture/" + lecture.getEncodedPath() + "/student";
     }
 }

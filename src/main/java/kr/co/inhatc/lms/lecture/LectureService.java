@@ -44,14 +44,6 @@ public class LectureService {
         return lecture;
     }
 
-    public void addStudent(Lecture lecture, Account account) {
-        lecture.addStudent(account);
-    }
-
-    public void removeStudent(Lecture lecture, Account account) {
-        lecture.oddStudent(account);
-    }
-
     public Lecture getLectureToRegister(String path) {
         Lecture lecture = lectureRepository.findLectureOnlyByPath(path);
         checkIfExistingStudy(path, lecture);
@@ -71,16 +63,20 @@ public class LectureService {
     public void cancelRegister(Lecture lecture, Account account) {
         Register register = registerRepository.findByLectureAndAccount(lecture, account);
         if (!register.isAttended()) {
-            lecture.removeEnrollment(register);
+            lecture.removeRegister(register);
             registerRepository.delete(register);
         }
     }
 
-    public void acceptRegister(Lecture lecture, Register register) {
-        lecture.accept(register);
+    public void acceptRegister(Account account,Lecture lecture, Register register) {
+        lecture.accept(register,account);
+//        lecture.addStudent(account);
     }
 
-    public void rejectRegister(Lecture lecture, Register register) {
-        lecture.reject(register);
+    public void rejectRegister(Account account, Lecture lecture, Register register) {
+        lecture.reject(register,account);
+//        lecture.oddStudent(account);
     }
+
+
 }
