@@ -19,8 +19,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .mvcMatchers("/", "/login", "/sign-up", "/check-email-token",
-                "/email-login", "/login-by-email").permitAll()
+                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/", "/login", "/sign-up", "/check-email-token"
+                        ,"/email-login", "/login-by-email").permitAll()
                 .anyRequest().authenticated();
 
         http.formLogin()
@@ -28,6 +29,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.logout()
                 .logoutSuccessUrl("/");
+
+        http.sessionManagement()
+                .maximumSessions(1)
+                .expiredUrl("/login")
+                .maxSessionsPreventsLogin(false);
+
+        http.csrf().disable();
     }
 
     @Override

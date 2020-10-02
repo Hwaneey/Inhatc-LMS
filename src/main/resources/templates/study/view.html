@@ -46,7 +46,7 @@
             <div>
                 <span class="h6">강의 등록일 : </span>
                 <span class="date-time" th:text="${study.getCreatedDateTime()}">Posted on January 1, 2019 at 12:00 PM</span>
-                <span class="pull-right">
+                <span class="pull-right justify-content-center">
                     <a class="btn btn-primary" sec:authorize="isAuthenticated()" th:if="${lecture.isLecturer(#authentication.principal)}"
                        th:href="@{'/study/' + ${lecture.path} + '/events/' + ${study.id} + '/edit'}">
                         수정
@@ -55,7 +55,7 @@
             </div>
             <hr>
             <div class="row px-3 justify-content-center">
-                <div class="col-10 pt-3" th:utext="${study.post}"></div>
+                <div class="pull-left" th:utext="${study.post}"></div>
             </div>
             <hr>
             <h5 class="card-header">강의에 대한 질문을 남겨주세요:</h5>

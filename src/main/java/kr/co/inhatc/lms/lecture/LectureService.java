@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class LectureService {
     private final LectureRepository lectureRepository;
-
     private final RegisterRepository registerRepository;
 
     public Lecture createLecture(Lecture lecture , Account account) {
@@ -70,12 +69,10 @@ public class LectureService {
 
     public void acceptRegister(Account account,Lecture lecture, Register register) {
         lecture.accept(register,account);
-//        lecture.addStudent(account);
     }
 
     public void rejectRegister(Account account, Lecture lecture, Register register) {
         lecture.reject(register,account);
-//        lecture.oddStudent(account);
     }
 
 

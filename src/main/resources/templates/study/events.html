@@ -84,6 +84,10 @@
 </div>
 <div class="col-9 text-right justify-content-end">
 
+    <a href="#" class="btn btn-success" sec:authorize="hasAuthority('ROLE_MANAGER')" th:if="${lecture.isLecturer(#authentication.principal)}"
+       th:href="@{'/lecture/' + ${lecture.path} + '/createStudy'}">
+        <span class="fa fa-plus">강의 개설</span>
+    </a>
     <a href="#" class="btn btn-success" sec:authorize="hasAuthority('ROLE_ADMIN')"
        th:href="@{'/lecture/' + ${lecture.path} + '/createStudy'}">
         <span class="fa fa-plus">강의 개설</span>

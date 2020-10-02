@@ -10,12 +10,10 @@ import org.springframework.stereotype.Component;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-@Slf4j
-@Component
+@Slf4j @Component
 @RequiredArgsConstructor
 public class HtmlEmailService implements EmailService {
     private final JavaMailSender javaMailSender;
-
     @Override
     public void sendEmail(EmailMessage emailMessage) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();

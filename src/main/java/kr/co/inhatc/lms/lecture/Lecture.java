@@ -62,17 +62,15 @@ public class Lecture {
         Account account = userAccount.getAccount();
         return !this.student.contains(account) && !this.lecturer.contains(account);
     }
-
-    public boolean isAttended(UserAccount userAccount) {
-        Account account = userAccount.getAccount();
-        for (Register e : this.registers) {
-            if (e.getAccount().equals(account) && e.isAttended()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
+//    public boolean isAttended(UserAccount userAccount) {
+//        Account account = userAccount.getAccount();
+//        for (Register e : this.registers) {
+//            if (e.getAccount().equals(account) && e.isAttended()) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
     private boolean isAlreadyRegister(UserAccount userAccount) {
         Account account = userAccount.getAccount();
         for (Register e : this.registers) {
