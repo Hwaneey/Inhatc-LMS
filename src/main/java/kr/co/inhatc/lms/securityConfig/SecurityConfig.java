@@ -32,8 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.sessionManagement()
                 .maximumSessions(1)
-                .expiredUrl("/login")
-                .maxSessionsPreventsLogin(false);
+                .maxSessionsPreventsLogin(false)
+                .expiredUrl("/login");
 
         http.csrf().disable();
     }

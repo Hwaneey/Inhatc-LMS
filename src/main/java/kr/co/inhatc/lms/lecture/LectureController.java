@@ -5,8 +5,6 @@ import kr.co.inhatc.lms.Register.RegisterRepository;
 import kr.co.inhatc.lms.account.Account;
 import kr.co.inhatc.lms.account.CurrentUser;
 import kr.co.inhatc.lms.account.UserRepository;
-import kr.co.inhatc.lms.study.StudyRepository;
-import kr.co.inhatc.lms.study.StudyService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -28,8 +26,6 @@ public class LectureController {
     private final LectureRepository lectureRepository;
     private final LectureFormValidator lectureFormValidator;
     private final UserRepository userRepository;
-    private final StudyService studyService;
-    private final StudyRepository studyRepository;
     private final RegisterRepository registerRepository;
 
     private void list(@CurrentUser Account account, Model model) {

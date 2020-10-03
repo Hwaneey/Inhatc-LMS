@@ -75,5 +75,4 @@ public class LectureService {
         lecture.reject(register,account);
     }
 
-
 }

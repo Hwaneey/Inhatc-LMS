@@ -4,84 +4,15 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="fragments.html :: head"></head>
-<body class="bg-light">
+
 <div th:replace="fragments.html :: main-nav"></div>
 
-<div class="container justify-content-center">
-    <div>
-        <div class="row pt-4 text-left justify-content-center bg-light">
-            <div class="col-11">
-                <a href="#" class="text-decoration-none"
-                   th:href="@{'/lecture/' + ${lecture.path}}">
-                    <span class="h5" th:text="${lecture.subjectTitle}">강의명</span>
-                </a>&nbsp;
-                <span sec:authorize="isAuthenticated()">
-                    <button th:if="${lecture.isRegisterFor(#authentication.principal) and !lecture.isLecturer(#authentication.principal)}"
-                            class="btn btn-outline-primary" data-toggle="modal" data-target="#register">
-                        <i class="fa fa-plus-circle"></i> 수강 신청
-                    </button>
-                    <button th:if="${lecture.isDisRegisterFor(#authentication.principal) and !lecture.isStudent(#authentication.principal)}"
-                            class="btn btn-outline-danger" data-toggle="modal" data-target="#disRegister">
-                        <i class="fa fa-minus-circle"></i> 수강 신청 대기중
-                    </button>
-                    <span class="text-success" th:if="${lecture.isStudent(#authentication.principal)}" disabled>
-                        <i class="fa fa-check-circle"></i> 수강중
-                    </span>
-                </span>
-            </div>
-        </div>
-    </div>
-    <br>
-<!--    <br>-->
-</div>
+<div th:replace="fragments.html :: lecture-banner"></div>
 
 <div th:replace="fragments.html :: lecture-menu(lectureMenu='info')"></div>
 
-<div class="modal fade" id="disRegister" tabindex="-1" role="dialog" aria-labelledby="leaveTitle"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="leaveTitle" th:text="${lecture.getSubjectTitle()}"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body"> <p><strong>수강 신청</strong>을 취소하시겠습니까?</p></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                <form th:action="@{'/lecture/' + ${lecture.path} + '/disRegister/' + ${lecture.id}}"
-                      method="post">
-                    <button class="btn btn-primary" type="submit" aria-describedby="submitHelp">확인</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+<body class="bg-light">
 
-<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="registerTitle"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="enrollmentTitle" th:text="${lecture.getSubjectTitle()}"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p><strong>수강 신청</strong>을 하시겠습니까?</p></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                <form th:action="@{'/lecture/' + ${lecture.path} + '/register/' + ${lecture.id}}"
-                      method="post">
-                    <button class="btn btn-primary" type="submit" aria-describedby="submitHelp">확인</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div th:replace="fragments.html :: footer"></div>
 </body>
+<div th:replace="fragments.html :: footer"></div>
 </html>

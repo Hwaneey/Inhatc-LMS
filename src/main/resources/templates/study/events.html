@@ -2,42 +2,29 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments.html :: head"></head>
-<body class="bg-light">
 <nav th:replace="fragments.html :: main-nav"></nav>
-<div class="container justify-content-center">
-    <div>
-        <div class="row pt-4 text-left justify-content-center bg-light">
-            <div class="col-11">
-                <a href="#" class="text-decoration-none"
-                   th:href="@{'/lecture/' + ${lecture.path}}">
-                    <span class="h5" th:text="${lecture.subjectTitle}">강의명</span>
-                </a>
-            </div>
+<div th:replace="fragments.html :: lecture-banner"></div>
+<div th:replace="fragments.html :: lecture-menu(lectureMenu='lecture')"></div>
 
-        </div>
-    </div>
-    <br>
-    <div th:replace="fragments.html :: lecture-menu(lectureMenu='lecture')"></div>
-    <br>
-</div>
+<body class="bg-light">
 <div class="card text-center">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row my-3 mx-3 justify-content-center">
             <div class="col-10 px-0 row">
-
                 <div class="col-12 row row-cols-1 row row-cols-2 row row-cols-3 row row-cols-4">
                     <div class="col mb-4 pr-0 " th:each="event: ${studyPage}">
                         <div class="card border-success mb-3" style="max-width: 18rem;">
                             <div class="card-header bg-transparent border-success">
-                                <span th:text="${eventStat.count + studyPage.getNumber() * 4}" >1</span>주차 &nbsp&nbsp
+                                <span th:text="${eventStat.count + studyPage.getNumber() * 4}">1</span>주차 &nbsp&nbsp
                                 <br>
-                                <small class="date" th:text="${event.getStartDateTime()}">Posted on January 1, 2019 at 12:00
+                                <small class="date" th:text="${event.getStartDateTime()}">Posted on January 1, 2019 at
+                                    12:00
                                     PM</small>~
-                                <small class="date" th:text="${event.getEndDateTime()}">Posted on January 1, 2019 at 12:00 PM</small>
+                                <small class="date" th:text="${event.getEndDateTime()}">Posted on January 1, 2019 at
+                                    12:00 PM</small>
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">
-                                    <!--                                <i class="fa fa-book"></i>-->
                                     <span th:text="${event.title}">강의 명</span>
                                 </li>
                                 <li class="list-group-item">
@@ -84,7 +71,8 @@
 </div>
 <div class="col-9 text-right justify-content-end">
 
-    <a href="#" class="btn btn-success" sec:authorize="hasAuthority('ROLE_MANAGER')" th:if="${lecture.isLecturer(#authentication.principal)}"
+    <a href="#" class="btn btn-success" sec:authorize="hasAuthority('ROLE_MANAGER')"
+       th:if="${lecture.isLecturer(#authentication.principal)}"
        th:href="@{'/lecture/' + ${lecture.path} + '/createStudy'}">
         <span class="fa fa-plus">강의 개설</span>
     </a>

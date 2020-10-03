@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: head"><head/>
-<body>
+<body class="bg-light">
 <div th:replace="fragments :: main-nav"></div>
 <div class="alert alert-warning justify-content-center text-center" style="height: 60%;" role="alert" th:if="${account != null && !account.emailVerified}">
 <!--    <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.-->
@@ -10,12 +10,6 @@
     <a href="#" th:href="@{/check-email}" class="alter-link">
         계정 인증 이메일을 확인
     </a> 하세요
-</div>
-
-<div class="container">
-    <div class="py-5 text-center">
-
-    </div>
 </div>
 <div th:replace="fragments :: footer"></div>
 </body>

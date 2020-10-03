@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,22 +30,27 @@ public class Lecture {
     @ManyToMany
     private Set<Account> student = new HashSet<>();
 
-    private LocalDateTime createdDateTime;
+    @OneToMany(mappedBy = "lecture")
+    private List<Register> registers = new ArrayList<>();
 
     @Column(unique = true)
     private String path;
 
     private String subjectTitle;
 
+    private LocalDateTime createdDateTime;
+
     private int studentCount;
 
-    @OneToMany(mappedBy = "lecture")
-    private List<Register> registers ;
+    @Lob @Basic(fetch = FetchType.EAGER)
+    private String image;
+
+    private boolean showBanner = true;
+
 
     public void addLecturer(Account account) {
         this.lecturer.add(account);
     }
-
 
     public String getEncodedPath() {
         return URLEncoder.encode(this.path, StandardCharsets.UTF_8);
@@ -62,15 +68,7 @@ public class Lecture {
         Account account = userAccount.getAccount();
         return !this.student.contains(account) && !this.lecturer.contains(account);
     }
-//    public boolean isAttended(UserAccount userAccount) {
-//        Account account = userAccount.getAccount();
-//        for (Register e : this.registers) {
-//            if (e.getAccount().equals(account) && e.isAttended()) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+
     private boolean isAlreadyRegister(UserAccount userAccount) {
         Account account = userAccount.getAccount();
         for (Register e : this.registers) {
@@ -117,4 +115,9 @@ public class Lecture {
     public boolean canReject(Register register) {
         return this.registers.contains(register) && register.isAccepted();
     }
+
+    public String getImage() {
+        return image != null ? image : "/images/banner.png";
+    }
+
 }

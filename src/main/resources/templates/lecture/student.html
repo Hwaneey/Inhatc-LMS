@@ -3,24 +3,13 @@
 <head th:replace="fragments.html :: head"></head>
 <body class="bg-light">
 <div th:replace="fragments.html :: main-nav"></div>
-<div class="container">
-    <div >
-        <div class="row pt-4 text-left justify-content-center bg-light">
-            <div class="col-11">
-                <a href="#" class="text-decoration-none"
-                   th:href="@{'/lecture/' + ${lecture.path}}">
-                    <span class="h5" th:text="${lecture.subjectTitle}">강의명</span>
-                </a>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div th:replace="fragments.html :: lecture-menu(lectureMenu='students')"></div>
-    <br>
+<div th:replace="fragments.html :: lecture-banner"></div>
+<div th:replace="fragments.html :: lecture-menu(lectureMenu='students')"></div>
+<br>
 <div class="row justify-content-center">
     <div class="col-lg-6">
-    <div th:replace="fragments.html :: member-list(student=${lecture.lecturer},isLecturer=${true})"></div>
-    <div th:replace="fragments.html :: member-list(student=${lecture.student},isLecturer=${false})"></div>
+        <div th:replace="fragments.html :: member-list(student=${lecture.lecturer},isLecturer=${true})"></div>
+        <div th:replace="fragments.html :: member-list(student=${lecture.student},isLecturer=${false})"></div>
     </div>
     <div class="col justify-content-center">
         <div class="col-xs-10">
@@ -30,7 +19,7 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">학생명 </th>
+                        <th scope="col">학생명</th>
                         <th scope="col">수강 일시</th>
                         <th scope="col">수강 상태</th>
                         <th th:if="${lecture.isLecturer(#authentication.principal)}" scope="col">
@@ -71,7 +60,7 @@
         </div>
     </div>
 </div>
-    <div th:replace="fragments.html :: footer"></div>
+<div th:replace="fragments.html :: footer"></div>
 </div>
 <div th:replace="fragments.html :: date-time"></div>
 </body>

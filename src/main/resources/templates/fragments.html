@@ -14,6 +14,21 @@
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/node_modules/jdenticon/dist/jdenticon.min.js"></script>
 
+    <style type="text/css">
+        .img-jmbo{
+            background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
+                /*url('/images/banner.png');*/
+            url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);
+            background-size: 100%, 100%;
+        }
+        .jumbotron {
+            border-radius: 0 !important;
+        }
+        .nav-link {
+            border-radius: 0 !important;
+        }
+    </style>
+
     <style>
         .container {
             max-width: 100%;
@@ -30,10 +45,17 @@
         .popover {
             font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         }
+
+        footer {
+            position: fixed;
+            height: 100px;
+            bottom: 0;
+            width: 100%;
+        }
     </style>
 </head>
 
-<nav th:fragment="main-nav" class="navbar navbar-expand-lg navbar-dark" style="background-color: #24292e;">
+<nav th:fragment="main-nav" class="navbar navbar-expand-sm navbar-dark" style="background-color: #24292e;">
     <div>
         <a class="navbar-brand" th:href="@{/}">
 <!--            <img src="/images/logo.png" width="30" height="30">-->
@@ -41,13 +63,7 @@
         </a>
     </div>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-
-            </li>
-        </ul>
-
-        <ul class="navbar-nav justify-content-end">
+        <ul class="navbar-nav ml-auto nav-flex-icons">
 
             <li class="nav-item" sec:authorize="!isAuthenticated()">
                 <a class="nav-link" th:href="@{/login}" style="color: white" > Sign in </a>
@@ -57,8 +73,8 @@
                 <a class="nav-link" th:href="@{/sign-up}" style="color: white"> Sign up </a>
             </li>
 
-            <li class="nav-item dropdown"  sec:authorize="hasAuthority('ROLE_USER')" th:if="${account != null && !account.emailVerified}"></li>
-            <li class="nav-item dropdown"  sec:authorize="hasAuthority('ROLE_USER')" th:if="${account != null && account.emailVerified}">
+<!--            <li class="nav-item dropdown"  sec:authorize="hasAuthority('ROLE_USER')" th:if="${account != null && !account.emailVerified}"></li>-->
+            <li class="nav-item dropdown"  sec:authorize="hasAuthority('ROLE_USER')">
                 <a class="nav-link dropdown-toggle" href="#" id="usersDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-plus" aria-hidden="true"></i>
@@ -123,8 +139,80 @@
     </div>
 </nav>
 
-<div th:fragment="lecture-menu (lectureMenu)" class="row px-1 justify-content-center bg-light">
-    <nav class="col-11 nav nav-tabs">
+<div th:fragment="lecture-banner" class="jumbotron img-jmbo" style="margin-bottom: -10px;">
+    <div class="container-fluid">
+        <a href="#" class="text-decoration-none text-white" th:href="@{'/lecture/' + ${lecture.path}}">
+            <span class="h2" th:text="${lecture.subjectTitle}">강의명</span>
+        </a>
+        <div>
+            <div class="row pt-4 text-left">
+                <div class="col-12">
+                <span sec:authorize="isAuthenticated()">
+                    <button th:if="${lecture.isRegisterFor(#authentication.principal) and !lecture.isLecturer(#authentication.principal)}"
+                            class="btn btn-danger" data-toggle="modal" data-target="#register">
+                        <i class="fa fa-plus-circle"></i> 수강신청
+                    </button>
+                    <button th:if="${lecture.isDisRegisterFor(#authentication.principal) and !lecture.isStudent(#authentication.principal)}"
+                            class="btn btn-primary" data-toggle="modal" data-target="#disRegister">
+                        <i class="fa fa-minus-circle"></i> 대기중
+                    </button>
+                    <span class="btn btn-success" th:if="${lecture.isStudent(#authentication.principal)}" disabled>
+                        <i class="fa fa-check-circle"></i> 수강중
+                    </span>
+                </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="disRegister" tabindex="-1" role="dialog" aria-labelledby="leaveTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="leaveTitle" th:text="${lecture.getSubjectTitle()}"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body"><p><strong>수강 신청</strong>을 취소하시겠습니까?</p></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                        <form th:action="@{'/lecture/' + ${lecture.path} + '/disRegister/' + ${lecture.id}}"
+                              method="post">
+                            <button class="btn btn-primary" type="submit" aria-describedby="submitHelp">확인</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="registerTitle"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="enrollmentTitle" th:text="${lecture.getSubjectTitle()}"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>수강 신청</strong>을 하시겠습니까?</p></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                        <form th:action="@{'/lecture/' + ${lecture.path} + '/register/' + ${lecture.id}}"
+                              method="post">
+                            <button class="btn btn-primary" type="submit" aria-describedby="submitHelp">확인</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:fragment="lecture-menu (lectureMenu)" >
+    <nav class="nav nav-tabs nav-fill justify-content-sm-start" style="margin: 10px;">
         <a class="nav-item nav-link" th:classappend="${lectureMenu == 'info'}? active" href="#" th:href="@{'/lecture/' + ${lecture.path}}">
             <i class="fa fa-bullhorn"></i> 공지사항
         </a>
@@ -136,10 +224,10 @@
                 class="nav-item nav-link" th:classappend="${lectureMenu == 'students'}? active" th:href="@{'/lecture/' + ${lecture.path} + '/student'}">
             <i class="fa fa-user-circle" ></i> 수강인원
         </a>
-<!--        <a sec:authorize="isAuthenticated()" th:if="${lecture.isLecturer(#authentication.principal) or lecture.isStudent(#authentication.principal)}"-->
-<!--                class="nav-item nav-link" th:classappend="${lectureMenu == 'assignment'}? active" th:href="@{#}">-->
-<!--            <i class="fa fa-book fa-fw" ></i> 과제-->
-<!--        </a>-->
+        <a sec:authorize="isAuthenticated()" th:if="${lecture.isLecturer(#authentication.principal) or lecture.isStudent(#authentication.principal)}"
+                class="nav-item nav-link" th:classappend="${lectureMenu == 'assignment'}? active" th:href="@{#}">
+            <i class="fa fa-book fa-fw" ></i> 과제
+        </a>
         <a sec:authorize="isAuthenticated()" th:if="${lecture.isLecturer(#authentication.principal) or lecture.isStudent(#authentication.principal)}"
                 class="nav-item nav-link"  th:classappend="${lectureMenu == 'attendance'}? active" th:href="@{#}">
             <i class="fa fa-check" ></i> 출석
@@ -149,36 +237,17 @@
             <i class="fa fa-cog fa-fw" ></i> 설정
         </a>
     </nav>
-</div>
 
-<div th:fragment="study-info">
-    <div class="row pt-4 text-left justify-content-center bg-light">
-        <div class="col-4 text-right justify-content-end">
-            <span sec:authorize="isAuthenticated()" th:if="${!lecture.isStudent(#authentication.principal) and !lecture.isLecturer(#authentication.principal)}"
-                  class="btn-group" role="group" aria-label="Basic example">
-                    <a class="btn btn-primary" th:href="@{'/lecture/' + ${lecture.path} + '/register'}">
-                        수강 신청
-                    </a>
-<!--                    <a class="btn btn-outline-primary" th:href="@{'/lecture/' + ${lecture.path} + '/members'}"-->
-<!--                       th:text="${lecture.student.size()}">1</a>-->
-                </span>
-            <span sec:authorize="isAuthenticated()"
-                  th:if="${lecture.isStudent(#authentication.principal)}" class="btn-group" role="group">
-                    <a class="btn btn-outline-warning" th:href="@{'/lecture/' + ${lecture.path} + '/leave'}">
-                        수강 취소
-                    </a>
-                </span>
-        </div>
-    </div>
 </div>
 
 <div th:fragment="member-list (student, isLecturer)" class="row px-3 justify-content-center">
     <ul class="list-unstyled col-10">
         <li class="media mt-3" th:each="member: ${student}">
             <svg th:data-jdenticon-value="${member.getUsername()}"
-                 width="64" height="64" class="d-flex mr-3 rounded-circle border bg-light"></svg>
+                 width="24" height="24" class="d-flex mr-3 rounded-circle border bg-light"></svg>
             <div class="media-body">
-                <h5 class="mt-0 mb-1"><span th:text="${member.getUsername()}"></span>
+                <h5 class="mt-0 mb-1">
+                    <span th:text="${member.getUsername()}"></span>
                     <span th:if="${isLecturer}" class="badge badge-primary">교수</span>
                 </h5>
 <!--                <span th:text="${member.getUserRole()}"></span>-->
@@ -187,8 +256,18 @@
     </ul>
 </div>
 
+<div th:fragment="lecturer-list (student, isLecturer)" class="row px-3 justify-content-center">
+    <ul class="list-unstyled col-10">
+        <li class="media mt-3" th:each="member: ${student}">
+            <div class="media-body">
+                    <span th:text="${member.getUsername()}"></span>
+            </div>
+        </li>
+    </ul>
+</div>
+
 <footer th:fragment="footer">
-    <div class="footer-copyright text-center py-3">© 2020 Copyright
+    <div class="fixed-bottom footer-copyright text-center py-3">© 2020 Copyright
         <a th:href="@{/}"> Inha Technical College</a>
     </div>
 </footer>
