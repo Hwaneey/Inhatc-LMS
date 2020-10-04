@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" >
-
     <head th:fragment="adminHead">
         <link rel="stylesheet" th:href="@{/css/base.css}" />
         <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css}" />
@@ -12,11 +11,8 @@
             function tabChange(tabNum){
                 if(tabNum == '1'){
                     location.href='/admin/accounts';
-                }else if(tabNum == '2'){
-                    location.href='/admin/roles';
                 }
             }
         </script>
     </head>
-
 </html>

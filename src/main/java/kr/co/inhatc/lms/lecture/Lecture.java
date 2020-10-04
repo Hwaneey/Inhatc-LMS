@@ -47,7 +47,6 @@ public class Lecture {
 
     private boolean showBanner = true;
 
-
     public void addLecturer(Account account) {
         this.lecturer.add(account);
     }
@@ -71,7 +70,7 @@ public class Lecture {
 
     private boolean isAlreadyRegister(UserAccount userAccount) {
         Account account = userAccount.getAccount();
-        for (Register e : this.registers) {
+        for (Register e: this.registers) {
             if (e.getAccount().equals(account)) {
                 return true;
             }
@@ -83,11 +82,11 @@ public class Lecture {
         this.registers.add(register);
         register.setLecture(this);
     }
+
     public void removeRegister(Register register) {
         this.registers.remove(register);
         register.setLecture(null);
     }
-
     public boolean isRegisterFor(UserAccount userAccount) {
         return !isAlreadyRegister(userAccount);
     }

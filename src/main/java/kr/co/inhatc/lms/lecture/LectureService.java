@@ -61,10 +61,8 @@ public class LectureService {
 
     public void cancelRegister(Lecture lecture, Account account) {
         Register register = registerRepository.findByLectureAndAccount(lecture, account);
-        if (!register.isAttended()) {
-            lecture.removeRegister(register);
-            registerRepository.delete(register);
-        }
+        lecture.removeRegister(register);
+        registerRepository.delete(register);
     }
 
     public void acceptRegister(Account account,Lecture lecture, Register register) {

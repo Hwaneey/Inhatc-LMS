@@ -7,27 +7,30 @@
 <div th:replace="fragments.html :: lecture-menu(lectureMenu='students')"></div>
 <br>
 <div class="row justify-content-center">
-    <div class="col-lg-6">
-        <div th:replace="fragments.html :: member-list(student=${lecture.lecturer},isLecturer=${true})"></div>
-        <div th:replace="fragments.html :: member-list(student=${lecture.student},isLecturer=${false})"></div>
-    </div>
-    <div class="col justify-content-center">
-        <div class="col-xs-10">
-            <dt class="font-weight-light">수강 신청자 (<span th:text="${lecture.registers.size()}"></span>)</dt>
+
+<!--    <div class="col-lg-6">-->
+<!--        <div th:replace="fragments.html :: member-list(student=${lecture.lecturer},isLecturer=${true})"></div>-->
+<!--        <div th:replace="fragments.html :: member-list(student=${lecture.student},isLecturer=${false})"></div>-->
+<!--    </div>-->
+
+    <div class="col-md-8 justify-content-center">
+        <div>
+            <dt class="font-weight-normal">수강 신청자 (<span th:text="${lecture.registers.size()}"></span>)</dt>
+            <hr>
             <dd>
-                <table class="table table-borderless table-sm" th:if="${lecture.registers.size() > 0}">
+                <table class="table table-bordered" th:if="${lecture.registers.size() > 0}">
                     <thead>
-                    <tr>
+                    <tr class="text-center">
                         <th scope="col">#</th>
                         <th scope="col">학생명</th>
-                        <th scope="col">수강 일시</th>
+                        <th scope="col">신청 일시</th>
                         <th scope="col">수강 상태</th>
                         <th th:if="${lecture.isLecturer(#authentication.principal)}" scope="col">
-                            수강 신청 상태
+                            수강 신청
                         </th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-center">
                     <tr th:each="register: ${lecture.registers}">
                         <th scope="row" th:text="${registerStat.count}"></th>
                         <td>
@@ -43,8 +46,8 @@
                             <span class="date-time" th:text="${register.getRegisteredAt()}"></span>
                         </td>
                         <td>
-                            <span th:if="${register.accepted}">수강중</span>
-                            <span th:if="${!register.accepted}">대기중</span>
+                            <span class="text-success" th:if="${register.accepted}">수강중</span>
+                            <span class="text-danger"th:if="${!register.accepted}">대기중</span>
                         </td>
                         <td th:if="${lecture.isLecturer(#authentication.principal)}">
                             <a th:if="${lecture.canAccept(register)}" href="#" class="text-decoration-none"

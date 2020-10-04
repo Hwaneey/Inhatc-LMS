@@ -2,11 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments.html :: head"></head>
-<nav th:replace="fragments.html :: main-nav"></nav>
-<div th:replace="fragments.html :: lecture-banner"></div>
-<div th:replace="fragments.html :: lecture-menu(lectureMenu='lecture')"></div>
 
 <body class="bg-light">
+
+<nav th:replace="fragments.html :: main-nav"></nav>
+
+<div th:replace="fragments.html :: lecture-banner"></div>
+
+<div th:replace="fragments.html :: lecture-menu(lectureMenu='lecture')"></div>
+
 <div class="card text-center">
     <div class="container-fluid">
         <div class="row my-3 mx-3 justify-content-center">
@@ -14,27 +18,25 @@
                 <div class="col-12 row row-cols-1 row row-cols-2 row row-cols-3 row row-cols-4">
                     <div class="col mb-4 pr-0 " th:each="event: ${studyPage}">
                         <div class="card border-success mb-3" style="max-width: 18rem;">
+
                             <div class="card-header bg-transparent border-success">
                                 <span th:text="${eventStat.count + studyPage.getNumber() * 4}">1</span>주차 &nbsp&nbsp
                                 <br>
-                                <small class="date" th:text="${event.getStartDateTime()}">Posted on January 1, 2019 at
-                                    12:00
-                                    PM</small>~
-                                <small class="date" th:text="${event.getEndDateTime()}">Posted on January 1, 2019 at
-                                    12:00 PM</small>
+                                <small class="date" th:text="${event.getStartDateTime()}">출석시작일시</small>~
+                                <small class="date" th:text="${event.getEndDateTime()}">출석종료일시</small>
                             </div>
+
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">
                                     <span th:text="${event.title}">강의 명</span>
                                 </li>
                                 <li class="list-group-item">
-
                                     <a href="#" th:href="@{'/study/' + ${lecture.path} + '/events/' + ${event.id}}"
-                                       class="card-link">
-                                        <i class="fa fa-book"></i>
-                                        학습하기</a>
+                                       class="card-link"><i class="fa fa-book"></i>학습하기
+                                    </a>
                                 </li>
                             </ul>
+
                         </div>
                     </div>
 

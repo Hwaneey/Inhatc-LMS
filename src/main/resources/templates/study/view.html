@@ -2,19 +2,22 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments.html :: head"></head>
 
 
 <body class="bg-light">
-<head th:replace="fragments.html :: head"></head>
-<nav th:replace="fragments.html :: main-nav"></nav>
-<div th:replace="fragments.html :: lecture-banner"></div>
-<!-- Page Content -->
-<div class="container">
 
-    <br>
+<nav th:replace="fragments.html :: main-nav"></nav>
+
+<div th:replace="fragments.html :: lecture-banner"></div>
+
+<div th:replace="fragments.html :: lecture-menu(lectureMenu='lecture')"></div>
+
+<div class="container-fluid">
+
     <div class="row justify-content-center">
         <div class="col-xs-10">
-            <table class="table table-hover">
+            <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th scope="col">주차</th>
@@ -28,7 +31,7 @@
                     <td th:text="${event.title}">Title</td>
                     <td>
                         <a th:href="@{'/study/' + ${lecture.path} + '/events/' + ${event.id}}"
-                           class="card-link" >학습하기</a>
+                           class="card-link">학습하기</a>
                     </td>
                 </tr>
                 </tbody>
@@ -36,7 +39,7 @@
         </div>
         <div class="col-lg-6">
             <h5>
-                <a th:href="@{'/lecture/' + ${lecture.path}}">
+                <a th:href="@{'/study/' + ${lecture.path} + '/events/'}">
                     <span th:text="${lecture.subjectTitle}">강의명</span>
                 </a>/
                 <span th:text="${study.title}"></span>
@@ -46,13 +49,7 @@
             <hr>
             <div>
                 <span class="h6">강의 등록일 : </span>
-                <span class="date-time" th:text="${study.getCreatedDateTime()}">Posted on January 1, 2019 at 12:00 PM</span>
-                <span class="pull-right justify-content-center">
-                    <a class="btn btn-primary" sec:authorize="isAuthenticated()" th:if="${lecture.isLecturer(#authentication.principal)}"
-                       th:href="@{'/study/' + ${lecture.path} + '/events/' + ${study.id} + '/edit'}">
-                        수정
-                    </a>
-                </span>
+                <span class="date-time" th:text="${study.getCreatedDateTime()}">등록날짜</span>
             </div>
             <hr>
             <div class="row px-3 justify-content-center">
@@ -63,26 +60,32 @@
             <div class="card-body">
                 <form th:action="@{'/study/' + ${lecture.path} + '/events/' +${study.id} +'/comment'}" method="post">
                     <div class="form-group">
-                        <input  type="hidden" name="studyId" th:value="${study.id}" >
-                        <input type="hidden" name="studyId" >
+                        <input type="hidden" name="studyId" th:value="${study.id}">
+                        <input type="hidden" name="studyId">
                         <textarea class="form-control" type="text" name="content" rows="5"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary pull-left">Submit</button>
                 </form>
+                <span class="pull-right justify-content-center">
+                    <a class="btn btn-warning" sec:authorize="isAuthenticated()"
+                       th:if="${lecture.isLecturer(#authentication.principal)}"
+                       th:href="@{'/study/' + ${lecture.path} + '/events/' + ${study.id} + '/edit'}">수정
+                    </a>
+                </span>
             </div>
             <br>
             <hr>
             <div class="card-body">
-                <ul class="comments-list" th:each="comment,status : ${study.comments}" >
+                <ul class="comments-list" th:each="comment,status : ${study.comments}">
 
-<!--                <ul class="comments-list" th:each="comment : ${#study.comments.sort(#dates)}">-->
-                    <div class="comment" >
-<!--                        <form id="delete-comment-form"  method="post">-->
-<!--                            <input type="hidden" name="_method" value="delete"/>-->
-<!--                            <button class="btn btn-outline-danger pull-right comment-delete-btn">-->
-<!--                                <i class="fa fa-times" aria-hidden="true"></i>-->
-<!--                            </button>-->
-<!--                        </form>-->
+                    <!--                <ul class="comments-list" th:each="comment : ${#study.comments.sort(#dates)}">-->
+                    <div class="comment">
+                        <!--                        <form id="delete-comment-form"  method="post">-->
+                        <!--                            <input type="hidden" name="_method" value="delete"/>-->
+                        <!--                            <button class="btn btn-outline-danger pull-right comment-delete-btn">-->
+                        <!--                                <i class="fa fa-times" aria-hidden="true"></i>-->
+                        <!--                            </button>-->
+                        <!--                        </form>-->
 
                         <a class="pull-left" href="#">
                             <svg th:data-jdenticon-value="${comment.getWriter().getUsername()}"
@@ -91,7 +94,7 @@
                         </a>
                         <div class="media mb-4">
                             <div class="media-body">
-                                <span class="h5" th:text="${comment.getWriter().getUsername()}" >Commenter Name</span>
+                                <span class="h5" th:text="${comment.getWriter().getUsername()}">Commenter Name</span>
                                 <span class="fromNow" th:text="${comment.createdDate}">~분전</span>
                                 <p th:text="${comment.content}"></p>
                             </div>
@@ -101,10 +104,9 @@
                 </ul>
             </div>
         </div>
-        </div>
     </div>
-
 </div>
+
 <div th:replace="fragments.html :: date-time"></div>
 <div th:replace="fragments.html :: footer"></div>
 </body>

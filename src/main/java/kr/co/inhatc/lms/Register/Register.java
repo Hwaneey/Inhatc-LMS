@@ -31,5 +31,4 @@ public class Register {
 
     private boolean accepted;
 
-    private boolean attended;
 }

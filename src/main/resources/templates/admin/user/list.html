@@ -3,21 +3,15 @@
 <head th:replace="fragments :: head"><head/>
 
 <body>
-	<script type="text/javascript">
-	$(document).ready(function(){
-	});
-	
-	</script>
 	<div th:replace="fragments :: main-nav"></div>
-	<div id="maininner"><!-- maininner (s)-->
-		<div class="cc-tab-con">
-			<a href="javascript:void(0);" class="cc-tab-item on">사용자관리</a>		<!--// on : 현재 위치 //-->
-<!--			<a href="javascript:tabChange('2');" class="cc-tab-item">권한관리</a>-->
-		</div>
-			<div class="tbl_wrp">
-				<table class="table">
+			<div class="col-xs-10">
+				<br>
+				<dt class="h2">전체 회원 (<span th:text="${accounts.size()}"></span>)</dt>
+				<hr>
+				<dd>
+				<table class="table table-bordered">
 					<thead>
-					<tr class="table-info">
+					<tr class="thead">
 						<th scope="col">이름</th>
 						<th scope="col">이메일</th>
 						<th scope="col">가입날짜</th>
@@ -40,12 +34,30 @@
 					</tr>
 					</tbody>
 				</table>
+					<nav aria-label="Page navigation example">
+						<ul class="pagination justify-content-center">
+							<li class="page-item disabled">
+								<a class="page-link" href="#" tabindex="-1">Previous</a>
+							</li>
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item">
+								<a class="page-link" href="#">Next</a>
+							</li>
+						</ul>
+					</nav>
+				<dd>
+				<hr>
 				<div style="text-align:left;">
 					<p><a class="btn btn-dark btn-lg" style="margin:10;" th:href="@{/admin/user/register}">회원 등록</a></p>
 				</div>
 			</div>
-	</div>
+
 	<div th:replace="fragments :: footer"></div>
-	<div th:replace="fragments.html :: date-time"></div>
 </body>
+<div th:replace="fragments.html :: date-time"></div>
+<script type="text/javascript">
+	$(document).ready(function(){
+	});
+
+</script>
 </html>

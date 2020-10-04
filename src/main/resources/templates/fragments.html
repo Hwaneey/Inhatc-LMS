@@ -209,20 +209,17 @@
         </div>
     </div>
 
+
 </div>
 
 <div th:fragment="lecture-menu (lectureMenu)" >
     <nav class="nav nav-tabs nav-fill justify-content-sm-start" style="margin: 10px;">
         <a class="nav-item nav-link" th:classappend="${lectureMenu == 'info'}? active" href="#" th:href="@{'/lecture/' + ${lecture.path}}">
-            <i class="fa fa-bullhorn"></i> 공지사항
+            <i class="fa fa-bullhorn"></i> 소개
         </a>
         <a sec:authorize="isAuthenticated()" th:if="${lecture.isLecturer(#authentication.principal) or lecture.isStudent(#authentication.principal) }"
                 class="nav-item nav-link" th:classappend="${lectureMenu == 'lecture'}? active" href="#" th:href="@{'/study/' + ${lecture.path} + '/events/'}">
             <i class="fa fa-caret-square-o-right"></i> 강의실
-        </a>
-        <a sec:authorize="isAuthenticated()" th:if="${lecture.isLecturer(#authentication.principal)}"
-                class="nav-item nav-link" th:classappend="${lectureMenu == 'students'}? active" th:href="@{'/lecture/' + ${lecture.path} + '/student'}">
-            <i class="fa fa-user-circle" ></i> 수강인원
         </a>
         <a sec:authorize="isAuthenticated()" th:if="${lecture.isLecturer(#authentication.principal) or lecture.isStudent(#authentication.principal)}"
                 class="nav-item nav-link" th:classappend="${lectureMenu == 'assignment'}? active" th:href="@{#}">
@@ -231,6 +228,10 @@
         <a sec:authorize="isAuthenticated()" th:if="${lecture.isLecturer(#authentication.principal) or lecture.isStudent(#authentication.principal)}"
                 class="nav-item nav-link"  th:classappend="${lectureMenu == 'attendance'}? active" th:href="@{#}">
             <i class="fa fa-check" ></i> 출석
+        </a>
+        <a sec:authorize="isAuthenticated()" th:if="${lecture.isLecturer(#authentication.principal)}"
+           class="nav-item nav-link" th:classappend="${lectureMenu == 'students'}? active" th:href="@{'/lecture/' + ${lecture.path} + '/student'}">
+            <i class="fa fa-user-circle" ></i> 수강생
         </a>
         <a sec:authorize="isAuthenticated()" th:if="${lecture.isLecturer(#authentication.principal)}"
            class="nav-item nav-link" th:classappend="${lectureMenu == 'setting'}? active" href="#" th:href="@{#}">
