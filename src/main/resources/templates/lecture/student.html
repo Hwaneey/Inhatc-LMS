@@ -15,8 +15,7 @@
 
     <div class="col-md-8 justify-content-center">
         <div>
-            <dt class="font-weight-normal">수강 신청자 (<span th:text="${lecture.registers.size()}"></span>)</dt>
-            <hr>
+            <dt class="font-weight-normal">수강 신청자 (<span th:text="${lecture.registers.size()}"></span>)</dt><br>
             <dd>
                 <table class="table table-bordered" th:if="${lecture.registers.size() > 0}">
                     <thead>
