@@ -3,39 +3,50 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="fragments :: head"><head/>
+<head th:replace="fragments :: head">
+    <head/>
 <body>
 <div th:replace="fragments :: main-nav"></div>
 <div class="container">
     <div th:if="${param.error}" class="alert alert-danger" role="alert">
         이메일 혹은 패스워드가 일치하지 않습니다.
     </div>
-    <div class="py-5 text-center">
-        <p class="lead" >Sign in to InhaTC</p>
-    </div>
-
     <div class="row justify-content-center">
         <form class="needs-validation col-sm-7" action="#" th:action="@{/login}" method="post" novalidate>
-            <div>
-<!--            <img src="/images/logo_lg.png" width="250" height="250">-->
+            <div class="text-center py-5 ">
+                <a href="/" class="lead">Inha Technical College</a><br>
+                <h2>  Sign in your account</h2>
             </div>
+<!--            <div class="row justify-content-center">-->
+<!--                <img src="/images/logo_lg_bor.png" width="250" height="250">-->
+<!--            </div>-->
             <div class="form-group">
-                <label >Email address</label>
+
+                <label>이메일</label>
                 <input id="username" type="email" name="username" class="form-control"
                        placeholder="your@email.com" aria-describedby="emailHelp" required>
                 <small class="invalid-feedback">이메일을 입력하세요.</small>
+                <small id="usernameHelp" class="form-text text-muted">
+                    3자 이상 20자 이내로 입력하세요.</small>
             </div>
 
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password">비밀번호</label>
                 <input id="password" type="password" name="password" class="form-control"
                        aria-describedby="passwordHelp" required>
                 <small class="invalid-feedback">패스워드를 입력하세요.</small>
+                <small id="passwordHelp" class="form-text text-muted">
+                    6자 이상 50자 이내로 입력하세요.</small>
+            </div>
+
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="rememberMe" name="remember-me" checked>
+                <label class="form-check-label" for="rememberMe" aria-describedby="rememberMeHelp">로그인 유지</label>
             </div>
 
             <div class="form-group">
-                <button class="btn btn-success btn-block" type="submit"
-                        aria-describedby="submitHelp">Sign in
+                <button class="btn btn-success btn-lg btn-block" type="submit"
+                        aria-describedby="submitHelp">로그인
                 </button>
             </div>
 
@@ -44,7 +55,7 @@
     <br>
     <div class="row justify-content-center">
         <li id="submitHelp" class="form-text text-muted">
-            New to GitHub? <a href="#" th:href="@{/sign-up}"> Create an account</a>
+            계정이 없으신가요? <a href="#" th:href="@{/sign-up}"> Create your account</a>
         </li>
     </div>
 </div>

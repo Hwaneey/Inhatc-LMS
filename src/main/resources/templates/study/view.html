@@ -15,8 +15,8 @@
 
 <div class="container-fluid">
 
-    <div class="row justify-content-center">
-        <div class="col-xs-10">
+    <div class="row px-3 justify-content-center">
+        <div class="col-xs-1 text-center">
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -37,7 +37,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-lg-6">
+        <div class="col-8 pt-3 text-left">
             <h5>
                 <a th:href="@{'/study/' + ${lecture.path} + '/events/'}">
                     <span th:text="${lecture.subjectTitle}">강의명</span>
@@ -52,7 +52,7 @@
                 <span class="date-time" th:text="${study.getCreatedDateTime()}">등록날짜</span>
             </div>
             <hr>
-            <div class="row px-3 justify-content-center">
+            <div class="row px-3 ">
                 <div class="pull-left" th:utext="${study.post}"></div>
             </div>
             <hr>
@@ -108,6 +108,6 @@
 </div>
 
 <div th:replace="fragments.html :: date-time"></div>
-<div th:replace="fragments.html :: footer"></div>
+<!--<div th:replace="fragments.html :: footer"></div>-->
 </body>
 </html>

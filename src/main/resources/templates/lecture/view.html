@@ -12,7 +12,14 @@
 <div th:replace="fragments.html :: lecture-menu(lectureMenu='info')"></div>
 
 <body class="bg-light">
-
+<div class="row px-3 justify-content-center">
+<!--    <div class="col-10 pt-3" th:utext="${introduce.getIntroducePost()}"></div>-->
+</div>
+<a href="#" class="btn btn-success" sec:authorize="hasAuthority('ROLE_MANAGER')"
+   th:if="${lecture.isLecturer(#authentication.principal)}"
+   th:href="@{'/lecture/' + ${lecture.path} + '/introduceForm'}">
+    <span class="fa fa-plus">소개 작성</span>
+</a>
 </body>
 <div th:replace="fragments.html :: footer"></div>
 </html>

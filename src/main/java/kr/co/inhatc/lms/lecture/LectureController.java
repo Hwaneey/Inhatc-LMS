@@ -5,6 +5,7 @@ import kr.co.inhatc.lms.Register.RegisterRepository;
 import kr.co.inhatc.lms.account.Account;
 import kr.co.inhatc.lms.account.CurrentUser;
 import kr.co.inhatc.lms.account.UserRepository;
+import kr.co.inhatc.lms.introduce.Introduce;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -35,9 +36,9 @@ public class LectureController {
 
     @GetMapping("/new-lecture")
     public String newStudyForm(@CurrentUser Account account, Model model) {
+        model.addAttribute(new LectureForm());
         model.addAttribute(account);
         list(account, model);
-        model.addAttribute(new LectureForm());
         return "lecture/form";
     }
 
@@ -56,11 +57,12 @@ public class LectureController {
     }
 
     @GetMapping("/lecture/{path}")
-    public String viewLecture(@CurrentUser Account account, @PathVariable String path, Model model) {
+    public String viewLecture(@CurrentUser Account account, @PathVariable String path, Model model, Introduce introduce) {
         Lecture lecture = lectureRepository.findByPath(path);
         list(account, model);
         model.addAttribute(account);
         model.addAttribute(lecture);
+        model.addAttribute(introduce);
         return "lecture/view";
     }
 

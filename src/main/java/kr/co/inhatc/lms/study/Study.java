@@ -1,7 +1,7 @@
 package kr.co.inhatc.lms.study;
 
-import kr.co.inhatc.lms.comment.Comment;
 import kr.co.inhatc.lms.account.Account;
+import kr.co.inhatc.lms.comment.Comment;
 import kr.co.inhatc.lms.lecture.Lecture;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,17 +28,19 @@ public class Study {
     @ManyToOne
     private Account createdBy;
 
-    @ManyToOne
-    @JoinColumn(name ="account_lecturer")
+    @ManyToOne @JoinColumn(name ="account_lecturer")
     private Account writer;
 
     @Column(nullable = false)
     private  String title;
 
+    @Column(updatable = false)
     private LocalDateTime createdDateTime;
 
+    @Column(updatable = false)
     private LocalDateTime startDateTime;
 
+    @Column(updatable = false)
     private LocalDateTime endDateTime;
 
     @Lob
@@ -58,5 +60,6 @@ public class Study {
     public void removeComment (Comment comment) {
         this.comments.remove(comment);
     }
+
 
 }

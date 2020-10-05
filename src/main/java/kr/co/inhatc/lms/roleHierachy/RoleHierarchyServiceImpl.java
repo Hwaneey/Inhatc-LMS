@@ -22,7 +22,9 @@ public class RoleHierarchyServiceImpl implements RoleHierarchyService {
         List<RoleHierarchy> rolesHierarchy = roleHierarchyRepository.findAll();
 
         Iterator<RoleHierarchy> itr = rolesHierarchy.iterator();
+
         StringBuilder concatedRoles = new StringBuilder();
+
         while (itr.hasNext()) {
             RoleHierarchy roleHierarchy = itr.next();
             if (roleHierarchy.getParentName() != null) {
