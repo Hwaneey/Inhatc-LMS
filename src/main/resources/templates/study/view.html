@@ -37,7 +37,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-8 pt-3 text-left">
+
+        <div class="col-9 pt-3 text-left">
             <h5>
                 <a th:href="@{'/study/' + ${lecture.path} + '/events/'}">
                     <span th:text="${lecture.subjectTitle}">강의명</span>
@@ -52,7 +53,7 @@
                 <span class="date-time" th:text="${study.getCreatedDateTime()}">등록날짜</span>
             </div>
             <hr>
-            <div class="row px-3 ">
+            <div class="row px-3">
                 <div class="pull-left" th:utext="${study.post}"></div>
             </div>
             <hr>
