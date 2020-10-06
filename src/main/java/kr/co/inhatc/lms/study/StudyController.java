@@ -37,7 +37,6 @@ public class StudyController {
         model.addAttribute("studentManagerOf",lectureRepository.findFirst5ByStudentContaining(account));
     }
 
-
     @GetMapping("/lecture/{path}/createStudy")
     public String createStudy(@CurrentUser Account account, @PathVariable String path, Model model) {
         Lecture lecture = lectureService.getStudyToUpdateStatus(path);
@@ -71,12 +70,12 @@ public class StudyController {
 
     @GetMapping("/study/{path}/events/{id}")
     public String getEvent(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id, Model model) {
-        model.addAttribute(account);
+        Lecture lecture = studyService.getStudy(path);
         model.addAttribute(studyRepository.findById(id).orElseThrow());
         model.addAttribute(lectureService.getStudy(path));
-        list(account, model);
-        Lecture lecture = studyService.getStudy(path);
         List<Study> study = studyRepository.findByLectureOrderByStartDateTime(lecture);
+        list(account, model);
+        model.addAttribute(account);
         model.addAttribute("studys",study);
         return "study/view";
     }
@@ -85,11 +84,11 @@ public class StudyController {
     public String viewStudyEvents(@CurrentUser Account account, @PathVariable String path, Model model,
                                   @PageableDefault(size = 4,direction = Sort.Direction.DESC)Pageable pageable) {
         Lecture lecture = studyService.getStudy(path);
+        Page<Study> studyPage = studyRepository.findByLectureOrderByStartDateTime(lecture,pageable);
+        list(account, model);
+        model.addAttribute("studyPage",studyPage);
         model.addAttribute(account);
         model.addAttribute(lecture);
-        list(account, model);
-        Page<Study> studyPage = studyRepository.findByLectureOrderByStartDateTime(lecture,pageable);
-        model.addAttribute("studyPage",studyPage);
         return "study/events";
     }
 

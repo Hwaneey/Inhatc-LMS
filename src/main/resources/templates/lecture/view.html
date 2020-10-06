@@ -13,15 +13,21 @@
 
 <body class="bg-light">
 
+<a class="row px-3 justify-content-center" sec:authorize="hasAuthority('ROLE_MANAGER')"
+   th:if="${lecture.isLecturer(#authentication.principal)}"
+   th:href="@{'/lecture/' + ${lecture.path} + '/introduceForm'}">
+    <span th:if="${lecture.isIntroduce()} == false" class="fa fa-plus"> 학습목표 작성</span>
+</a>
+
+<a class="row px-3 justify-content-center" sec:authorize="hasAuthority('ROLE_MANAGER')"
+   th:if="${lecture.isLecturer(#authentication.principal)}"
+   th:href="@{'/lecture/' + ${lecture.path} + '/edit'}">
+    <span th:if="${lecture.isIntroduce()} == true" class="fa fa-plus"> 학습목표 수정</span>
+</a>
+
 <div class="row px-3 justify-content-center">
     <div class="col-10 pt-3" th:utext="${lecture.introduce}"></div>
 </div>
-
-<a class="row px-3 justify-content-center" sec:authorize="hasAuthority('ROLE_MANAGER')"
-   th:if="${lecture.isLecturer(#authentication.principal) and lecture.isIntroduce()==false}"
-   th:href="@{'/lecture/' + ${lecture.path} + '/introduceForm'}">
-    <span class="fa fa-plus"> 소개 작성</span>
-</a>
 </body>
 <!--<div th:replace="fragments.html :: footer"></div>-->
 </html>

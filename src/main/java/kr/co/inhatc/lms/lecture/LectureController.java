@@ -68,6 +68,7 @@ public class LectureController {
     @GetMapping("/lecture/{path}/introduceForm")
     public String newIntroduce(@CurrentUser Account account, @PathVariable String path, Model model) {
         Lecture lecture = lectureRepository.findByPath(path);
+        list(account, model);
         model.addAttribute(account);
         model.addAttribute(lecture);
         model.addAttribute(new IntroduceForm());
@@ -75,12 +76,40 @@ public class LectureController {
     }
 
     @PostMapping("/lecture/{path}/introduceForm")
-    public String newIntroduceSubmit(@CurrentUser Account account, @PathVariable String path, IntroduceForm introduceForm, Errors errors, Model model) {
+    public String newIntroduceSubmit(@CurrentUser Account account, @PathVariable String path, IntroduceForm introduceForm, Errors errors,Model model) {
         Lecture lecture = lectureService.getLectureToRegister(path);
         if (errors.hasErrors()) {
+            model.addAttribute(account);
+            model.addAttribute(lecture);
             return "lecture/view";
         }
         lectureService.createIntroduce(lecture,introduceForm);
+        return "redirect:/lecture/" + lecture.getEncodedPath();
+    }
+
+    @GetMapping("/lecture/{path}/edit")
+    public String editIntroduce(@CurrentUser Account account, @PathVariable String path, Model model) {
+//        Lecture lecture = lectureRepository.findByPath(path);
+        Lecture lecture = lectureService.getStudy(path);
+        model.addAttribute(account);
+        model.addAttribute(lecture);
+        model.addAttribute(modelMapper.map(lecture,IntroduceForm.class));
+        list(account, model);
+        return "lecture/editIntroduceForm";
+    }
+
+    @PostMapping("/lecture/{path}/edit")
+    public String editIntroduceSubmit(@CurrentUser Account account, @PathVariable String path,IntroduceForm introduceForm,
+                                  Errors errors, Model model) {
+//        Lecture lecture = lectureService.getStudyToUpdateStatus(path);
+//        Lecture lecture = lectureRepository.findByPath(path);
+        Lecture lecture = lectureService.getStudy(path);
+        if (errors.hasErrors()) {
+            model.addAttribute(account);
+            model.addAttribute(lecture);
+            return "lecture/view";
+        }
+        lectureService.editIntroduce(lecture,introduceForm);
         return "redirect:/lecture/" + lecture.getEncodedPath();
     }
 

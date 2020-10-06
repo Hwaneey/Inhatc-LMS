@@ -40,7 +40,7 @@
             <div class="form-group">
                 <label for="description">강의 설명</label>
                 <textarea id="description" type="textarea" th:field="*{post}" class="editor form-control"
-                          placeholder="강의을 자세히 설명해 주세요." aria-describedby="descriptionHelp" required>
+                          placeholder="강의를 자세히 설명해 주세요." aria-describedby="descriptionHelp" required>
                 </textarea>
                 <small class="invalid-feedback">강의 내용 을 입력하세요.</small>
                 <small class="form-text text-danger" th:if="${#fields.hasErrors('post')}" th:errors="*{post}">Error</small>

@@ -12,26 +12,25 @@
 <div class="bg-light container">
 
     <div class="py-5 text-center">
-        <h2>학습목표 개설</h2>
+        <h2>학습목표 수정</h2>
     </div>
 
     <div class="row justify-content-center">
-        <form class="needs-validation col-sm-10" th:action="@{'/lecture/' + ${lecture.path} + '/introduceForm'}" th:object="${introduceForm}" method="post" novalidate>
+        <form class="needs-validation col-sm-10" th:action="@{'/lecture/' + ${lecture.path} + '/edit'}" th:object="${introduceForm}" method="post" novalidate>
 
             <div class="form-group">
-                <label for="fullDescription">상세 소개</label>
-                <textarea id="fullDescription" type="textarea" th:field="*{introduce}" class="editor form-control"
+                <label for="introducePost">상세 소개</label>
+                <textarea id="introducePost" type="textarea" class="editor form-control" th:field="*{introduce}"
                           placeholder="강의를 자세히 설명해 주세요." aria-describedby="fullDescriptionHelp" required></textarea>
                 <small id="fullDescriptionHelp" class="form-text text-muted">
                     강의 목표, 일정, 진행 방식, 사용할 교재 또는 인터넷 강좌등 강의에 대해 자세히 적어 주세요.
                 </small>
                 <small class="invalid-feedback">상세 소개를 입력하세요.</small>
-<!--                <small class="form-text text-danger" th:if="${#fields.hasErrors('fullDescription')}" th:errors="*{fullDescription}">FullDescription Error</small>-->
             </div>
 
             <div class="form-group">
                 <button class="btn btn-primary btn-block" type="submit"
-                        aria-describedby="submitHelp">소개 만들기</button>
+                        aria-describedby="submitHelp">수정하기</button>
             </div>
         </form>
     </div>

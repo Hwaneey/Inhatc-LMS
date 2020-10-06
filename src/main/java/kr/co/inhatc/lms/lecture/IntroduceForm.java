@@ -1,12 +1,15 @@
 package kr.co.inhatc.lms.lecture;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Basic;
+import javax.persistence.FetchType;
+import javax.persistence.Lob;
 
-@Data
+@Data @NoArgsConstructor
 public class IntroduceForm {
-    @NotBlank
-    private String introducePost;
-
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
+    private String introduce;
 }

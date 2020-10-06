@@ -17,6 +17,7 @@ public class LectureService {
     private final LectureRepository lectureRepository;
     private final RegisterRepository registerRepository;
     private final ModelMapper modelMapper;
+
     public Lecture createLecture(Lecture lecture , Account account) {
         Lecture createLecture = lectureRepository.save(lecture);
         createLecture.addLecturer(account);
@@ -54,6 +55,10 @@ public class LectureService {
         modelMapper.map(introduceForm, lecture);
     }
 
+    public void editIntroduce(Lecture lecture, IntroduceForm introduceForm) {
+        modelMapper.map(introduceForm, lecture);
+    }
+
     public void newRegister(Lecture lecture, Account account) {
         if (!registerRepository.existsByLectureAndAccount(lecture, account)) {
             Register register = new Register();
@@ -77,4 +82,5 @@ public class LectureService {
     public void rejectRegister(Account account, Lecture lecture, Register register) {
         lecture.reject(register,account);
     }
+
 }
