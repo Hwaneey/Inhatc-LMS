@@ -24,26 +24,24 @@ public class Lecture {
     @Id @GeneratedValue
     private Long id;
 
-    @ManyToMany
-    private Set<Account> lecturer = new HashSet<>();
-
-    @ManyToMany
-    private Set<Account> student = new HashSet<>();
-
-    @OneToMany(mappedBy = "lecture")
-    private List<Register> registers = new ArrayList<>();
-
     @Column(unique = true)
     private String path;
 
     private String subjectTitle;
-
-    private LocalDateTime createdDateTime;
-
-    private int studentCount;
-
     @Lob @Basic(fetch = FetchType.EAGER)
     private String image;
+    @ManyToMany
+    private Set<Account> lecturer = new HashSet<>();
+    @ManyToMany
+    private Set<Account> student = new HashSet<>();
+    @OneToMany(mappedBy = "lecture")
+    private List<Register> registers = new ArrayList<>();
+
+    private LocalDateTime createdDateTime;
+    @Lob @Basic(fetch = FetchType.EAGER)
+    private String introduce;
+    private int studentCount;
+
 
     private boolean showBanner = true;
 
@@ -53,6 +51,10 @@ public class Lecture {
 
     public String getEncodedPath() {
         return URLEncoder.encode(this.path, StandardCharsets.UTF_8);
+    }
+
+    public boolean isIntroduce() {
+        return this.introduce != null;
     }
 
     public boolean isLecturer(UserAccount userAccount) {
@@ -87,6 +89,7 @@ public class Lecture {
         this.registers.remove(register);
         register.setLecture(null);
     }
+
     public boolean isRegisterFor(UserAccount userAccount) {
         return !isAlreadyRegister(userAccount);
     }

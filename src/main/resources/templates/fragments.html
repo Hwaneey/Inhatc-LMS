@@ -57,12 +57,14 @@
 </head>
 
 <nav th:fragment="main-nav" class="navbar navbar-expand-sm navbar-dark" style="background-color: #24292e;">
+
     <div>
         <a class="navbar-brand" th:href="@{/}">
-<!--            <img src="/images/logo.png" width="30" height="30">-->
-            Inha Technical College
+<!--            <img src="/images/logo.png" width="30" height="30">&nbsp-->
+            &nbsp Inha Technical College
         </a>
     </div>
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto nav-flex-icons">
 
@@ -216,7 +218,7 @@
 <div th:fragment="lecture-menu (lectureMenu)" >
     <nav class="nav nav-tabs nav-fill justify-content-sm-start" style="margin: 10px;">
         <a class="nav-item nav-link" th:classappend="${lectureMenu == 'info'}? active" href="#" th:href="@{'/lecture/' + ${lecture.path}}">
-            <i class="fa fa-bullhorn"></i> 소개
+            <i class="fa fa-bullhorn"></i> 학습목표
         </a>
         <a sec:authorize="isAuthenticated()" th:if="${lecture.isLecturer(#authentication.principal) or lecture.isStudent(#authentication.principal) }"
                 class="nav-item nav-link" th:classappend="${lectureMenu == 'lecture'}? active" href="#" th:href="@{'/study/' + ${lecture.path} + '/events/'}">

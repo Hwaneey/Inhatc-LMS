@@ -5,7 +5,6 @@ import kr.co.inhatc.lms.Register.RegisterRepository;
 import kr.co.inhatc.lms.account.Account;
 import kr.co.inhatc.lms.account.CurrentUser;
 import kr.co.inhatc.lms.account.UserRepository;
-import kr.co.inhatc.lms.introduce.Introduce;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -29,6 +28,7 @@ public class LectureController {
     private final UserRepository userRepository;
     private final RegisterRepository registerRepository;
 
+
     private void list(@CurrentUser Account account, Model model) {
         model.addAttribute("lectureManagerOf", lectureRepository.findFirst5ByLecturerContaining(account));
         model.addAttribute("studentManagerOf", lectureRepository.findFirst5ByStudentContaining(account));
@@ -48,22 +48,40 @@ public class LectureController {
             model.addAttribute(account);
             return "lecture/form";
         }
-        lectureFormValidator.validate(lectureForm,errors);
-        if (errors.hasErrors()){
+        lectureFormValidator.validate(lectureForm, errors);
+        if (errors.hasErrors()) {
             return "lecture/form";
         }
-        Lecture createLecture = lectureService.createLecture(modelMapper.map(lectureForm, Lecture.class),account);
+        Lecture createLecture = lectureService.createLecture(modelMapper.map(lectureForm, Lecture.class), account);
         return "redirect:/lecture/" + URLEncoder.encode(createLecture.getPath(), StandardCharsets.UTF_8);
     }
 
     @GetMapping("/lecture/{path}")
-    public String viewLecture(@CurrentUser Account account, @PathVariable String path, Model model, Introduce introduce) {
+    public String viewLecture(@CurrentUser Account account, @PathVariable String path, Model model) {
         Lecture lecture = lectureRepository.findByPath(path);
         list(account, model);
         model.addAttribute(account);
         model.addAttribute(lecture);
-        model.addAttribute(introduce);
         return "lecture/view";
+    }
+
+    @GetMapping("/lecture/{path}/introduceForm")
+    public String newIntroduce(@CurrentUser Account account, @PathVariable String path, Model model) {
+        Lecture lecture = lectureRepository.findByPath(path);
+        model.addAttribute(account);
+        model.addAttribute(lecture);
+        model.addAttribute(new IntroduceForm());
+        return "lecture/introduceForm";
+    }
+
+    @PostMapping("/lecture/{path}/introduceForm")
+    public String newIntroduceSubmit(@CurrentUser Account account, @PathVariable String path, IntroduceForm introduceForm, Errors errors, Model model) {
+        Lecture lecture = lectureService.getLectureToRegister(path);
+        if (errors.hasErrors()) {
+            return "lecture/view";
+        }
+        lectureService.createIntroduce(lecture,introduceForm);
+        return "redirect:/lecture/" + lecture.getEncodedPath();
     }
 
     @GetMapping("/lecture/{path}/student")
@@ -89,13 +107,13 @@ public class LectureController {
     }
 
     @GetMapping("/lecture/{path}/register/{id}/registers/{registerId}/accept")
-    public String acceptEnrollment(@PathVariable String path, @PathVariable Long id , @PathVariable Long registerId) {
+    public String acceptEnrollment(@PathVariable String path, @PathVariable Long id, @PathVariable Long registerId) {
 
         Lecture lecture = lectureRepository.findByPath(path);
         Register register = registerRepository.findById(registerId).orElseThrow();
         Account findAccount = userRepository.findById(id).orElseThrow();
 
-        lectureService.acceptRegister(findAccount,lecture, register);
+        lectureService.acceptRegister(findAccount, lecture, register);
         return "redirect:/lecture/" + lecture.getEncodedPath() + "/student";
     }
 
@@ -106,7 +124,7 @@ public class LectureController {
         Register register = registerRepository.findById(registerId).orElseThrow();
         Account findAccount = userRepository.findById(id).orElseThrow();
 
-        lectureService.rejectRegister(findAccount,lecture, register);
+        lectureService.rejectRegister(findAccount, lecture, register);
         return "redirect:/lecture/" + lecture.getEncodedPath() + "/student";
     }
 }
