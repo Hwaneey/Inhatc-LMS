@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="fragments.html :: head"></head>
 
 <body class="bg-light">
@@ -9,6 +10,7 @@
 <div th:replace="fragments.html :: lecture-banner"></div>
 
 <div th:replace="fragments.html :: lecture-menu(lectureMenu='info')"></div>
+
 <div class="bg-light container">
 
     <div class="py-5 text-center">
@@ -37,7 +39,12 @@
     </div>
 
 </div>
+<div th:replace="fragments.html :: footer"></div>
+
 <script th:replace="fragments.html :: form-validation"></script>
+
 <script th:replace="fragments.html :: editor-script"></script>
+
 </body>
+
 </html>

@@ -24,8 +24,8 @@ public class AccountController {
     public String home(@CurrentUser Account account, Model model) {
         if (account != null) {
             model.addAttribute(account);
-            model.addAttribute("lectureManagerOf",lectureRepository.findFirst5ByLecturerContaining(account));
-            model.addAttribute("studentManagerOf",lectureRepository.findFirst5ByStudentContaining(account));
+            model.addAttribute("lectureManagerOf",lectureRepository.findFirst20ByLecturerContaining(account));
+            model.addAttribute("studentManagerOf",lectureRepository.findFirst20ByStudentContaining(account));
         }
         return "index";
     }

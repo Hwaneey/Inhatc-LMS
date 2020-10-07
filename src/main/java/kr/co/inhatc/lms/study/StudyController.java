@@ -33,15 +33,13 @@ public class StudyController {
     private final ModelMapper modelMapper;
 
     private void list(Account account, Model model) {
-        model.addAttribute("lectureManagerOf",lectureRepository.findFirst5ByLecturerContaining(account));
-        model.addAttribute("studentManagerOf",lectureRepository.findFirst5ByStudentContaining(account));
+        model.addAttribute("lectureManagerOf",lectureRepository.findFirst20ByLecturerContaining(account));
+        model.addAttribute("studentManagerOf",lectureRepository.findFirst20ByStudentContaining(account));
     }
 
     @GetMapping("/lecture/{path}/createStudy")
     public String createStudy(@CurrentUser Account account, @PathVariable String path, Model model) {
         Lecture lecture = lectureService.getStudyToUpdateStatus(path);
-        model.addAttribute("lectureManagerOf",
-                lectureRepository.findFirst5ByLecturerContaining(account));
         list(account, model);
         model.addAttribute(lecture);
         model.addAttribute(account);

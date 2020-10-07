@@ -1,8 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="fragments.html :: head"></head>
+
 <body class="bg-light">
+
 <nav th:replace="fragments.html :: main-nav"></nav>
+
+<div th:replace="fragments.html :: lecture-banner"></div>
+
+<div th:replace="fragments.html :: lecture-menu(lectureMenu='info')"></div>
+
 <div class="container">
     <div class="py-5 text-center">
         <h2>
@@ -13,6 +21,7 @@
         <form class="needs-validation col-sm-10"
               th:action="@{'/study/' + ${lecture.path} + '/events/' + ${study.id} + '/edit'}"
               th:object="${studyDto}" method="post" novalidate>
+
             <div class="form-group">
                 <label for="title">강의 명</label>
                 <input id="title" type="text" th:field="*{title}" class="form-control"

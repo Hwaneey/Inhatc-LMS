@@ -34,6 +34,7 @@
             max-width: 100%;
         }
         body {
+
             font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         }
         body,
@@ -47,12 +48,6 @@
             font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         }
 
-        footer {
-            position: fixed;
-            height: 100px;
-            bottom: 0;
-            width: 100%;
-        }
     </style>
 </head>
 
@@ -271,9 +266,13 @@
 </div>
 
 <footer th:fragment="footer">
-    <div class="text-center py-3">© 2020 Copyright
-        <a th:href="@{/}"> Inha Technical College</a>
-    </div>
+    <br>
+    <br>
+    <br>
+    <hr>
+    <p class="footer row justify-content-center">© 2020 Copyright
+        <a th:href="@{/}"> &nbsp Inha Technical College</a>
+    </p>
 </footer>
 
 <div th:fragment="editor-script">

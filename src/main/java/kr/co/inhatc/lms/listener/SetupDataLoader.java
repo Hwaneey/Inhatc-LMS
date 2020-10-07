@@ -91,8 +91,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
                     .childName(childRole.getRoleName())
                     .build();
         }
-
         RoleHierarchy childRoleHierarchy = roleHierarchyRepository.save(roleHierarchy);
+
         childRoleHierarchy.setParentName(parentRoleHierarchy);
     }
 

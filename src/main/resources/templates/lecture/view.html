@@ -13,21 +13,28 @@
 
 <body class="bg-light">
 
-<a class="row px-3 justify-content-center" sec:authorize="hasAuthority('ROLE_MANAGER')"
-   th:if="${lecture.isLecturer(#authentication.principal)}"
-   th:href="@{'/lecture/' + ${lecture.path} + '/introduceForm'}">
-    <span th:if="${lecture.isIntroduce()} == false" class="fa fa-plus"> 학습목표 작성</span>
-</a>
+<div class="alert alert-primary text-center" role="alert" sec:authorize="hasAuthority('ROLE_MANAGER')"
+     th:if="${lecture.isLecturer(#authentication.principal) and lecture.isIntroduce()} == true" >
+    수정을 원하시면
+    <a class="alert-link" th:href="@{'/lecture/' + ${lecture.path} + '/edit'}">
+        학습목표 수정
+    </a>
+    을 눌러주세요
+</div>
 
-<a class="row px-3 justify-content-center" sec:authorize="hasAuthority('ROLE_MANAGER')"
-   th:if="${lecture.isLecturer(#authentication.principal)}"
-   th:href="@{'/lecture/' + ${lecture.path} + '/edit'}">
-    <span th:if="${lecture.isIntroduce()} == true" class="fa fa-plus"> 학습목표 수정</span>
-</a>
+<div class="alert alert-danger text-center" role="alert" sec:authorize="hasAuthority('ROLE_MANAGER')"
+     th:if="${lecture.isLecturer(#authentication.principal) and lecture.isIntroduce()} == false" >
+    학습목표 작성을 하시려면
+    <a class="alert-link" th:href="@{'/lecture/' + ${lecture.path} + '/introduceForm'}">
+        학습목표 작성
+    </a>
+    을 눌러주세요
+</div>
 
 <div class="row px-3 justify-content-center">
     <div class="col-10 pt-3" th:utext="${lecture.introduce}"></div>
 </div>
+
+<div th:replace="fragments.html :: footer"></div>
 </body>
-<!--<div th:replace="fragments.html :: footer"></div>-->
 </html>

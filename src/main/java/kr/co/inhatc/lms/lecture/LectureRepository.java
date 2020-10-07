@@ -12,9 +12,9 @@ public interface LectureRepository extends JpaRepository<Lecture,Long> {
 
     Lecture findByPath(String path);
 
-    List<Lecture> findFirst5ByLecturerContaining(Account account);
+    List<Lecture> findFirst20ByLecturerContaining(Account account);
 
-    List<Lecture> findFirst5ByStudentContaining(Account account);
+    List<Lecture> findFirst20ByStudentContaining(Account account);
 
     Lecture findStudyWithLecturerByPath(String path);
 

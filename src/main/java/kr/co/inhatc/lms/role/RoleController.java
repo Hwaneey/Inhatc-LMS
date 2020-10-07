@@ -21,8 +21,8 @@ public class RoleController {
 	private final LectureRepository lectureRepository;
 
 	private void list(Account account, Model model) {
-		model.addAttribute("lectureManagerOf",lectureRepository.findFirst5ByLecturerContaining(account));
-		model.addAttribute("studentManagerOf",lectureRepository.findFirst5ByStudentContaining(account));
+		model.addAttribute("lectureManagerOf",lectureRepository.findFirst20ByLecturerContaining(account));
+		model.addAttribute("studentManagerOf",lectureRepository.findFirst20ByStudentContaining(account));
 	}
 
 	@GetMapping(value="/admin/roles")
