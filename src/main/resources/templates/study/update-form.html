@@ -20,7 +20,7 @@
     <div class="row justify-content-center">
         <form class="needs-validation col-sm-10"
               th:action="@{'/study/' + ${lecture.path} + '/events/' + ${study.id} + '/edit'}"
-              th:object="${studyDto}" method="post" novalidate>
+              th:object="${studyForm}" method="post" novalidate>
 
             <div class="form-group">
                 <label for="title">강의 명</label>

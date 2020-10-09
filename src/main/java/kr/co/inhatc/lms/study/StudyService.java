@@ -26,16 +26,8 @@ public class StudyService {
         return studyRepository.save(study);
     }
 
-    public Lecture getStudy(String path) {
-        Lecture lecture = this.lectureRepository.findByPath(path);
-        if (lecture == null) {
-            throw new IllegalArgumentException(path + "에 해당하는 강의가 없습니다.");
-        }
-        return lecture;
-    }
-
-    public void editStudy(Study study, StudyDto studyDto) {
-        modelMapper.map(studyDto, study);
+    public void editStudy(Study study, StudyForm studyForm) {
+        modelMapper.map(studyForm, study);
     }
 
     public void deleteStudy(Study study) {

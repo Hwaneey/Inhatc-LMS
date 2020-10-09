@@ -3,7 +3,6 @@ package kr.co.inhatc.lms.comment;
 import kr.co.inhatc.lms.account.Account;
 import kr.co.inhatc.lms.study.Study;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -28,11 +27,14 @@ public class Comment {
     private Account writer;
 
     @Column(columnDefinition = "TEXT", nullable = false)
-    private String content;
+    private String comment;
 
-    @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdDate;
+
+    private int level;
+
+    private boolean isLive;
 
     public boolean isWriter(Account account) {
         return this.writer.equals(account);

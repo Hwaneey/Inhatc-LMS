@@ -31,7 +31,6 @@ public class StudyController {
     private final LectureRepository lectureRepository;
     private final StudyValidator studyValidator;
     private final ModelMapper modelMapper;
-
     private void list(Account account, Model model) {
         model.addAttribute("lectureManagerOf",lectureRepository.findFirst20ByLecturerContaining(account));
         model.addAttribute("studentManagerOf",lectureRepository.findFirst20ByStudentContaining(account));
@@ -43,13 +42,13 @@ public class StudyController {
         list(account, model);
         model.addAttribute(lecture);
         model.addAttribute(account);
-        model.addAttribute(new StudyDto());
+        model.addAttribute(new StudyForm());
         return "study/form";
     }
 
     @PostMapping("/lecture/{path}/createStudy")
     public String newEventSubmit(@CurrentUser Account account, @PathVariable String path,
-                                 @Valid StudyDto studyDto, Errors errors, Model model) {
+                                 @Valid StudyForm studyForm, Errors errors, Model model) {
         Lecture lecture = lectureService.getLectureToUpdateStatus(path);
         if (errors.hasErrors()) {
             model.addAttribute(account);
@@ -57,18 +56,18 @@ public class StudyController {
             return "study/form";
         }
 
-        studyValidator.validate(studyDto,errors);
+        studyValidator.validate(studyForm,errors);
         if (errors.hasErrors()){
             return "study/form";
         }
 
-        Study study = studyService.createStudy(modelMapper.map(studyDto, Study.class), lecture, account);
+        Study study = studyService.createStudy(modelMapper.map(studyForm, Study.class), lecture, account);
         return "redirect:/study/" + lecture.getEncodedPath() + "/events/" + study.getId();
     }
 
     @GetMapping("/study/{path}/events/{id}")
     public String getEvent(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id, Model model) {
-        Lecture lecture = studyService.getStudy(path);
+        Lecture lecture = lectureService.getLecture(path);
         model.addAttribute(studyRepository.findById(id).orElseThrow());
         model.addAttribute(lectureService.getLecture(path));
         List<Study> study = studyRepository.findByLectureOrderByStartDateTime(lecture);
@@ -81,7 +80,7 @@ public class StudyController {
     @GetMapping("/study/{path}/events")
     public String viewStudyEvents(@CurrentUser Account account, @PathVariable String path, Model model,
                                   @PageableDefault(size = 4,direction = Sort.Direction.DESC)Pageable pageable) {
-        Lecture lecture = studyService.getStudy(path);
+        Lecture lecture = lectureService.getLecture(path);
         Page<Study> studyPage = studyRepository.findByLectureOrderByStartDateTime(lecture,pageable);
         list(account, model);
         model.addAttribute("studyPage",studyPage);
@@ -98,13 +97,13 @@ public class StudyController {
         model.addAttribute(lecture);
         model.addAttribute(account);
         model.addAttribute(study);
-        model.addAttribute(modelMapper.map(study, StudyDto.class));
+        model.addAttribute(modelMapper.map(study, StudyForm.class));
 
         return "study/update-form";
     }
 
     @PostMapping("/study/{path}/events/{id}/edit")
-    public String editStudyOk(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id, @Valid StudyDto studyDto, Errors errors, Model model) {
+    public String editStudyOk(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id, @Valid StudyForm studyForm, Errors errors, Model model) {
         Lecture lecture = lectureService.getLectureToUpdateStatus(path);
         Study study = studyRepository.findById(id).orElseThrow();
 
@@ -115,7 +114,7 @@ public class StudyController {
             return "study/update-form";
         }
 
-        studyService.editStudy(study,studyDto);
+        studyService.editStudy(study, studyForm);
 
         return "redirect:/study/" + lecture.getEncodedPath() + "/events/" + study.getId();
     }

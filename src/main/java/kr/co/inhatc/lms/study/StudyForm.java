@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Data
-public class StudyDto {
+public class StudyForm {
 
     @NotBlank @Length(max = 50)
     private String title;

@@ -25,16 +25,22 @@ public class LectureService {
         return createLecture;
     }
 
-    public Lecture getLectureToUpdateStatus(String path) {
-        Lecture lecture = lectureRepository.findStudyWithLecturerByPath(path);
-        checkIfExistingStudy(path, lecture);
-        return lecture;
-    }
-
-    private void checkIfExistingStudy(String path, Lecture lecture) {
+    private void exitsLecture(String path, Lecture lecture) {
         if (lecture == null) {
             throw new IllegalArgumentException(path + "에 해당하는 강의가 없습니다.");
         }
+    }
+
+    public Lecture getLectureToUpdateStatus(String path) {
+        Lecture lecture = lectureRepository.findStudyWithLecturerByPath(path);
+        exitsLecture(path, lecture);
+        return lecture;
+    }
+
+    public Lecture getLectureToRegister(String path) {
+        Lecture lecture = lectureRepository.findLectureOnlyByPath(path);
+        exitsLecture(path, lecture);
+        return lecture;
     }
 
     public Lecture getLecture(String path) {
@@ -42,12 +48,6 @@ public class LectureService {
         if (lecture == null) {
             throw new IllegalArgumentException(path + "에 해당하는 강의가 없습니다.");
         }
-        return lecture;
-    }
-
-    public Lecture getLectureToRegister(String path) {
-        Lecture lecture = lectureRepository.findLectureOnlyByPath(path);
-        checkIfExistingStudy(path, lecture);
         return lecture;
     }
 

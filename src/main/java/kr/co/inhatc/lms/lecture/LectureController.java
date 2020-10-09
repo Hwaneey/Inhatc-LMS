@@ -89,8 +89,8 @@ public class LectureController {
 
     @GetMapping("/lecture/{path}/edit")
     public String editIntroduce(@CurrentUser Account account, @PathVariable String path, Model model) {
-//        Lecture lecture = lectureRepository.findByPath(path);
-        Lecture lecture = lectureService.getLecture(path);
+        Lecture lecture = lectureRepository.findByPath(path);
+//        Lecture lecture = lectureService.getLecture(path);
         model.addAttribute(account);
         model.addAttribute(lecture);
         model.addAttribute(modelMapper.map(lecture,IntroduceForm.class));
@@ -101,8 +101,6 @@ public class LectureController {
     @PostMapping("/lecture/{path}/edit")
     public String editIntroduceSubmit(@CurrentUser Account account, @PathVariable String path,IntroduceForm introduceForm,
                                   Errors errors, Model model) {
-//        Lecture lecture = lectureService.getStudyToUpdateStatus(path);
-//        Lecture lecture = lectureRepository.findByPath(path);
         Lecture lecture = lectureService.getLecture(path);
         if (errors.hasErrors()) {
             model.addAttribute(account);

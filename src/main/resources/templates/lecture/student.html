@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments.html :: head"></head>
-<body class="bg-light">
-<div th:replace="fragments.html :: main-nav"></div>
-<div th:replace="fragments.html :: lecture-banner"></div>
-<div th:replace="fragments.html :: lecture-menu(lectureMenu='students')"></div>
-<br>
-<div class="row justify-content-center">
 
-<!--    <div class="col-lg-6">-->
-<!--        <div th:replace="fragments.html :: member-list(student=${lecture.lecturer},isLecturer=${true})"></div>-->
-<!--        <div th:replace="fragments.html :: member-list(student=${lecture.student},isLecturer=${false})"></div>-->
-<!--    </div>-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments.html :: head"></head>
+
+<body class="bg-light">
+
+<div th:replace="fragments.html :: main-nav"></div>
+
+<div th:replace="fragments.html :: lecture-banner"></div>
+
+<div th:replace="fragments.html :: lecture-menu(lectureMenu='students')"></div><br>
+
+<div class="row justify-content-center">
 
     <div class="col-md-8 justify-content-center">
         <div>
@@ -61,9 +62,15 @@
             </dd>
         </div>
     </div>
+
 </div>
+
 <div th:replace="fragments.html :: footer"></div>
+
 </div>
+
 <div th:replace="fragments.html :: date-time"></div>
+
 </body>
+
 </html>

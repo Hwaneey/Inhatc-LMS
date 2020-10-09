@@ -11,20 +11,23 @@ public class StudyValidator implements Validator  {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return StudyDto.class.isAssignableFrom(clazz);
+        return StudyForm.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        StudyDto studyDto = (StudyDto) target;
+        StudyForm studyForm = (StudyForm) target;
 
-        if (isNotValidEndDateTime(studyDto)) {
+        if (isNotValidEndDateTime(studyForm)) {
             errors.rejectValue("endDateTime", "wrong.datetime", "강의 종료 일시를 정확히 입력하세요.");
         }
+
     }
 
-    private boolean isNotValidEndDateTime(StudyDto studyDto) {
-        LocalDateTime endDateTime = studyDto.getEndDateTime();
-        return endDateTime.isBefore(studyDto.getStartDateTime());
+    private boolean isNotValidEndDateTime(StudyForm studyForm) {
+        LocalDateTime endDateTime = studyForm.getEndDateTime();
+        return endDateTime.isBefore(studyForm.getStartDateTime());
     }
+
+
 }

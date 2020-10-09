@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class CommentForm {
     @NotBlank
-    String content;
+    String comment;
 
     @NotBlank
     Long studyId;
