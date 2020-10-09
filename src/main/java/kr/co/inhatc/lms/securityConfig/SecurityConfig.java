@@ -32,16 +32,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.sessionManagement()
                 .maximumSessions(1)
+
                 .maxSessionsPreventsLogin(false)
                 .expiredUrl("/login");
 
-        http.csrf().disable();
-    }
+        http.csrf().disable()
+                .cors().disable();
 
+    }
+    //.antMatchers("/favicon.ico", "/resources/**", "/error") status 999에러 해결법
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .mvcMatchers("/node_modules/**")
+                .antMatchers("/favicon.ico", "/resources/**", "/error")
                 .requestMatchers(PathRequest
                 .toStaticResources()
                 .atCommonLocations());

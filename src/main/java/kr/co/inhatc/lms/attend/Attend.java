@@ -1,7 +1,7 @@
-package kr.co.inhatc.lms.Register;
+package kr.co.inhatc.lms.attend;
 
 import kr.co.inhatc.lms.account.Account;
-import kr.co.inhatc.lms.lecture.Lecture;
+import kr.co.inhatc.lms.study.Study;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,19 +16,19 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-public class Register {
+public class Attend {
+
     @Id
     @GeneratedValue
     private Long id;
 
     @ManyToOne
-    private Lecture lecture;
+    private Study study;
 
     @ManyToOne
     private Account account;
 
-    private LocalDateTime registeredAt;
+    private LocalDateTime residenceTime;
 
-    private boolean accepted;
-
+    private boolean attend;
 }

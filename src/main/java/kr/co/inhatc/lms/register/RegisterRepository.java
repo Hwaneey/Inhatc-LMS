@@ -1,4 +1,4 @@
-package kr.co.inhatc.lms.Register;
+package kr.co.inhatc.lms.register;
 
 import kr.co.inhatc.lms.account.Account;
 import kr.co.inhatc.lms.lecture.Lecture;

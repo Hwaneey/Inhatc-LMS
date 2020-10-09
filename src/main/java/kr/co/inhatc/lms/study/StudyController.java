@@ -39,7 +39,7 @@ public class StudyController {
 
     @GetMapping("/lecture/{path}/createStudy")
     public String createStudy(@CurrentUser Account account, @PathVariable String path, Model model) {
-        Lecture lecture = lectureService.getStudyToUpdateStatus(path);
+        Lecture lecture = lectureService.getLectureToUpdateStatus(path);
         list(account, model);
         model.addAttribute(lecture);
         model.addAttribute(account);
@@ -50,7 +50,7 @@ public class StudyController {
     @PostMapping("/lecture/{path}/createStudy")
     public String newEventSubmit(@CurrentUser Account account, @PathVariable String path,
                                  @Valid StudyDto studyDto, Errors errors, Model model) {
-        Lecture lecture = lectureService.getStudyToUpdateStatus(path);
+        Lecture lecture = lectureService.getLectureToUpdateStatus(path);
         if (errors.hasErrors()) {
             model.addAttribute(account);
             model.addAttribute(lecture);
@@ -70,7 +70,7 @@ public class StudyController {
     public String getEvent(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id, Model model) {
         Lecture lecture = studyService.getStudy(path);
         model.addAttribute(studyRepository.findById(id).orElseThrow());
-        model.addAttribute(lectureService.getStudy(path));
+        model.addAttribute(lectureService.getLecture(path));
         List<Study> study = studyRepository.findByLectureOrderByStartDateTime(lecture);
         list(account, model);
         model.addAttribute(account);
@@ -92,7 +92,7 @@ public class StudyController {
 
     @GetMapping("/study/{path}/events/{id}/edit")
     public String editStudy(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id, Model model) {
-        Lecture lecture = lectureService.getStudyToUpdateStatus(path);
+        Lecture lecture = lectureService.getLectureToUpdateStatus(path);
         Study study = studyRepository.findById(id).orElseThrow();
         list(account, model);
         model.addAttribute(lecture);
@@ -105,7 +105,7 @@ public class StudyController {
 
     @PostMapping("/study/{path}/events/{id}/edit")
     public String editStudyOk(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id, @Valid StudyDto studyDto, Errors errors, Model model) {
-        Lecture lecture = lectureService.getStudyToUpdateStatus(path);
+        Lecture lecture = lectureService.getLectureToUpdateStatus(path);
         Study study = studyRepository.findById(id).orElseThrow();
 
         if (errors.hasErrors()) {
@@ -122,7 +122,7 @@ public class StudyController {
 
     @PostMapping("/study/{path}/events/{id}")
     public String deleteStudy(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id) {
-        Lecture lecture = lectureService.getStudyToUpdateStatus(path);
+        Lecture lecture = lectureService.getLectureToUpdateStatus(path);
         studyService.deleteStudy(studyRepository.findById(id).orElseThrow());
         return "redirect:/study/" + lecture.getEncodedPath() + "/events";
     }

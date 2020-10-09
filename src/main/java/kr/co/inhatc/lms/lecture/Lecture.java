@@ -1,6 +1,6 @@
 package kr.co.inhatc.lms.lecture;
 
-import kr.co.inhatc.lms.Register.Register;
+import kr.co.inhatc.lms.register.Register;
 import kr.co.inhatc.lms.account.Account;
 import kr.co.inhatc.lms.account.UserAccount;
 import lombok.*;

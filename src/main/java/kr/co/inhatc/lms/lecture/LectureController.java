@@ -1,7 +1,7 @@
 package kr.co.inhatc.lms.lecture;
 
-import kr.co.inhatc.lms.Register.Register;
-import kr.co.inhatc.lms.Register.RegisterRepository;
+import kr.co.inhatc.lms.register.Register;
+import kr.co.inhatc.lms.register.RegisterRepository;
 import kr.co.inhatc.lms.account.Account;
 import kr.co.inhatc.lms.account.CurrentUser;
 import kr.co.inhatc.lms.account.UserRepository;
@@ -90,7 +90,7 @@ public class LectureController {
     @GetMapping("/lecture/{path}/edit")
     public String editIntroduce(@CurrentUser Account account, @PathVariable String path, Model model) {
 //        Lecture lecture = lectureRepository.findByPath(path);
-        Lecture lecture = lectureService.getStudy(path);
+        Lecture lecture = lectureService.getLecture(path);
         model.addAttribute(account);
         model.addAttribute(lecture);
         model.addAttribute(modelMapper.map(lecture,IntroduceForm.class));
@@ -103,7 +103,7 @@ public class LectureController {
                                   Errors errors, Model model) {
 //        Lecture lecture = lectureService.getStudyToUpdateStatus(path);
 //        Lecture lecture = lectureRepository.findByPath(path);
-        Lecture lecture = lectureService.getStudy(path);
+        Lecture lecture = lectureService.getLecture(path);
         if (errors.hasErrors()) {
             model.addAttribute(account);
             model.addAttribute(lecture);

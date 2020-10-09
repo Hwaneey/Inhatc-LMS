@@ -1,7 +1,7 @@
 package kr.co.inhatc.lms.lecture;
 
-import kr.co.inhatc.lms.Register.Register;
-import kr.co.inhatc.lms.Register.RegisterRepository;
+import kr.co.inhatc.lms.register.Register;
+import kr.co.inhatc.lms.register.RegisterRepository;
 import kr.co.inhatc.lms.account.Account;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -25,7 +25,7 @@ public class LectureService {
         return createLecture;
     }
 
-    public Lecture getStudyToUpdateStatus(String path) {
+    public Lecture getLectureToUpdateStatus(String path) {
         Lecture lecture = lectureRepository.findStudyWithLecturerByPath(path);
         checkIfExistingStudy(path, lecture);
         return lecture;
@@ -37,7 +37,7 @@ public class LectureService {
         }
     }
 
-    public Lecture getStudy(String path) {
+    public Lecture getLecture(String path) {
         Lecture lecture = this.lectureRepository.findByPath(path);
         if (lecture == null) {
             throw new IllegalArgumentException(path + "에 해당하는 강의가 없습니다.");
