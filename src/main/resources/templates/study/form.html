@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head th:replace="fragments.html :: head"></head>
 <body class="bg-light">
 <nav th:replace="fragments.html :: main-nav"></nav>
@@ -23,20 +22,22 @@
                 <small class="form-text text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Error</small>
             </div>
 
-            <div class="form-group col-sm-13">
+            <div class="form-row">
+                <div class="form-group col-md-6">
                 <label for="startDateTime">강의 시작 일시</label>
                 <input id="startDateTime" type="datetime-local" th:field="*{startDateTime}" class="form-control"
-                       aria-describedby="startDateTimeHelp" required>
+                aria-describedby="startDateTimeHelp" required>
                 <small class="invalid-feedback">강의 시작 일시를 입력하세요.</small>
-            </div>
+                </div>
 
-            <div class="form-group col-sm-13">
-                <label for="startDateTime">강의 종료 일시</label>
-                <input id="endDateTime" type="datetime-local" th:field="*{endDateTime}" class="form-control"
-                       aria-describedby="endDateTimeHelp" required>
-                <small class="invalid-feedback">강의 종료 일시를 입력하세요.</small>
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('endDateTime')}"
-                       th:errors="*{endDateTime}">Error</small>
+                <div class="form-group col-md-6" >
+                    <label for="startDateTime">강의 종료 일시</label>
+                    <input id="endDateTime" type="datetime-local" th:field="*{endDateTime}" class="form-control"
+                           aria-describedby="endDateTimeHelp" required>
+                    <small class="invalid-feedback">강의 종료 일시를 입력하세요.</small>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('endDateTime')}"
+                           th:errors="*{endDateTime}">Error</small>
+                </div>
             </div>
 
             <div class="form-group">
@@ -55,7 +56,7 @@
         </form>
     </div>
 </div>
-<!--<div th:replace="fragments.html :: footer"></div>-->
+<div th:replace="fragments.html :: footer"></div>
 <script th:replace="fragments.html :: form-validation"></script>
 
 <script th:replace="fragments.html :: editor-script"></script>

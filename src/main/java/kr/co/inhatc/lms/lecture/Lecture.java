@@ -54,7 +54,7 @@ public class Lecture {
     }
 
     public boolean isIntroduce() {
-        return this.introduce != null;
+        return this.introduce == null;
     }
 
     public boolean isLecturer(UserAccount userAccount) {
