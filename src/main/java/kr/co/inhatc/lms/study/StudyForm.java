@@ -19,5 +19,7 @@ public class StudyForm {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime endDateTime;
 
+    private int classTime;
+
     private String post;
 }

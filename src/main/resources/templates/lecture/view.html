@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
+
       xmlns:th="http://www.thymeleaf.org"
+
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="fragments.html :: head"></head>
@@ -24,7 +26,6 @@
 
 <div class="alert alert-primary text-center" role="alert" sec:authorize="hasAuthority('ROLE_MANAGER')"
      th:if="${lecture.isLecturer(#authentication.principal) && !lecture.isIntroduce()}" >
-
     수정을 원하시면
     <a class="alert-link" th:href="@{'/lecture/' + ${lecture.path} + '/edit'}">
         학습목표 수정

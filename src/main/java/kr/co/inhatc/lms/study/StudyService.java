@@ -1,8 +1,8 @@
 package kr.co.inhatc.lms.study;
 
 import kr.co.inhatc.lms.account.Account;
+import kr.co.inhatc.lms.attend.Attend;
 import kr.co.inhatc.lms.lecture.Lecture;
-import kr.co.inhatc.lms.lecture.LectureRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -16,10 +16,10 @@ import java.time.LocalDateTime;
 public class StudyService {
 
     private final StudyRepository studyRepository;
-    private final LectureRepository lectureRepository;
     private final ModelMapper modelMapper;
 
     public Study createStudy(Study study, Lecture lecture, Account account) {
+        Attend attend = new Attend();
         study.setCreatedBy(account);
         study.setLecture(lecture);
         study.setCreatedDateTime(LocalDateTime.now());

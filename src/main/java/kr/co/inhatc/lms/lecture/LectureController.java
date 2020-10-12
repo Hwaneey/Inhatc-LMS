@@ -21,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 @Controller
 @RequiredArgsConstructor
 public class LectureController {
+
     private final ModelMapper modelMapper;
     private final LectureService lectureService;
     private final LectureRepository lectureRepository;
@@ -33,7 +34,9 @@ public class LectureController {
         model.addAttribute("lectureManagerOf", lectureRepository.findFirst20ByLecturerContaining(account));
         model.addAttribute("studentManagerOf", lectureRepository.findFirst20ByStudentContaining(account));
     }
-
+    /**
+    * 강의실 개설
+    **/
     @GetMapping("/new-lecture")
     public String newStudyForm(@CurrentUser Account account, Model model) {
         model.addAttribute(new LectureForm());
@@ -55,7 +58,9 @@ public class LectureController {
         Lecture createLecture = lectureService.createLecture(modelMapper.map(lectureForm, Lecture.class), account);
         return "redirect:/lecture/" + URLEncoder.encode(createLecture.getPath(), StandardCharsets.UTF_8);
     }
-
+    /**
+     * 강의실 접속
+     * */
     @GetMapping("/lecture/{path}")
     public String viewLecture(@CurrentUser Account account, @PathVariable String path, Model model) {
         Lecture lecture = lectureRepository.findByPath(path);
@@ -64,6 +69,10 @@ public class LectureController {
         model.addAttribute(lecture);
         return "lecture/view";
     }
+
+    /**
+     * 강의실 학습목표 작성
+     * */
 
     @GetMapping("/lecture/{path}/introduceForm")
     public String newIntroduce(@CurrentUser Account account, @PathVariable String path, Model model) {
@@ -87,6 +96,11 @@ public class LectureController {
         return "redirect:/lecture/" + lecture.getEncodedPath();
     }
 
+
+
+    /**
+     * 강의실 수강생
+     * */
     @GetMapping("/lecture/{path}/edit")
     public String editIntroduce(@CurrentUser Account account, @PathVariable String path, Model model) {
         Lecture lecture = lectureRepository.findByPath(path);

@@ -1,159 +1,176 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 
-    <html lang="en"
+<html lang="en"
 
-          xmlns:th="http://www.thymeleaf.org"
+      xmlns:th="http://www.thymeleaf.org"
 
-          xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <head th:replace="fragments.html :: head"></head>
+<head th:replace="fragments.html :: head"></head>
 
-    <body class="bg-light">
+<body class="bg-light">
 
-    <nav th:replace="fragments.html :: main-nav"></nav>
+<nav th:replace="fragments.html :: main-nav"></nav>
 
-    <div th:replace="fragments.html :: lecture-banner"></div>
+<div th:replace="fragments.html :: lecture-banner"></div>
 
-    <div th:replace="fragments.html :: lecture-menu(lectureMenu='lecture')"></div>
+<div th:replace="fragments.html :: lecture-menu(lectureMenu='lecture')"></div>
 
-    <div class="container-fluid" th:if="${lecture.isLecturer(#authentication.principal) or lecture.isStudent(#authentication.principal)}">
+<div class="container-fluid"
+     th:if="${lecture.isLecturer(#authentication.principal) or lecture.isStudent(#authentication.principal)}">
 
-        <div class="row px-3 justify-content-center">
-            <div class="col-xs-1 text-center">
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th scope="col">주차</th>
-                        <th scope="col">강의 명</th>
-                        <th scope="col">링크</th>
-                    </tr>
-                    </thead>
-                    <tbody th:each="event: ${studys}">
-                    <tr>
-                        <th scope="row" th:text="${eventStat.count}">1</th>
-                        <td th:text="${event.title}">Title</td>
-                        <td>
-                            <a th:href="@{'/study/' + ${lecture.path} + '/events/' + ${event.id}}"
-                               class="card-link">학습하기</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="row px-3 justify-content-center">
+        <div class="col-xs-1 text-center">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">주차</th>
+                    <th scope="col">강의 명</th>
+                    <th scope="col">링크</th>
+                </tr>
+                </thead>
+                <tbody th:each="event: ${studys}">
+                <tr>
+                    <th scope="row" th:text="${eventStat.count}">1</th>
+                    <td th:text="${event.title}">Title</td>
+                    <td>
+                        <a th:href="@{'/study/' + ${lecture.path} + '/events/' + ${event.id}}"
+                           class="card-link">학습하기</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
-            <div class="col-md-6 pt-3">
-                <h5>
-                    <a th:href="@{'/study/' + ${lecture.path} + '/events/'}">
-                        <span th:text="${lecture.subjectTitle}">강의명</span>
-                    </a>/
-                    <span th:text="${study.title}"></span>
-                </h5>
+        <div class="col-md-6 pt-3">
+            <h5>
+                <a th:href="@{'/study/' + ${lecture.path} + '/events/'}">
+                    <span th:text="${lecture.subjectTitle}">강의명</span>
+                </a>/
+                <span th:text="${study.title}"></span>
+            </h5>
 
-                <hr>
+            <hr>
 
-                <div>
-                    <span class="h6">강의 등록일 : </span>
-                    <span class="date-time" th:text="${study.getCreatedDateTime()}">등록날짜</span>
-                    <span class="timer h5 pull-right justify-content-center text-center">
+            <div>
+                <span class="h6">강의 등록일 : </span>
+                <span class="date-time" th:text="${study.getCreatedDateTime()}">등록날짜</span>
+                <span class="timer h5 pull-right justify-content-center text-center">
                                 <i class="fa fa-clock-o"></i><span class="timer-text">00:00:00</span>
                     </span>
 
-                </div>
+            </div>
 
-                <hr>
+            <hr>
 
-                <div class="row px-3">
-                    <div class="text-center" th:utext="${study.post}"></div>
-                </div>
+            <div class="row px-3">
+                <div class="text-center" th:utext="${study.post}"></div>
+            </div>
 
-                <hr>
+            <hr>
 
-                <h5 class="card-header">강의에 대한 질문을 남겨주세요:</h5>
+            <h5 class="card-header">강의에 대한 질문을 남겨주세요:</h5>
 
-                <div class="card-body">
+            <div class="card-body">
 
-                    <form th:action="@{'/study/' + ${lecture.path} + '/events/' +${study.id} +'/comment'}" method="post">
-                        <div class="form-group">
-                            <input type="hidden" name="studyId" th:value="${study.id}">
-                            <input type="hidden" name="studyId">
-                            <textarea class="form-control" type="text" name="comment" rows="5"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary pull-left">Submit</button>
-                    </form>
+                <form th:action="@{'/study/' + ${lecture.path} + '/events/' +${study.id} +'/comment'}" method="post">
+                    <div class="form-group">
+                        <input type="hidden" name="studyId" th:value="${study.id}">
+                        <input type="hidden" name="studyId">
+                        <textarea class="form-control" type="text" name="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-left">Submit</button>
+                </form>
 
-                    <span class="pull-right justify-content-center">
+                <span class="pull-right justify-content-center">
                         <a class="btn btn-warning" sec:authorize="isAuthenticated()"
                            th:if="${lecture.isLecturer(#authentication.principal)}"
                            th:href="@{'/study/' + ${lecture.path} + '/events/' + ${study.id} + '/edit'}">수정
                         </a>
                     </span>
 
-                </div>
+            </div>
 
-                <br>
+            <br>
 
-                <hr>
+            <hr>
 
-                <div class="card-body">
-                    <ul class="comments-list" th:each="comment,status : ${study.comments}">
+            <div class="card-body" >
+                <ul class="comments-list" id="reset" th:each="comment,status : ${study.comments}">
 
-                        <div class="comment">
-                            <form id="delete-comment-form" th:action="@{'/study/' + ${lecture.path} + '/events/' +${study.id} +'/comment/' + ${comment.id}}"
-                                  th:if="${#authentication.name == comment.writer.username}" method="post">
-                                <input type="hidden" name="_method" value="delete" th:value="${study.id}" />
-                                <button class="btn btn-outline-danger pull-right comment-delete-btn">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                </button>
-                            </form>
+                    <div class="comment">
+                        <form id="delete-comment-form"
+                              th:action="@{'/study/' + ${lecture.path} + '/events/' +${study.id} +'/comment/' + ${comment.id}}"
+                              th:if="${#authentication.name == comment.writer.username}" method="post">
+                            <input type="hidden" name="_method" value="delete" th:value="${study.id}"/>
+                            <button class="btn btn-outline-danger pull-right comment-delete-btn">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </button>
+                        </form>
 
-                            <a class="pull-left" href="#">
-                                <svg th:data-jdenticon-value="${comment.getWriter().getUsername()}"
-                                     width="40" height="40" class="d-flex mr-3 rounded-circle border bg-light">
-                                </svg>
-                            </a>
-                            <div class="media mb-n3">
-                                <div class="media-body">
-                                    <span class="h6" th:text="${comment.getWriter().getUsername()}">Commenter Name</span>
-                                    <span class="fromNow" th:text="${comment.createdDate}">~분전</span>
-                                    <p th:text="${comment.comment}"></p>
-                                </div>
+                        <a class="pull-left" href="#">
+                            <svg th:data-jdenticon-value="${comment.getWriter().getUsername()}"
+                                 width="40" height="40" class="d-flex mr-3 rounded-circle border bg-light">
+                            </svg>
+                        </a>
+                        <div class="media mb-n3">
+                            <div class="media-body">
+                                <span class="h6" th:text="${comment.getWriter().getUsername()}">Commenter Name</span>
+                                <span class="fromNow" th:text="${comment.createdDate}">~분전</span>
+                                <p th:text="${comment.comment}"></p>
                             </div>
-                            <hr>
                         </div>
-                    </ul>
-                </div>
-
+                        <hr>
+                    </div>
+                </ul>
             </div>
 
         </div>
 
     </div>
 
-    <div th:replace="fragments.html :: date-time"></div>
+</div>
 
-    <div th:replace="fragments.html :: footer"></div>
+<div th:replace="fragments.html :: date-time"></div>
 
-    </body>
+<div th:replace="fragments.html :: footer"></div>
 
-    <script type="application/javascript">
-        var timer = 0;
+</body>
 
-        function pad(n, width) {
-            n = String(n);
-            return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    let timer = /*[[ ${study.classTime} ]]*/;
+
+    /*]]*/
+
+    // let timer = 30;
+
+    window.onload = function () {
+        tid = setInterval(function () {
+            onTimer();
+        }, 1000);
+    }
+
+    function pad(n, width) {
+        n = String(n);
+        return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
+    }
+
+    function onTimer() {
+        const s_timer = pad(Math.floor(timer / 3600), 2) + ":" + pad(Math.floor(timer / 60), 2) + ":" + pad(timer % 60, 2);
+        $('.timer-text').html(s_timer);
+        timer--;
+        if (timer == -1) {
+            clearInterval(tid);
         }
+    }
 
-        function onTimer() {
-            var s_timer = pad(Math.floor(timer / 3600), 2) + ":" + pad(Math.floor(timer / 60), 2) + ":" + pad(timer % 60, 2);
-            $('.timer-text').html(s_timer);
-            timer++;
-        }
+    function stop(){
+        console.log("stopped")
+        clearInterval(onTimer)
+    }
 
-        window.onload = function () {
-            tid = setInterval(function () {
-                onTimer();
-            }, 1000);
-        }
-    </script>
+</script>
 
-    </html>
+</html>

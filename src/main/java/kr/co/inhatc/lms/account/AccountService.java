@@ -7,11 +7,6 @@ import kr.co.inhatc.lms.role.Role;
 import kr.co.inhatc.lms.role.RoleRepository;
 import kr.co.inhatc.lms.signup.SignUpForm;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,12 +14,10 @@ import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service @Transactional @RequiredArgsConstructor
-public class AccountService implements UserDetailsService {
+public class AccountService{
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -73,19 +66,19 @@ public class AccountService implements UserDetailsService {
         account.checkEmail();
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Account account = userRepository.findByEmail(email);
-        if (account == null) {
-            throw new UsernameNotFoundException(email);
-        }
-        Set<String> userRoles = account.getUserRoles()
-                .stream()
-                .map(userRole -> userRole.getRoleName())
-                .collect(Collectors.toSet());
-
-        List<GrantedAuthority> collect = userRoles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-        return new UserAccount(account, collect);
-    }
+//    @Transactional(readOnly = true)
+//    @Override
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//        Account account = userRepository.findByEmail(email);
+//        if (account == null) {
+//            throw new UsernameNotFoundException(email);
+//        }
+//        Set<String> userRoles = account.getUserRoles()
+//                .stream()
+//                .map(userRole -> userRole.getRoleName())
+//                .collect(Collectors.toSet());
+//
+//        List<GrantedAuthority> collect = userRoles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+//        return new UserAccount(account, collect);
+//    }
 }

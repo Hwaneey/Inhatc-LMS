@@ -35,7 +35,11 @@ public class StudyController {
         model.addAttribute("lectureManagerOf",lectureRepository.findFirst20ByLecturerContaining(account));
         model.addAttribute("studentManagerOf",lectureRepository.findFirst20ByStudentContaining(account));
     }
-
+    /**
+     * <pre>
+     *     <b>강의 생성</b>
+     * </pre>
+     * **/
     @GetMapping("/lecture/{path}/createStudy")
     public String createStudy(@CurrentUser Account account, @PathVariable String path, Model model) {
         Lecture lecture = lectureService.getLectureToUpdateStatus(path);
@@ -47,7 +51,7 @@ public class StudyController {
     }
 
     @PostMapping("/lecture/{path}/createStudy")
-    public String newEventSubmit(@CurrentUser Account account, @PathVariable String path,
+    public String createStudySubmit(@CurrentUser Account account, @PathVariable String path,
                                  @Valid StudyForm studyForm, Errors errors, Model model) {
         Lecture lecture = lectureService.getLectureToUpdateStatus(path);
         if (errors.hasErrors()) {
@@ -66,7 +70,7 @@ public class StudyController {
     }
 
     @GetMapping("/study/{path}/events/{id}")
-    public String getEvent(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id, Model model) {
+    public String viewStudy(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id, Model model) {
         Lecture lecture = lectureService.getLecture(path);
         model.addAttribute(studyRepository.findById(id).orElseThrow());
         model.addAttribute(lectureService.getLecture(path));
@@ -78,7 +82,7 @@ public class StudyController {
     }
 
     @GetMapping("/study/{path}/events")
-    public String viewStudyEvents(@CurrentUser Account account, @PathVariable String path, Model model,
+    public String studyList(@CurrentUser Account account, @PathVariable String path, Model model,
                                   @PageableDefault(size = 4,direction = Sort.Direction.DESC)Pageable pageable) {
         Lecture lecture = lectureService.getLecture(path);
         Page<Study> studyPage = studyRepository.findByLectureOrderByStartDateTime(lecture,pageable);
@@ -103,7 +107,7 @@ public class StudyController {
     }
 
     @PostMapping("/study/{path}/events/{id}/edit")
-    public String editStudyOk(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id, @Valid StudyForm studyForm, Errors errors, Model model) {
+    public String editStudySubmit(@CurrentUser Account account, @PathVariable String path, @PathVariable Long id, @Valid StudyForm studyForm, Errors errors, Model model) {
         Lecture lecture = lectureService.getLectureToUpdateStatus(path);
         Study study = studyRepository.findById(id).orElseThrow();
 

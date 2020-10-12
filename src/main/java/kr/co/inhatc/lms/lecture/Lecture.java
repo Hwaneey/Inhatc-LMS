@@ -70,16 +70,6 @@ public class Lecture {
         return !this.student.contains(account) && !this.lecturer.contains(account);
     }
 
-    private boolean isAlreadyRegister(UserAccount userAccount) {
-        Account account = userAccount.getAccount();
-        for (Register e: this.registers) {
-            if (e.getAccount().equals(account)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void addRegister(Register register) {
         this.registers.add(register);
         register.setLecture(this);
@@ -88,6 +78,16 @@ public class Lecture {
     public void removeRegister(Register register) {
         this.registers.remove(register);
         register.setLecture(null);
+    }
+
+    private boolean isAlreadyRegister(UserAccount userAccount) {
+        Account account = userAccount.getAccount();
+        for (Register e: this.registers) {
+            if (e.getAccount().equals(account)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isRegisterFor(UserAccount userAccount) {

@@ -28,7 +28,14 @@ public class Attend {
     @ManyToOne
     private Account account;
 
-    private LocalDateTime residenceTime;
+    private int residenceTime;
+
+    private LocalDateTime attendTime;
 
     private boolean attend;
+
+    public void checkAttend(Attend attend){
+        attend.setAttendTime(LocalDateTime.now());
+        attend.setAttend(true);
+    }
 }

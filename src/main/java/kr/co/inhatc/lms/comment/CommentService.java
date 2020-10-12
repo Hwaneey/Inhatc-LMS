@@ -17,7 +17,6 @@ public class CommentService {
 
     private final StudyRepository studyRepository;
     private final CommentRepository commentRepository;
-
     public Study getStudy(Long studyId){
         return studyRepository.findById(studyId).get();
     }
@@ -37,6 +36,7 @@ public class CommentService {
     }
 
     public void deleteComment(Long commentId, Account account){
+
         Optional<Comment> comment = commentRepository.findById(commentId);
 
         Study study = comment.get().getStudy();

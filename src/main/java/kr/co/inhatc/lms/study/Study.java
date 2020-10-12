@@ -1,6 +1,7 @@
 package kr.co.inhatc.lms.study;
 
 import kr.co.inhatc.lms.account.Account;
+import kr.co.inhatc.lms.attend.Attend;
 import kr.co.inhatc.lms.comment.Comment;
 import kr.co.inhatc.lms.lecture.Lecture;
 import lombok.EqualsAndHashCode;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +45,14 @@ public class Study {
     @Column(updatable = false)
     private LocalDateTime endDateTime;
 
+    @Column(nullable = false) @Min(5)
+    private int classTime;
+
     @Lob
     private String post;
+
+    @OneToMany
+    private List<Attend> attendList = new ArrayList<>();
 
     @OneToMany
     private List<Comment> comments = new ArrayList<>();
